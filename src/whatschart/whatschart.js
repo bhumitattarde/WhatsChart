@@ -31,6 +31,7 @@ class whatsChart {
     };
 
     incrementCounter(map, key) {
+
         let freq = map.get(key);
         map.set(key, (freq === undefined) ? 1 : freq + 1);
     };
@@ -139,6 +140,7 @@ class whatsChart {
                         return this.generateStats(messages);
                     },
                     err => {
+
                         console.error(`Error while parsing chats: (${err.name}: ${err.message})`);
                         reject(new Error(`Error while parsing chats: (${err.name}: ${err.message})`));
                     }
@@ -147,6 +149,7 @@ class whatsChart {
                         resolve(authors);
                     },
                     err => {
+
                         console.error(`Error while generating stats: (${err.name}: ${err.message})`);
                         reject(new Error(`Error while generating stats: (${err.name}: ${err.message})`));
                     }

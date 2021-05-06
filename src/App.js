@@ -4,40 +4,26 @@ import whatsChart from "./whatschart/whatschart.js";
 import Chart from "./components/chart"
 
 //FIXME make a progress/error pane that'll display progress/errors that occur
+//FIXME form should be a separate component that accepts a callback as a prop
 
 class App extends React.Component {
 
   constructor(props) {
+
     super(props);
     this.state = {
       showChart: false,
     }
 
+    // method bindings
     this.handleFileSelect = this.handleFileSelect.bind(this);
     this.generate = this.generate.bind(this);
     this.generateChart = this.generateChart.bind(this);
 
+    // member variables
     this.author1 = {};
     this.author2 = {};
   }
-
-  generateChart(authors) {
-
-    return new Promise((resolve, reject) => {
-
-      if (authors === undefined) {
-        reject(new Error("Received empty data from generator"));
-      };
-
-      console.log(authors);
-
-      this.author1 = authors.author1;
-      this.author2 = authors.author2;
-
-      resolve();
-    });
-
-  };
 
   generate(data) {
 
@@ -47,9 +33,15 @@ class App extends React.Component {
 
       wc.run(data)
         .then(authors => {
-          return this.generateChart(authors);
-        })
-        .then(() => {
+
+          if (authors === undefined) {
+            reject(new Error("Received empty data from generator"));
+          };
+
+          console.log(authors);
+
+          this.author1 = authors.author1;
+          this.author2 = authors.author2;
           this.setState(prevState => {
             return { showChart: true };
           });
@@ -57,6 +49,7 @@ class App extends React.Component {
           resolve();
         })
         .catch(err => {
+
           console.error(err);
           reject();
         });
@@ -70,6 +63,7 @@ class App extends React.Component {
       const reader = new FileReader();
 
       reader.onload = (event) => {
+
         const data = event.target.result;
         if (data && data !== "") {
           // this.generate(data);
