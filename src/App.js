@@ -18,7 +18,6 @@ class App extends React.Component {
     // method bindings
     this.handleFileSelect = this.handleFileSelect.bind(this);
     this.generate = this.generate.bind(this);
-    this.generateChart = this.generateChart.bind(this);
 
     // member variables
     this.author1 = {};
