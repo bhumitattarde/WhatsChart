@@ -16,5 +16,11 @@ module.exports = class author {
         this.messagesByHour = new Map();
         this.messagesByDaysOfWeek = new Map();
         this.messagesByDate = new Map();
+
+        //
+
+        this.startDate = {};
+        this.endDate = {};
+        this.periodInDays = 0;
     }
 }

@@ -35,18 +35,6 @@ class whatsChart {
         map.set(key, (freq === undefined) ? 1 : freq + 1);
     };
 
-    parseChats(data) {
-
-        wsp
-            .parseString(data)
-            .then(messages => {
-                this.generateStats(messages);
-            })
-            .catch(err => {
-                console.log("Couldn't parse chats..", err);
-            });
-    };
-
     setAuthorNames(messages) {
 
         for (let msg of messages) {
@@ -66,76 +54,134 @@ class whatsChart {
 
     generateStats(messages) {
 
-        this.setAuthorNames(messages);
+        return new Promise((resolve, reject) => {
 
-        for (let msg of messages) {
+            try {
+                this.setAuthorNames(messages);
 
-            // get author of the message
-            var auth = {};
-            if (msg.author == this.authors.author1.name) {
-                auth = this.authors.author1;
-            } else if (msg.author == this.authors.author2.name) {
-                auth = this.authors.author2;
-            };
+                for (let msg of messages) {
 
-            // Sort message by time and increment counters
-            this.incrementCounter(auth.messagesByHour, msg.date.getHours());
-            this.incrementCounter(auth.messagesByDaysOfWeek, msg.date.getDay());
-            this.incrementCounter(auth.messagesByDate, msg.date.toLocaleDateString());
+                    // get author of the message
+                    var auth = {};
+                    if (msg.author === this.authors.author1.name) {
+                        auth = this.authors.author1;
+                    } else if (msg.author === this.authors.author2.name) {
+                        auth = this.authors.author2;
+                    };
 
-            // Convert message to lower-case. We're making a decision that case doesn't matter for analysis.
-            const message = msg.message.toLowerCase();
+                    // Sort message by time and increment counters
+                    this.incrementCounter(auth.messagesByHour, msg.date.getHours());
+                    this.incrementCounter(auth.messagesByDaysOfWeek, msg.date.getDay());
+                    this.incrementCounter(auth.messagesByDate, msg.date.toLocaleDateString());
 
-            // determine the type of message and increment counters
-            // This can obviously fail if one includes these file extensions manually, but thanks to WhatsApp's
-            // big brain decision to use differring formats for media messages, this seems to be the only way.
-            auth.totalMessages++;
+                    // Convert message to lower-case. We're making a decision that case doesn't matter for analysis.
+                    const message = msg.message.toLowerCase();
 
-            if (message.includes(".jpg") || message.includes(".webp")) {
-                // is an image
-                auth.totalMedia++;
-                auth.pictures++;
-            } else if (message.includes(".opus")) {
-                // is an audio
-                auth.totalMedia++;
-                auth.audios++;
-            } else if (message.includes(".mp4")) {
-                // is a video
-                auth.totalMedia++;
-                auth.videos++;
-            } else if (message.includes("https://") || message.includes("http://")) {
-                // is a link
-                auth.totalMedia++;
-                auth.links++;
-            } else {
-                // text message
-                auth.textMessages++;
+                    // determine the type of message and increment counters
+                    // This can obviously fail if one includes these file extensions manually, but thanks to WhatsApp's
+                    // big brain decision to use differring formats for media messages, this seems to be the only way.
+                    auth.totalMessages++;
 
-                // extract words
-                let words = message.match(this.regexWords);
-                if (words) {
-                    words = sw.removeStopwords(words, sw.en);
-                    for (let word of words) {
-                        this.incrementCounter(auth.words, word);
+                    if (message.includes(".jpg") || message.includes(".webp")) {
+                        // is an image
+                        auth.totalMedia++;
+                        auth.pictures++;
+                    } else if (message.includes(".opus")) {
+                        // is an audio
+                        auth.totalMedia++;
+                        auth.audios++;
+                    } else if (message.includes(".mp4")) {
+                        // is a video
+                        auth.totalMedia++;
+                        auth.videos++;
+                    } else if (message.includes("https://") || message.includes("http://")) {
+                        // is a link
+                        auth.totalMedia++;
+                        auth.links++;
+                    } else {
+                        // text message
+                        auth.textMessages++;
+
+                        // extract words
+                        let words = message.match(this.regexWords);
+                        if (words) {
+                            words = sw.removeStopwords(words, sw.en);
+                            for (let word of words) {
+                                this.incrementCounter(auth.words, word);
+                            };
+                        };
+
+                        // detect & process emojis
+                        let emojis = message.match(this.regexEmojis);
+                        if (emojis) {
+                            for (let emoji of emojis) {
+                                this.incrementCounter(auth.emojis, emoji);
+                            };
+                        };
                     };
                 };
-
-                // detect & process emojis
-                let emojis = message.match(this.regexEmojis);
-                if (emojis) {
-                    for (let emoji of emojis) {
-                        this.incrementCounter(auth.emojis, emoji);
-                    };
-                };
+            } catch (err) {
+                reject(err);
             };
-        };
 
-        console.log(this.authors);
+            resolve(this.authors);
+        });
+
+    };
+
+    parseChats(data) {
+
+        return new Promise((resolve, reject) => {
+
+            wsp.parseString(data)
+                .then(
+                    messages => {
+                        return this.generateStats(messages);
+                    },
+                    err => {
+                        console.error(`Error while parsing chats: (${err.name}: ${err.message})`);
+                        reject(new Error(`Error while parsing chats: (${err.name}: ${err.message})`));
+                    }
+                ).then(
+                    authors => {
+                        resolve(authors);
+                    },
+                    err => {
+                        console.error(`Error while generating stats: (${err.name}: ${err.message})`);
+                        reject(new Error(`Error while generating stats: (${err.name}: ${err.message})`));
+                    }
+                );
+            // authorsPromise
+            //     .then((authors) => {
+            //         resolve(authors);
+            //     })
+            //     .catch(err => {
+            //         console.erro("Couldn't parse chats..", err);
+            //         reject(err);
+            //     });
+
+        });
+
     };
 
     run(data) {
 
-        this.parseChats(data);
+        // try {
+        //     this.parseChats(data, callback);
+        // } catch (err) {
+        //     callback(err.message, undefined);
+        // }
+
+        // return new Promise((resolve, reject) => {
+        //     this.parseChats(data).then((authors) => {
+        //         resolve(authors);
+        //     }).catch((err) => {
+        //         reject(err);
+        //     })
+
+        // });
+
+        return this.parseChats(data);
     };
 
 
