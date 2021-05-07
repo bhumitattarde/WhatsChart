@@ -24,5 +24,6 @@ module.exports = class author {
         this.periodInDays = 0;
         this.wordsPerMessage = 0;
         this.mostUsedWord = "";
+        this.mostUsedEmoji = "";
     }
 }

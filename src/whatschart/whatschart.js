@@ -62,6 +62,7 @@ class whatsChart {
 
         auth.wordsPerMessage = auth.totalWords / auth.textMessages;
         auth.mostUsedWord = [...auth.words][0];
+        auth.mostUsedEmoji = [...auth.emojis][0];
     }
 
     generateStats(messages) {
@@ -187,35 +188,12 @@ class whatsChart {
                         reject(new Error(`Error while generating stats: (${err.name}: ${err.message})`));
                     }
                 );
-            // authorsPromise
-            //     .then((authors) => {
-            //         resolve(authors);
-            //     })
-            //     .catch(err => {
-            //         console.erro("Couldn't parse chats..", err);
-            //         reject(err);
-            //     });
-
         });
 
     };
 
     run(data, rmStopwords = false) {
 
-        // try {
-        //     this.parseChats(data, callback);
-        // } catch (err) {
-        //     callback(err.message, undefined);
-        // }
-
-        // return new Promise((resolve, reject) => {
-        //     this.parseChats(data).then((authors) => {
-        //         resolve(authors);
-        //     }).catch((err) => {
-        //         reject(err);
-        //     })
-
-        // });
         this.removeStopwords = rmStopwords;
         return this.parseChats(data);
     };

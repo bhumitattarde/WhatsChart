@@ -24,6 +24,7 @@ class Chart extends React.Component {
         // `this` bindings
         this.getSectionWordsString = this.getSectionWordsString.bind(this);
         this.addMaps = this.addMaps.bind(this);
+        this.getWeekDayName = this.getWeekDayName.bind(this);
     }
 
     addMaps(map1, map2) {
@@ -44,6 +45,11 @@ class Chart extends React.Component {
         };
 
         return newMap;
+    };
+
+    getWeekDayName(day) {
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        return days[day];
     };
 
     getSectionWordsString(author1, author2) {
@@ -83,8 +89,24 @@ class Chart extends React.Component {
     componentWillMount() {
 
         this.sectionWordsString = this.getSectionWordsString(this.props.author1, this.props.author2);
+
         this.totalWordsCombined = util.sortMap(this.addMaps(this.props.author1.words, this.props.author2.words));
+        this.totalEmojisCombined = util.sortMap(this.addMaps(this.props.author1.emojis, this.props.author2.emojis));
+        this.messagesByHour = this.addMaps(this.props.author1.messagesByHour, this.props.author2.messagesByHour);
+        this.messagesByDaysOfWeek = this.addMaps(this.props.author1.messagesByDaysOfWeek, this.props.author2.messagesByDaysOfWeek);
+        this.messagesByDate = this.addMaps(this.props.author1.messagesByDate, this.props.author2.messagesByDate);
+
         this.mostUsedWord = [...this.totalWordsCombined][0];
+        this.mostUsedEmoji = [...this.totalEmojisCombined][0];
+        this.busiestHour = [...this.messagesByHour.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
+        this.busiestWeekOfDay = [...this.messagesByDaysOfWeek.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
+        this.busiestDay = [...this.messagesByDate.entries()].reduce((a, e) => e[1] > a[1] ? e : a);
+
+        this.startDate = [...this.messagesByDate][0][0];
+        this.endDate = [...this.messagesByDate][this.messagesByDate.size - 1][0];
+        // const diffTime = Math.abs(new Date(this.endDate) - new Date(this.startDate));
+        // this.periodInDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        this.periodInDays = this.messagesByDate.size;
     }
 
     render() {
@@ -101,7 +123,7 @@ class Chart extends React.Component {
             <div id="chart">
 
                 <header>
-                    <h1>{author1.periodInDays} days of WhatsApp texting</h1>
+                    <h1>{this.periodInDays} days of WhatsApp texting</h1>
                     <h2>between {author1Name} &amp; {author2Name} in numbers</h2>
                 </header>
 
@@ -174,13 +196,43 @@ class Chart extends React.Component {
                 <section className="chartSection">
                     <h3>{this.sectionWordsString}</h3>
                     {/*TODO words per message graph */}
-                    <h3>{this.mostUsedWord[0]} was the most used word, making appearance {this.mostUsedWord[1]} times!</h3>
+                    <h3>'{this.mostUsedWord[0]}' was the most used word, making appearance {this.mostUsedWord[1]} times!</h3>
                     {/*TODO wordcloud */}
-                    <h3>{author1Name}'s favourite word was {author1.mostUsedWord[0]}, while that of {author2Name} was {author2.mostUsedWord[0]}</h3>
+                    <h3>{author1Name}'s favourite word was '{author1.mostUsedWord[0]}', while that of {author2Name} was '{author2.mostUsedWord[0]}'</h3>
                     {/*TODO most used words chart  */}
                 </section>
 
-            </div>
+                {/* emojis section */}
+                {(author1.totalEmojis + author2.totalEmojis) > 0 ? (
+
+                    <section className="chartSection">
+                        <h3>But words isn't the only way of expressing themselves for {author1Name} &amp; {author2Name}</h3>
+                        <h3>{author1Name} &amp; {author2Name} sent a total of {author1.totalEmojis + author2.totalEmojis} emojis
+                    with {author1Name} sending {author1.totalEmojis} &amp; {author2Name} sending {author2.totalEmojis}</h3>
+                        <h3>'{this.mostUsedEmoji[0]}' was overall the most used emoji appearing {this.mostUsedEmoji[1]} times</h3>
+                        {/*TODO chart*/}
+                        <h3>{author1Name}'s favourite emoji was '{author1.mostUsedEmoji[0]}' while that of {author2Name} was '{author2.mostUsedEmoji[0]}'</h3>
+                        {/*TODO chart */}
+                    </section>
+
+                ) : null}
+
+                {/* Timing section */}
+                <section className="chartSection">
+                    <h3>When do {author1Name} &amp; {author2Name} chat?</h3>
+                    <h3>{this.busiestHour[0]}:00 is the busiest hour with about {this.busiestHour[1]} messages</h3>
+                    {/*TODO chart  */}
+
+                    <h3>{author1Name} &amp; {author2Name} send about {this.totalMessages / this.periodInDays} messages every day
+                    &amp; {this.getWeekDayName(this.busiestWeekOfDay[0])}s are the busiest!</h3>
+                    {/*TODO chart  */}
+
+                    <h3>{this.busiestDay[0]} was the busiest day with {this.busiestDay[1]} messages! That's about {(this.busiestDay[1] / 24).toPrecision(4)}
+                    messages every hour</h3>
+                    {/*TODO chart  */}
+                </section>
+
+            </div >
         );
     }
 }
