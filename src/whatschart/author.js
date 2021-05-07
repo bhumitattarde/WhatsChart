@@ -19,9 +19,6 @@ module.exports = class author {
         this.messagesByDaysOfWeek = new Map();
         this.messagesByDate = new Map();
 
-        this.startDate = {};
-        this.endDate = {};
-        this.periodInDays = 0;
         this.wordsPerMessage = 0;
         this.mostUsedWord = "";
         this.mostUsedEmoji = "";

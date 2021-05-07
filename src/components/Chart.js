@@ -104,8 +104,6 @@ class Chart extends React.Component {
 
         this.startDate = [...this.messagesByDate][0][0];
         this.endDate = [...this.messagesByDate][this.messagesByDate.size - 1][0];
-        // const diffTime = Math.abs(new Date(this.endDate) - new Date(this.startDate));
-        // this.periodInDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         this.periodInDays = this.messagesByDate.size;
     }
 

@@ -6,7 +6,6 @@ import Chart from "./components/Chart"
 //FIXME make a progress/error pane that'll display progress/errors that occur
 //FIXME form should be a separate component that accepts a callback as a prop
 //FIXME use either require or import
-//FIXME fix apostrophe words being incorrectly parsed
 
 class App extends React.Component {
 
