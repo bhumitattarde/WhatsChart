@@ -1,6 +1,7 @@
 const wsp = require("whatsapp-chat-parser");
 const sw = require("stopword")
 
+const util = require("../util/util.js")
 const author = require("./author.js");
 
 class whatsChart {
@@ -8,7 +9,7 @@ class whatsChart {
     constructor() {
 
         // member vars
-        this.mediaOmitted = false;
+        this.removeStopwords = false;
         this.authors = {
             author1: new author(),
             author2: new author()
@@ -52,6 +53,16 @@ class whatsChart {
             };
         };
     };
+
+    calculateFinalStats(auth) {
+
+        // sort maps
+        auth.words = util.sortMap(auth.words);
+        auth.emojis = util.sortMap(auth.emojis);
+
+        auth.wordsPerMessage = auth.totalWords / auth.textMessages;
+        auth.mostUsedWord = [...auth.words][0];
+    }
 
     generateStats(messages) {
 
@@ -106,10 +117,15 @@ class whatsChart {
                         // extract words
                         let words = message.match(this.regexWords);
                         if (words) {
-                            words = sw.removeStopwords(words, sw.en);
+                            if (this.removeStopwords === true) {
+                                words = sw.removeStopwords(words, sw.en);
+                            }
+
                             for (let word of words) {
                                 this.incrementCounter(auth.words, word);
                             };
+
+                            auth.totalWords += words.length;
                         };
 
                         // detect & process emojis
@@ -118,12 +134,29 @@ class whatsChart {
                             for (let emoji of emojis) {
                                 this.incrementCounter(auth.emojis, emoji);
                             };
+                            auth.totalEmojis += emojis.length;
                         };
                     };
                 };
             } catch (err) {
                 reject(err);
             };
+
+            // const author1 = this.authors.author1;
+            // const author2 = this.authors.author2;
+
+            // // sort maps
+            // author1.words = util.sortMap(author1.words);
+            // author1.emojis = util.sortMap(author1.emojis);
+            // author2.words = util.sortMap(author2.words);
+            // author2.emojis = util.sortMap(author2.emojis);
+
+            // // calculate properties that require other properties
+            // author1.wordsPerMessage = author1.totalWords / author1.textMessages;
+            // author2.wordsPerMessage = author2.totalWords / author2.textMessages;
+
+            this.calculateFinalStats(this.authors.author1);
+            this.calculateFinalStats(this.authors.author2);
 
             resolve(this.authors);
         });
@@ -167,7 +200,7 @@ class whatsChart {
 
     };
 
-    run(data) {
+    run(data, rmStopwords = false) {
 
         // try {
         //     this.parseChats(data, callback);
@@ -183,7 +216,7 @@ class whatsChart {
         //     })
 
         // });
-
+        this.removeStopwords = rmStopwords;
         return this.parseChats(data);
     };
 

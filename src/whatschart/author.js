@@ -4,12 +4,14 @@ module.exports = class author {
         this.name = "";
         this.totalMessages = 0;
         this.textMessages = 0;
-        this.emojis = 0;
+        this.totalWords = 0;
+        this.totalEmojis = 0;
         this.totalMedia = 0;
         this.pictures = 0;
         this.videos = 0;
         this.audios = 0;
         this.links = 0;
+
         this.words = new Map();
         this.emojis = new Map();
 
@@ -17,10 +19,10 @@ module.exports = class author {
         this.messagesByDaysOfWeek = new Map();
         this.messagesByDate = new Map();
 
-        //
-
         this.startDate = {};
         this.endDate = {};
         this.periodInDays = 0;
+        this.wordsPerMessage = 0;
+        this.mostUsedWord = "";
     }
 }

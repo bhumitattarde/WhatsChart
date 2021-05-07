@@ -1,10 +1,12 @@
 import React from "react";
 import "./App.css";
 import whatsChart from "./whatschart/whatschart.js";
-import Chart from "./components/chart"
+import Chart from "./components/Chart"
 
 //FIXME make a progress/error pane that'll display progress/errors that occur
 //FIXME form should be a separate component that accepts a callback as a prop
+//FIXME use either require or import
+//FIXME fix apostrophe words being incorrectly parsed
 
 class App extends React.Component {
 
@@ -24,13 +26,13 @@ class App extends React.Component {
     this.author2 = {};
   }
 
-  generate(data) {
+  generate(data/*, rmStopwords*/) {
 
     return new Promise((resolve, reject) => {
 
       const wc = new whatsChart();
 
-      wc.run(data)
+      wc.run(data, true)
         .then(authors => {
 
           if (authors === undefined) {
@@ -96,7 +98,7 @@ class App extends React.Component {
     } else {
       this.readFile(file)
         .then(data => {
-          return this.generate(data);
+          return this.generate(data/*FIXME, document.getElementById("rmStopwords")*/);
         })
         .then(() => {
           return true;
@@ -119,8 +121,8 @@ class App extends React.Component {
           <label htmlFor="fileSelector">Select your WhatsApp chat file</label>
           <input id="fileSelector" name="file" type="file" accept=".txt" />
           <input type="submit" value="SELECT" />
-          {this.state.showChart && <Chart author1={this.author1} author2={this.author2} />}
         </form>
+        {this.state.showChart && <Chart author1={this.author1} author2={this.author2} />}
       </div>
 
     );
