@@ -2,15 +2,16 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faIcons, faImages, faFilm, faMicrophoneAlt, faLink, faPhotoVideo } from "@fortawesome/free-solid-svg-icons"
+import { faIcons, faImages, faFilm, faMicrophoneAlt, faLink } from "@fortawesome/free-solid-svg-icons"
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons"
 
-import "./Chart.css"
+import "./whatschart.css"
+const Chart = require("chart.js")
 const util = require("../util/util.js");
 
 //FIXME add support for when media isn't included. Can be detected by checking if values of images, videos etc are 0 for both authors
 
-class Chart extends React.Component {
+class WhatsChart extends React.Component {
 
     // eslint-disable-next-line no-useless-constructor
     constructor(props) {
@@ -107,6 +108,44 @@ class Chart extends React.Component {
         this.periodInDays = this.messagesByDate.size;
     }
 
+    componentDidMount() {
+
+        let myChart = new Chart(document.getElementById("chartInDepthSummary").getContext("2d"), {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
     render() {
 
         // frequently used vars
@@ -188,6 +227,7 @@ class Chart extends React.Component {
                     were sent by {author1Name} &amp; {author2.totalMessages} or {(author2.totalMessages / (author1.totalMessages + author2.totalMessages) * 100).toPrecision(4)}%
                     by {author2Name}</h3>
                     {/*TODO chart of number of messages, prolly multi series pie */}
+                    <canvas id="chartInDepthSummary" width="400" height="400"></canvas>
                 </section>
 
                 {/* words section */}
@@ -235,15 +275,15 @@ class Chart extends React.Component {
     }
 }
 
-Chart.propTypes = {
+WhatsChart.propTypes = {
 
     author1: PropTypes.object.isRequired,
     author2: PropTypes.object.isRequired,
 }
 
-Chart.defaultProps = {
+WhatsChart.defaultProps = {
     author1: {},
     author2: {},
 }
 
-export default Chart;
+export default WhatsChart;

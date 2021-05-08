@@ -4,7 +4,7 @@ const sw = require("stopword")
 const util = require("../util/util.js")
 const author = require("./author.js");
 
-class whatsChart {
+class statsCalculator {
 
     constructor() {
 
@@ -201,5 +201,5 @@ class whatsChart {
 
 }
 
-export default whatsChart;
+export default statsCalculator;
 

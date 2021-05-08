@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
-import whatsChart from "./whatschart/whatschart.js";
-import Chart from "./components/Chart"
+import statsCalculator from "./core/statscalculator.js";
+import WhatsChart from "./components/whatschart"
 
 //FIXME make a progress/error pane that'll display progress/errors that occur
 //FIXME form should be a separate component that accepts a callback as a prop
@@ -29,9 +29,9 @@ class App extends React.Component {
 
     return new Promise((resolve, reject) => {
 
-      const wc = new whatsChart();
+      const sc = new statsCalculator();
 
-      wc.run(data, true)
+      sc.run(data, true)
         .then(authors => {
 
           if (authors === undefined) {
@@ -121,7 +121,7 @@ class App extends React.Component {
           <input id="fileSelector" name="file" type="file" accept=".txt" />
           <input type="submit" value="SELECT" />
         </form>
-        {this.state.showChart && <Chart author1={this.author1} author2={this.author2} />}
+        {this.state.showChart && <WhatsChart author1={this.author1} author2={this.author2} />}
       </div>
 
     );
