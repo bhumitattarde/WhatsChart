@@ -56,7 +56,9 @@ class WhatsChart extends React.Component {
     );
   }
 
-  setGraphTitle(title) {
+  setDefaultOptions(title) {
+    //returns default options with title set. If you need other options, set options directly in
+    //componentsWillMount()
     return {
       plugins: {
         title: {
@@ -141,6 +143,7 @@ class WhatsChart extends React.Component {
   }
 
   componentWillMount() {
+    //FIXME init all these vars in constructor
     const author1 = this.props.author1;
     const author2 = this.props.author2;
     const config = this.props.config;
@@ -186,52 +189,6 @@ class WhatsChart extends React.Component {
 
     // Graph configs
 
-    this.dataInDepthSummaryMedia = {
-      labels: [author1.name, author2.name],
-      datasets: [
-        {
-          label: "Pictures",
-          data: [author1.pictures, author2.pictures],
-          backgroundColor: [
-            this.shadeColor("0.6", config.author1Color),
-            this.shadeColor("0.6", config.author2Color),
-          ],
-          // borderWidth: 0,
-          borderColor: config.backgroundColor,
-        },
-        {
-          label: "Videos",
-          data: [author1.videos, author2.videos],
-          backgroundColor: [
-            this.shadeColor("0.4", config.author1Color),
-            this.shadeColor("0.4", config.author2Color),
-          ],
-          // borderWidth: 0,
-          borderColor: config.backgroundColor,
-        },
-        {
-          label: "Audios",
-          data: [author1.audios, author2.audios],
-          backgroundColor: [
-            this.shadeColor("0.2", config.author1Color),
-            this.shadeColor("0.2", config.author2Color),
-          ],
-          // borderWidth: 0,
-          borderColor: config.backgroundColor,
-        },
-        {
-          label: "Links",
-          data: [author1.links, author2.links],
-          backgroundColor: [
-            this.shadeColor("0", config.author1Color),
-            this.shadeColor("0", config.author2Color),
-          ],
-          // borderWidth: 0,
-          borderColor: config.backgroundColor,
-        },
-      ],
-    };
-
     this.dataInDepthSummaryAll = {
       labels: [author1.name, author2.name],
       datasets: [
@@ -240,8 +197,8 @@ class WhatsChart extends React.Component {
           labels: [author1.name, author2.name],
           data: [author1.totalMessages, author2.totalMessages],
           backgroundColor: [
-            this.shadeColor("0.6", config.author1Color),
-            this.shadeColor("0.6", config.author2Color),
+            this.shadeColor("0", config.author1Color),
+            this.shadeColor("0", config.author2Color),
           ],
           // "borderWidth": 2,
           borderColor: config.backgroundColor,
@@ -260,13 +217,118 @@ class WhatsChart extends React.Component {
         {
           label: "Media",
           labels: [author1.name, author2.name],
-          data: [author1.textMessages, author2.textMessages],
+          data: [author1.totalMedia, author2.totalMedia],
+          backgroundColor: [
+            this.shadeColor("0.6", config.author1Color),
+            this.shadeColor("0.6", config.author2Color),
+          ],
+          borderColor: config.backgroundColor,
+          // "borderWidth": 2,
+        },
+      ],
+    };
+
+    this.dataInDepthSummaryMedia = {
+      labels: [author1.name, author2.name],
+      datasets: [
+        {
+          label: "Pictures",
+          data: [author1.pictures, author2.pictures],
           backgroundColor: [
             this.shadeColor("0", config.author1Color),
             this.shadeColor("0", config.author2Color),
           ],
+          // borderWidth: 0,
           borderColor: config.backgroundColor,
-          // "borderWidth": 2,
+        },
+        {
+          label: "Videos",
+          data: [author1.videos, author2.videos],
+          backgroundColor: [
+            this.shadeColor("0.2", config.author1Color),
+            this.shadeColor("0.2", config.author2Color),
+          ],
+          // borderWidth: 0,
+          borderColor: config.backgroundColor,
+        },
+        {
+          label: "Audios",
+          data: [author1.audios, author2.audios],
+          backgroundColor: [
+            this.shadeColor("0.4", config.author1Color),
+            this.shadeColor("0.4", config.author2Color),
+          ],
+          // borderWidth: 0,
+          borderColor: config.backgroundColor,
+        },
+        {
+          label: "Links",
+          data: [author1.links, author2.links],
+          backgroundColor: [
+            this.shadeColor("0.6", config.author1Color),
+            this.shadeColor("0.6", config.author2Color),
+          ],
+          // borderWidth: 0,
+          borderColor: config.backgroundColor,
+        },
+      ],
+    };
+
+    this.dataWordsPerMessage = {
+      labels: [author1.name, author2.name],
+      datasets: [
+        {
+          data: [author1.wordsPerMessage, author2.wordsPerMessage],
+          backgroundColor: [config.author1Color, config.author2Color],
+          borderWidth: 0,
+        },
+      ],
+    };
+
+    this.optsWordsPerMessage = {
+      indexAxis: "y",
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          position: "bottom",
+          text: "Words per message",
+        },
+      },
+    };
+
+    this.dataMostUsedWords = (authorNum) => {
+      //authorNum is number (either 1 or 2)
+      const author = authorNum === 1 ? author1 : author2;
+
+      return {
+        labels: Array.from(author.words.keys()).slice(0, 11),
+        datasets: [
+          {
+            label: author.name,
+            data: Array.from(author.words.values()).slice(0, 11),
+            borderWidth: 0,
+            backgroundColor:
+              authorNum === 1 ? config.author1Color : config.author2Color,
+          },
+        ],
+      };
+    };
+
+    this.optsMostUsedWords = {
+      indexAxis: "y",
+    };
+
+    this.dataMostUsedWordsAuthor1 = {
+      labels: Array.from(author1.words.keys()).slice(0, 11),
+      datasets: [
+        {
+          label: author1.name,
+          data: Array.from(author1.words.values()).slice(0, 11),
+          borderWidth: 0,
+          backgroundColor: config.author1Color,
         },
       ],
     };
@@ -390,7 +452,7 @@ class WhatsChart extends React.Component {
                 data={this.dataInDepthSummaryAll}
                 height={300}
                 width={300}
-                options={this.setGraphTitle(
+                options={this.setDefaultOptions(
                   "Total messages (outer circle), text messages (middle circle) & media (inner circle)"
                 )}
               />
@@ -401,7 +463,7 @@ class WhatsChart extends React.Component {
                 data={this.dataInDepthSummaryMedia}
                 height={300}
                 width={300}
-                options={this.setGraphTitle("Distribution of media")}
+                options={this.setDefaultOptions("Distribution of media")}
               />
             </div>
           </div>
@@ -410,17 +472,41 @@ class WhatsChart extends React.Component {
         {/* words section */}
         <section className="chartSection">
           <h3>{this.sectionWordsString}</h3>
-          {/*TODO words per message graph */}
+          <div>
+            <Bar
+              id="chartWordsPerMessage"
+              data={this.dataWordsPerMessage}
+              height={120}
+              //   width={200}
+              options={this.optsWordsPerMessage}
+            />
+          </div>
           <h3>
             '{this.mostUsedWord[0]}' was the most used word, making appearance{" "}
             {this.mostUsedWord[1]} times!
           </h3>
-          {/*TODO wordcloud */}
           <h3>
             {author1Name}'s favourite word was '{author1.mostUsedWord[0]}',
             while that of {author2Name} was '{author2.mostUsedWord[0]}'
           </h3>
-          {/*TODO most used words chart  */}
+          <div className="chartsHorizontal">
+            <div>
+              <Bar
+                id="chartMostUsedWordsAuthor1"
+                data={this.dataMostUsedWords(1)}
+                height={300}
+                options={this.optsMostUsedWords}
+              />
+            </div>
+            <div>
+              <Bar
+                id="chartMostUsedWordsAuthor2"
+                data={this.dataMostUsedWords(2)}
+                height={300}
+                options={this.optsMostUsedWords}
+              />
+            </div>
+          </div>
         </section>
 
         {/* emojis section */}

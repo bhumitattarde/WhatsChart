@@ -1,59 +1,59 @@
-.container{
-    display: flex;
-    flex-direction: column;
+.container {
+  display: flex;
+  flex-direction: column;
 }
 
-#chart{
-    background-color: var(--backgroundColor, aqua);
-    /* color: var(--textColor), */
-    color: white;
+#chart {
+  background-color: var(--backgroundColor, aqua);
+  /* color: var(--textColor), */
+  color: white;
 
-    width: 100%;
-    max-width:800px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.chartSection{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+.chartSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.iconWrapper{
-    width: 90px;
-    height: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 80px;
-    color: var(--iconColor)
+.iconWrapper {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+  color: var(--iconColor);
 }
 
-.chartsHorizontal{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+.chartsHorizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Individual sections formatting */
 
-#summaries{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
+#summaries {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-    #summaries .summaryBox:not(:last-child){
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        margin-right: 40px;
-    }
+#summaries .summaryBox:not(:last-child) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 40px;
+}
