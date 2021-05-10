@@ -1,20 +1,27 @@
 import React from "react";
 import "./App.css";
 import statsCalculator from "./core/statscalculator.js";
-import WhatsChart from "./components/whatschart"
+import WhatsChart from "./components/whatschart";
 
 //FIXME make a progress/error pane that'll display progress/errors that occur
 //FIXME form should be a separate component that accepts a callback as a prop
 //FIXME use either require or import
 
 class App extends React.Component {
-
   constructor(props) {
-
     super(props);
     this.state = {
       showChart: false,
-    }
+      //FIXME setting for now. Later should be inputted by user. Is part of state so everything doesn't have to
+      //to be calculated again just to change color
+      config: {
+        author1Color: "rgb(234,1,49)",
+        author2Color: "rgb(1,190,149)",
+        backgroundColor: "rgb(42, 43, 70)",
+        textColor: "white",
+        iconColor: "rgb(68, 76, 166)",
+      },
+    };
 
     // method bindings
     this.handleFileSelect = this.handleFileSelect.bind(this);
@@ -25,63 +32,59 @@ class App extends React.Component {
     this.author2 = {};
   }
 
-  generate(data/*, rmStopwords*/) {
-
+  generate(data /*, rmStopwords*/) {
     return new Promise((resolve, reject) => {
-
       const sc = new statsCalculator();
 
       sc.run(data, true)
-        .then(authors => {
-
+        .then((authors) => {
           if (authors === undefined) {
             reject(new Error("Received empty data from generator"));
-          };
+          }
 
           console.log(authors);
 
           this.author1 = authors.author1;
           this.author2 = authors.author2;
-          this.setState(prevState => {
+          this.setState((prevState) => {
             return { showChart: true };
           });
 
           resolve();
         })
-        .catch(err => {
-
+        .catch((err) => {
           console.error(err);
           reject();
         });
     });
-  };
+  }
 
   readFile(file) {
-
     return new Promise((resolve, reject) => {
-
       const reader = new FileReader();
 
       reader.onload = (event) => {
-
         const data = event.target.result;
         if (data && data !== "") {
           // this.generate(data);
           resolve(data);
-        };
+        }
       };
 
       reader.onerror = (event) => {
-        reject(new Error(`An error (${reader.error}) occurred while while trying to read the selected file`))
+        reject(
+          new Error(
+            `An error (${reader.error}) occurred while while trying to read the selected file`
+          )
+        );
       };
 
       reader.readAsText(file);
     });
-  };
+  }
 
   handleFileSelect(event) {
-
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return { showChart: false };
     });
 
@@ -93,24 +96,25 @@ class App extends React.Component {
     if (file === undefined || !file.name.endsWith(".txt")) {
       //!update status
       console.error("Failed to access the selected file");
-      return false
+      return false;
     } else {
       this.readFile(file)
-        .then(data => {
-          return this.generate(data/*FIXME, document.getElementById("rmStopwords")*/);
+        .then((data) => {
+          return this.generate(
+            data /*FIXME, document.getElementById("rmStopwords")*/
+          );
         })
         .then(() => {
           return true;
         })
-        .catch(err => {
+        .catch((err) => {
           //!update progress bar
           return false;
-        })
+        });
     }
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -121,9 +125,14 @@ class App extends React.Component {
           <input id="fileSelector" name="file" type="file" accept=".txt" />
           <input type="submit" value="SELECT" />
         </form>
-        {this.state.showChart && <WhatsChart author1={this.author1} author2={this.author2} />}
+        {this.state.showChart && (
+          <WhatsChart
+            author1={this.author1}
+            author2={this.author2}
+            config={this.state.config}
+          />
+        )}
       </div>
-
     );
   }
 }

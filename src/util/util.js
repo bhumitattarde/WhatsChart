@@ -1,3 +1,5 @@
+// Util functions that are required in more than one class/file go here
+
 export function sortMap(map) {
 
     // sorts the map in descending order of values

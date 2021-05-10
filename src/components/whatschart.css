@@ -4,6 +4,10 @@
 }
 
 #chart{
+    background-color: var(--backgroundColor, aqua);
+    /* color: var(--textColor), */
+    color: white;
+
     width: 100%;
     max-width:800px;
     display: flex;
@@ -26,6 +30,14 @@
     justify-content: center;
     align-items: center;
     font-size: 80px;
+    color: var(--iconColor)
+}
+
+.chartsHorizontal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Individual sections formatting */
@@ -38,7 +50,7 @@
     flex-wrap: wrap;
 }
 
-    #summaries .summaryBox{
+    #summaries .summaryBox:not(:last-child){
         display: flex;
         flex-direction: column;
         justify-content: space-between;
