@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { element } from "prop-types";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -54,20 +54,6 @@ class WhatsChart extends React.Component {
       r(i(color) * P + t) +
       (d ? "," + d : ")")
     );
-  }
-
-  setDefaultOptions(title) {
-    //returns default options with title set. If you need other options, set options directly in
-    //componentsWillMount()
-    return {
-      plugins: {
-        title: {
-          display: true,
-          text: title,
-          position: "bottom",
-        },
-      },
-    };
   }
 
   addMaps(map1, map2) {
@@ -189,6 +175,91 @@ class WhatsChart extends React.Component {
 
     // Graph configs
 
+    // graph options. If some graph needs customized options, set them separately
+    this.defaultVerticalBarChartOpts = (title = "") => {
+      return {
+        scales: {
+          x: {
+            grid: {
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              drawBorder: false,
+            },
+          },
+          y: {
+            grid: {
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              drawBorder: false,
+            },
+          },
+        },
+        plugins: {
+          title: {
+            display: true,
+            position: "bottom",
+            text: title,
+          },
+        },
+      };
+    };
+
+    this.defaultHorizontalBarChartOpts = (title = "") => {
+      return {
+        indexAxis: "y",
+        scales: {
+          x: {
+            grid: {
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              drawBorder: false,
+            },
+          },
+          y: {
+            grid: {
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              drawBorder: false,
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            position: "bottom",
+            text: title,
+          },
+        },
+      };
+    };
+
+    this.defaultPieChartOpts = (title = "") => {
+      return {
+        scales: {
+          x: {
+            display: false,
+          },
+          y: {
+            display: false,
+          },
+        },
+        plugins: {
+          title: {
+            display: true,
+            position: "bottom",
+            text: title,
+          },
+        },
+      };
+    };
+
     this.dataInDepthSummaryAll = {
       labels: [author1.name, author2.name],
       datasets: [
@@ -285,20 +356,6 @@ class WhatsChart extends React.Component {
       ],
     };
 
-    this.optsWordsPerMessage = {
-      indexAxis: "y",
-      plugins: {
-        legend: {
-          display: false,
-        },
-        title: {
-          display: true,
-          position: "bottom",
-          text: "Words per message",
-        },
-      },
-    };
-
     this.dataMostUsedWords = (authorNum) => {
       //authorNum is number (either 1 or 2)
       const author = authorNum === 1 ? author1 : author2;
@@ -317,18 +374,81 @@ class WhatsChart extends React.Component {
       };
     };
 
-    this.optsMostUsedWords = {
-      indexAxis: "y",
-    };
-
-    this.dataMostUsedWordsAuthor1 = {
-      labels: Array.from(author1.words.keys()).slice(0, 11),
+    this.dataTotalEmojis = {
+      labels: [author1.name, author2.name],
       datasets: [
         {
-          label: author1.name,
-          data: Array.from(author1.words.values()).slice(0, 11),
+          data: [author1.totalEmojis, author2.totalEmojis],
+          backgroundColor: [config.author1Color, config.author2Color],
           borderWidth: 0,
-          backgroundColor: config.author1Color,
+        },
+      ],
+    };
+
+    this.dataMostUsedEmojis = (authorNum) => {
+      //authorNum is number (either 1 or 2)
+      const author = authorNum === 1 ? author1 : author2;
+
+      return {
+        labels: Array.from(author.emojis.keys()).slice(0, 6),
+        datasets: [
+          {
+            label: author.name,
+            data: Array.from(author.emojis.values()).slice(0, 6),
+            borderWidth: 0,
+            backgroundColor:
+              authorNum === 1 ? config.author1Color : config.author2Color,
+          },
+        ],
+      };
+    };
+
+    this.optsMostUsedEmojis = {
+      indexAxis: "y",
+      scales: {
+        x: {
+          grid: {
+            display: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+            drawBorder: false,
+          },
+        },
+        y: {
+          grid: {
+            display: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+            drawBorder: false,
+          },
+          ticks: {
+            font: {
+              size: 20,
+            },
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          position: "bottom",
+          text: "",
+        },
+      },
+    };
+
+    this.dataMessagesByHour = {
+      //   labels: [...this.messagesByHour.keys()],
+      labels: [...this.messagesByHour.keys()].map((val) => val + 1),
+      datasets: [
+        {
+          label: "Messages",
+          data: [...this.messagesByHour.values()],
+          borderWidth: 0,
+          backgroundColor: config.chartColor,
         },
       ],
     };
@@ -452,7 +572,7 @@ class WhatsChart extends React.Component {
                 data={this.dataInDepthSummaryAll}
                 height={300}
                 width={300}
-                options={this.setDefaultOptions(
+                options={this.defaultPieChartOpts(
                   "Total messages (outer circle), text messages (middle circle) & media (inner circle)"
                 )}
               />
@@ -463,7 +583,9 @@ class WhatsChart extends React.Component {
                 data={this.dataInDepthSummaryMedia}
                 height={300}
                 width={300}
-                options={this.setDefaultOptions("Distribution of media")}
+                options={this.defaultVerticalBarChartOpts(
+                  "Distribution of media"
+                )}
               />
             </div>
           </div>
@@ -478,7 +600,7 @@ class WhatsChart extends React.Component {
               data={this.dataWordsPerMessage}
               height={120}
               //   width={200}
-              options={this.optsWordsPerMessage}
+              options={this.defaultHorizontalBarChartOpts("Words per message")}
             />
           </div>
           <h3>
@@ -495,7 +617,7 @@ class WhatsChart extends React.Component {
                 id="chartMostUsedWordsAuthor1"
                 data={this.dataMostUsedWords(1)}
                 height={300}
-                options={this.optsMostUsedWords}
+                options={this.defaultHorizontalBarChartOpts()}
               />
             </div>
             <div>
@@ -503,7 +625,7 @@ class WhatsChart extends React.Component {
                 id="chartMostUsedWordsAuthor2"
                 data={this.dataMostUsedWords(2)}
                 height={300}
-                options={this.optsMostUsedWords}
+                options={this.defaultHorizontalBarChartOpts()}
               />
             </div>
           </div>
@@ -522,16 +644,41 @@ class WhatsChart extends React.Component {
               {author1Name} sending {author1.totalEmojis} &amp; {author2Name}{" "}
               sending {author2.totalEmojis}
             </h3>
+            <div>
+              <Doughnut
+                id="chartTotalEmojis"
+                data={this.dataTotalEmojis}
+                height={250}
+                width={250}
+                options={this.defaultPieChartOpts("Emojis sent")}
+              />
+            </div>
             <h3>
               '{this.mostUsedEmoji[0]}' was overall the most used emoji
               appearing {this.mostUsedEmoji[1]} times
             </h3>
-            {/*TODO chart*/}
             <h3>
               {author1Name}'s favourite emoji was '{author1.mostUsedEmoji[0]}'
               while that of {author2Name} was '{author2.mostUsedEmoji[0]}'
             </h3>
-            {/*TODO chart */}
+            <div className="chartsHorizontal">
+              <div>
+                <Bar
+                  id="chartMostUsedEmojisAuthor1"
+                  data={this.dataMostUsedEmojis(1)}
+                  height={300}
+                  options={this.optsMostUsedEmojis}
+                />
+              </div>
+              <div>
+                <Bar
+                  id="chartMostUsedEmojisAuthor2"
+                  data={this.dataMostUsedEmojis(2)}
+                  height={300}
+                  options={this.optsMostUsedEmojis}
+                />
+              </div>
+            </div>
           </section>
         ) : null}
 
@@ -544,7 +691,17 @@ class WhatsChart extends React.Component {
             {this.busiestHour[0]}:00 is the busiest hour with about{" "}
             {this.busiestHour[1]} messages
           </h3>
-          {/*TODO chart  */}
+          <div>
+            <Bar
+              id="chartMessagesByHour"
+              data={this.dataMessagesByHour}
+              height={300}
+              width={500}
+              options={this.defaultVerticalBarChartOpts(
+                "Messages by hour of the day"
+              )}
+            />
+          </div>
 
           <h3>
             {author1Name} &amp; {author2Name} send about{" "}

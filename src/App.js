@@ -20,6 +20,7 @@ class App extends React.Component {
         backgroundColor: "rgb(42, 43, 70)",
         textColor: "white",
         iconColor: "rgb(68, 76, 166)",
+        chartColor: "rgb(242, 17, 112)",
       },
     };
 
