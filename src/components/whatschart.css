@@ -1,26 +1,28 @@
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-#chart {
-  background-color: var(--backgroundColor, aqua);
-  /* color: var(--textColor), */
-  color: white;
-
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .chartSection {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin-top: 2em;
+}
+
+.sectionHeading {
+  margin-bottom: 2em;
+}
+
+.sectionHeadingII {
+  /* Use this class when there are multiple headings for a section */
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.sectionDescription {
+  margin-top: 1em;
+}
+
+.sectionHeading + .sectionDescription {
+  margin-top: -1em;
 }
 
 .iconWrapper {
@@ -33,14 +35,65 @@
   color: var(--iconColor);
 }
 
-.chartsHorizontal {
+.summaryBox {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1em;
+}
+
+.summaryBox:not(:last-child) {
+  margin-right: 3em;
+}
+
+.summaryBox p:is(:first-of-type) {
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+}
+
+.chartsHorizontal {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.chartsHorizontal > div:is(:first-of-type) {
+  margin-right: 3em;
 }
 
 /* Individual sections formatting */
+
+#madeWithTag {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  align-self: flex-end;
+}
+
+#chart {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3em;
+  background-color: var(--backgroundColor, aqua);
+  color: var(--textColor);
+}
+
+#chart h1 {
+  margin-bottom: 0.3em;
+}
+
+#chart header {
+  margin-bottom: 1em 0;
+}
 
 #summaries {
   display: flex;
@@ -50,10 +103,7 @@
   flex-wrap: wrap;
 }
 
-#summaries .summaryBox:not(:last-child) {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 40px;
+#sectionEmojis > .sectionDescription,
+#sectionTiming > .sectionDescription {
+  margin-bottom: 1em;
 }
