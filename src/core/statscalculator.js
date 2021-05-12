@@ -143,19 +143,6 @@ class statsCalculator {
         reject(err);
       }
 
-      // const author1 = this.authors.author1;
-      // const author2 = this.authors.author2;
-
-      // // sort maps
-      // author1.words = util.sortMap(author1.words);
-      // author1.emojis = util.sortMap(author1.emojis);
-      // author2.words = util.sortMap(author2.words);
-      // author2.emojis = util.sortMap(author2.emojis);
-
-      // // calculate properties that require other properties
-      // author1.wordsPerMessage = author1.totalWords / author1.textMessages;
-      // author2.wordsPerMessage = author2.totalWords / author2.textMessages;
-
       this.calculateFinalStats(this.authors.author1);
       this.calculateFinalStats(this.authors.author2);
 

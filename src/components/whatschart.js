@@ -168,7 +168,6 @@ class WhatsChart extends React.Component {
     const config = this.props.config;
 
     defaults.color = config.textColor;
-    // defaults.font.family=""
 
     this.sectionWordsString = this.getWordsSectionString(author1, author2);
 
@@ -477,7 +476,7 @@ class WhatsChart extends React.Component {
     };
 
     this.dataMessagesByHour = {
-      labels: [...this.messagesByHour.keys()].map((val) => val + 1),
+      labels: [...this.messagesByHour.keys()],
       datasets: [
         {
           label: "Messages",
