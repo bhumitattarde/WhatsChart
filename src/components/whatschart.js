@@ -707,11 +707,11 @@ class WhatsChart extends React.Component {
             />
           </div>
 
+          {/* prettier-ignore */}
           <h4 className="sectionDescription">
             {combined.busiestDay[0]} was the busiest day with{" "}
             {combined.busiestDay[1]} messages! That's about{" "}
-            {(combined.busiestDay[1] / 24).toPrecision(4)}
-            messages every hour.
+            {(combined.busiestDay[1] / 24).toPrecision(4)} messages every hour.
           </h4>
           <div>
             <Bar
