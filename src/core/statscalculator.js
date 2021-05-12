@@ -11,6 +11,21 @@ class statsCalculator {
     this.authors = {
       author1: new author(),
       author2: new author(),
+      combined: {
+        sectionsWordString: "",
+
+        messagesByHour: new Map(),
+        messagesByDaysOfWeek: new Map(),
+        messagesByDate: new Map(),
+        mostUsedWord: {},
+        mostUsedEmoji: {},
+        busiestHour: 0,
+        busiestWeekOfDay: 0,
+        busiestDay: {},
+        startDate: "",
+        endDate: "",
+        periodInDays: 0,
+      },
     };
     this.messages = [];
     // Matches emojis in a string
@@ -36,6 +51,64 @@ class statsCalculator {
     map.set(key, freq === undefined ? 1 : freq + 1);
   }
 
+  addMaps(map1, map2) {
+    // Adds two Maps. If there are duplicate keys, their values are added
+    const newMap = new Map();
+
+    for (let [key, val] of map1) {
+      newMap.set(key, val);
+    }
+    for (let [key, val] of map2) {
+      let prevVal = newMap.get(key);
+      if (prevVal === undefined) {
+        prevVal = 0;
+      }
+
+      newMap.set(key, prevVal + val);
+    }
+
+    return newMap;
+  }
+
+  generateWordsSectionString(author1, author2) {
+    let wordsSectionString = "";
+    if (author1.textMessages === author2.textMessages) {
+      if (author1.wordsPerMessage === author2.wordsPerMessage) {
+        wordsSectionString = `${author1.name} &amp; ${author2.name} have sent each other equal number of\
+                texts! But that's not all, their messages, on average, have been of the same length as well!`;
+      } else {
+        wordsSectionString = `${author1.name} &amp; ${
+          author2.name
+        } have sent each other equal number of\
+                texts! But ${
+                  author1.wordsPerMessage > author2.wordsPerMessage
+                    ? author1.name
+                    : author2.name
+                } 's texts were longer`;
+      }
+    } else if (author1.textMessages > author2.textMessages) {
+      if (author1.wordsPerMessage === author2.wordsPerMessage) {
+        wordsSectionString = `${author1.name} sends more texts, and their texts are of the same length\
+                as ${author2.name}`;
+      } else if (author1.wordsPerMessage > author2.wordsPerMessage) {
+        wordsSectionString = `${author1.name} not only sends more texts, but their texts also tend to be longer!`;
+      } else if (author2.wordsPerMessage > author1.wordsPerMessage) {
+        wordsSectionString = `While ${author1.name} sends more texts, their texts tend to be shorter`;
+      }
+    } else if (author2.textMessages > author1.textMessages) {
+      if (author1.wordsPerMessage === author2.wordsPerMessage) {
+        wordsSectionString = `${author2.name} sends more texts, and their texts are of the same length\
+                as ${author2.name}`;
+      } else if (author2.wordsPerMessage > author1.wordsPerMessage) {
+        wordsSectionString = `${author2.name} not only sends more texts, but their texts also tend to be longer!`;
+      } else if (author1.wordsPerMessage > author2.wordsPerMessage) {
+        wordsSectionString = `While ${author2.name} sends more texts, their texts tend to be shorter`;
+      }
+    }
+
+    return wordsSectionString;
+  }
+
   setAuthorNames(messages) {
     for (let msg of messages) {
       if (msg.author != "" && msg.author != "System") {
@@ -52,7 +125,53 @@ class statsCalculator {
     }
   }
 
-  calculateFinalStats(auth) {
+  generateCombinedStats() {
+    const author1 = this.authors.author1;
+    const author2 = this.authors.author2;
+    const combined = this.authors.combined;
+
+    combined.sectionWordsString = this.generateWordsSectionString(
+      author1,
+      author2
+    );
+
+    combined.messagesByHour = this.addMaps(
+      author1.messagesByHour,
+      author2.messagesByHour
+    );
+    combined.messagesByDaysOfWeek = this.addMaps(
+      author1.messagesByDaysOfWeek,
+      author2.messagesByDaysOfWeek
+    );
+    combined.messagesByDate = this.addMaps(
+      author1.messagesByDate,
+      author2.messagesByDate
+    );
+
+    combined.mostUsedWord = [
+      ...this.addMaps(author1.words, author2.words).entries(),
+    ].reduce((a, e) => (e[1] > a[1] ? e : a));
+    combined.mostUsedEmoji = [
+      ...this.addMaps(author1.emojis, author2.emojis).entries(),
+    ].reduce((a, e) => (e[1] > a[1] ? e : a));
+    combined.busiestHour = [...combined.messagesByHour.entries()].reduce(
+      (a, e) => (e[1] > a[1] ? e : a)
+    );
+    combined.busiestWeekOfDay = [
+      ...combined.messagesByDaysOfWeek.entries(),
+    ].reduce((a, e) => (e[1] > a[1] ? e : a));
+    combined.busiestDay = [...combined.messagesByDate.entries()].reduce(
+      (a, e) => (e[1] > a[1] ? e : a)
+    );
+
+    combined.startDate = [...combined.messagesByDate][0][0];
+    combined.endDate = [...combined.messagesByDate][
+      combined.messagesByDate.size - 1
+    ][0];
+    combined.periodInDays = combined.messagesByDate.size;
+  }
+
+  generateFinalStats(auth) {
     // sort maps
     auth.words = util.sortMap(auth.words);
     auth.emojis = util.sortMap(auth.emojis);
@@ -143,8 +262,9 @@ class statsCalculator {
         reject(err);
       }
 
-      this.calculateFinalStats(this.authors.author1);
-      this.calculateFinalStats(this.authors.author2);
+      this.generateFinalStats(this.authors.author1);
+      this.generateFinalStats(this.authors.author2);
+      this.generateCombinedStats();
 
       resolve(this.authors);
     });

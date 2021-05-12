@@ -33,6 +33,7 @@ class App extends React.Component {
     // member variables
     this.author1 = {};
     this.author2 = {};
+    this.combined = {};
   }
 
   //FIXME remove later
@@ -45,15 +46,16 @@ class App extends React.Component {
       const sc = new statsCalculator();
 
       sc.run(data, true)
-        .then((authors) => {
-          if (authors === undefined) {
+        .then((stats) => {
+          if (stats === undefined) {
             reject(new Error("Received empty data from generator"));
           }
 
-          console.log(authors);
+          console.log(stats);
 
-          this.author1 = authors.author1;
-          this.author2 = authors.author2;
+          this.author1 = stats.author1;
+          this.author2 = stats.author2;
+          this.combined = stats.combined;
           this.setState((prevState) => {
             return { showChart: true };
           });
@@ -140,6 +142,7 @@ class App extends React.Component {
           <WhatsChart
             author1={this.author1}
             author2={this.author2}
+            combined={this.combined}
             config={this.state.config}
           />
         )}

@@ -30,22 +30,6 @@ class WhatsChart extends React.Component {
       "Saturday",
     ];
 
-    this.sectionsWordString = "";
-
-    this.messagesByHour = new Map();
-    this.messagesByDaysOfWeek = new Map();
-    this.messagesByDate = new Map();
-
-    this.mostUsedWord = {};
-    this.mostUsedEmoji = {};
-    this.busiestHour = 0;
-    this.busiestWeekOfDay = 0;
-    this.busiestDay = "";
-
-    this.startDate = "";
-    this.endDate = "";
-    this.periodInDays = 0;
-
     // Graph configs
     // graph options. If some graph needs customized options, set them separately
     this.defaultVerticalBarChartOpts = () => {};
@@ -64,8 +48,6 @@ class WhatsChart extends React.Component {
     this.dataMessagesByDate = {};
 
     // `this` bindings
-    this.getSectionWordsString = this.getWordsSectionString.bind(this);
-    this.addMaps = this.addMaps.bind(this);
     this.getWeekDayName = this.getWeekDayName.bind(this);
 
     //chartjs global config
@@ -78,7 +60,6 @@ class WhatsChart extends React.Component {
   }
 
   // methods
-
   shadeColor(percentage, color) {
     // `percentage` range is -1 to 1 & color is in rgb format eg., ("0.1", "rgb(0,0,255)")
     var i = parseInt,
@@ -99,114 +80,22 @@ class WhatsChart extends React.Component {
     );
   }
 
-  addMaps(map1, map2) {
-    // Adds two Maps. If there are duplicate keys, their values are added
-    const newMap = new Map();
-
-    for (let [key, val] of map1) {
-      newMap.set(key, val);
-    }
-    for (let [key, val] of map2) {
-      let prevVal = newMap.get(key);
-      if (prevVal === undefined) {
-        prevVal = 0;
-      }
-
-      newMap.set(key, prevVal + val);
-    }
-
-    return newMap;
-  }
-
   getWeekDayName(day) {
     return this.days[day];
-  }
-
-  getWordsSectionString(author1, author2) {
-    let wordsSectionString = "";
-    if (author1.textMessages === author2.textMessages) {
-      if (author1.wordsPerMessage === author2.wordsPerMessage) {
-        wordsSectionString = `${author1.name} &amp; ${author2.name} have sent each other equal number of\
-                texts! But that's not all, their messages, on average, have been of the same length as well!`;
-      } else {
-        wordsSectionString = `${author1.name} &amp; ${
-          author2.name
-        } have sent each other equal number of\
-                texts! But ${
-                  author1.wordsPerMessage > author2.wordsPerMessage
-                    ? author1.name
-                    : author2.name
-                } 's texts were longer`;
-      }
-    } else if (author1.textMessages > author2.textMessages) {
-      if (author1.wordsPerMessage === author2.wordsPerMessage) {
-        wordsSectionString = `${author1.name} sends more texts, and their texts are of the same length\
-                as ${author2.name}`;
-      } else if (author1.wordsPerMessage > author2.wordsPerMessage) {
-        wordsSectionString = `${author1.name} not only sends more texts, but their texts also tend to be longer!`;
-      } else if (author2.wordsPerMessage > author1.wordsPerMessage) {
-        wordsSectionString = `While ${author1.name} sends more texts, their texts tend to be shorter`;
-      }
-    } else if (author2.textMessages > author1.textMessages) {
-      if (author1.wordsPerMessage === author2.wordsPerMessage) {
-        wordsSectionString = `${author2.name} sends more texts, and their texts are of the same length\
-                as ${author2.name}`;
-      } else if (author2.wordsPerMessage > author1.wordsPerMessage) {
-        wordsSectionString = `${author2.name} not only sends more texts, but their texts also tend to be longer!`;
-      } else if (author1.wordsPerMessage > author2.wordsPerMessage) {
-        wordsSectionString = `While ${author2.name} sends more texts, their texts tend to be shorter`;
-      }
-    }
-
-    return wordsSectionString;
   }
 
   // hooks
   componentWillMount() {
     const author1 = this.props.author1;
     const author2 = this.props.author2;
+    const combined = this.props.combined;
     const config = this.props.config;
 
     defaults.color = config.textColor;
 
-    this.sectionWordsString = this.getWordsSectionString(author1, author2);
-
-    this.messagesByHour = this.addMaps(
-      author1.messagesByHour,
-      author2.messagesByHour
-    );
-    this.messagesByDaysOfWeek = this.addMaps(
-      author1.messagesByDaysOfWeek,
-      author2.messagesByDaysOfWeek
-    );
-    this.messagesByDate = this.addMaps(
-      author1.messagesByDate,
-      author2.messagesByDate
-    );
-
-    this.mostUsedWord = [
-      ...this.addMaps(author1.words, author2.words).entries(),
-    ].reduce((a, e) => (e[1] > a[1] ? e : a));
-    this.mostUsedEmoji = [
-      ...this.addMaps(author1.emojis, author2.emojis).entries(),
-    ].reduce((a, e) => (e[1] > a[1] ? e : a));
-    this.busiestHour = [...this.messagesByHour.entries()].reduce((a, e) =>
-      e[1] > a[1] ? e : a
-    );
-    this.busiestWeekOfDay = [...this.messagesByDaysOfWeek.entries()].reduce(
-      (a, e) => (e[1] > a[1] ? e : a)
-    );
-    this.busiestDay = [...this.messagesByDate.entries()].reduce((a, e) =>
-      e[1] > a[1] ? e : a
-    );
-
-    this.startDate = [...this.messagesByDate][0][0];
-    this.endDate = [...this.messagesByDate][this.messagesByDate.size - 1][0];
-    this.periodInDays = this.messagesByDate.size;
-
     // Graph configs
-
     // graph options. If some graph needs customized options, set them separately
+
     this.defaultVerticalBarChartOpts = (title = "") => {
       return {
         scales: {
@@ -476,11 +365,11 @@ class WhatsChart extends React.Component {
     };
 
     this.dataMessagesByHour = {
-      labels: [...this.messagesByHour.keys()],
+      labels: [...combined.messagesByHour.keys()],
       datasets: [
         {
           label: "Messages",
-          data: [...this.messagesByHour.values()],
+          data: [...combined.messagesByHour.values()],
           borderWidth: 0,
           backgroundColor: config.chartColor,
         },
@@ -488,7 +377,7 @@ class WhatsChart extends React.Component {
     };
 
     this.dataMessagesByDayOfWeek = {
-      labels: [...this.messagesByDaysOfWeek.keys()].map((val) =>
+      labels: [...combined.messagesByDaysOfWeek.keys()].map((val) =>
         this.getWeekDayName(val)
       ),
       datasets: [
@@ -510,7 +399,7 @@ class WhatsChart extends React.Component {
         // },
         {
           label: "Messages",
-          data: [...this.messagesByDaysOfWeek.values()],
+          data: [...combined.messagesByDaysOfWeek.values()],
           borderWidth: 0,
           backgroundColor: config.chartColor,
         },
@@ -518,7 +407,7 @@ class WhatsChart extends React.Component {
     };
 
     this.dataMessagesByDate = {
-      labels: [...this.messagesByDate.keys()],
+      labels: [...combined.messagesByDate.keys()],
       datasets: [
         // {
         //   type: "line",
@@ -538,7 +427,7 @@ class WhatsChart extends React.Component {
         // },
         {
           label: "Messages",
-          data: [...this.messagesByDate.values()],
+          data: [...combined.messagesByDate.values()],
           borderWidth: 0,
           backgroundColor: config.chartColor,
         },
@@ -564,6 +453,7 @@ class WhatsChart extends React.Component {
     // frequently used vars
     const author1 = this.props.author1;
     const author2 = this.props.author2;
+    const combined = this.props.combined;
     const author1Name = this.props.author1.name;
     const author2Name = this.props.author2.name;
 
@@ -686,7 +576,7 @@ class WhatsChart extends React.Component {
 
         {/* words section */}
         <section className="chartSection">
-          <h3 className="sectionHeading">{this.sectionWordsString}</h3>
+          <h3 className="sectionHeading">{combined.sectionWordsString}</h3>
           <div>
             <Bar
               id="chartWordsPerMessage"
@@ -696,8 +586,8 @@ class WhatsChart extends React.Component {
             />
           </div>
           <h4 className="sectionDescription">
-            '{this.mostUsedWord[0]}' was the most used word, making appearance{" "}
-            {this.mostUsedWord[1]} times!
+            '{combined.mostUsedWord[0]}' was the most used word, making
+            appearance {combined.mostUsedWord[1]} times!
           </h4>
           <h3 className="sectionHeadingII">
             {author1Name}'s favourite word was '{author1.mostUsedWord[0]}',
@@ -746,8 +636,8 @@ class WhatsChart extends React.Component {
               />
             </div>
             <h4 className="sectionDescription">
-              '{this.mostUsedEmoji[0]}' was overall the most used emoji
-              appearing {this.mostUsedEmoji[1]} times!
+              '{combined.mostUsedEmoji[0]}' was overall the most used emoji
+              appearing {combined.mostUsedEmoji[1]} times!
             </h4>
             <h3 className="sectionHeadingII">
               {author1Name}'s favourite emoji was '{author1.mostUsedEmoji[0]}'
@@ -780,8 +670,8 @@ class WhatsChart extends React.Component {
             When do {author1Name} &amp; {author2Name} chat?
           </h3>
           <h4 className="sectionDescription">
-            {this.busiestHour[0]}:00 is the busiest hour with about{" "}
-            {this.busiestHour[1]} messages.
+            {combined.busiestHour[0]}:00 is the busiest hour with about{" "}
+            {combined.busiestHour[1]} messages.
           </h4>
           <div>
             <Bar
@@ -799,10 +689,11 @@ class WhatsChart extends React.Component {
             {author1Name} &amp; {author2Name} send about{" "}
             {(
               (author1.totalMessages + author2.totalMessages) /
-              this.periodInDays
+              combined.periodInDays
             ).toPrecision(4)}{" "}
             messages every day &amp;{" "}
-            {this.getWeekDayName(this.busiestWeekOfDay[0])}s are the busiest!
+            {this.getWeekDayName(combined.busiestWeekOfDay[0])}s are the
+            busiest!
           </h4>
           <div>
             <Bar
@@ -817,8 +708,9 @@ class WhatsChart extends React.Component {
           </div>
 
           <h4 className="sectionDescription">
-            {this.busiestDay[0]} was the busiest day with {this.busiestDay[1]}{" "}
-            messages! That's about {(this.busiestDay[1] / 24).toPrecision(4)}
+            {combined.busiestDay[0]} was the busiest day with{" "}
+            {combined.busiestDay[1]} messages! That's about{" "}
+            {(combined.busiestDay[1] / 24).toPrecision(4)}
             messages every hour.
           </h4>
           <div>
@@ -839,12 +731,14 @@ class WhatsChart extends React.Component {
 WhatsChart.propTypes = {
   author1: PropTypes.object.isRequired,
   author2: PropTypes.object.isRequired,
+  combined: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
 };
 
 WhatsChart.defaultProps = {
   author1: {},
   author2: {},
+  combined: {},
   config: {},
 };
 
