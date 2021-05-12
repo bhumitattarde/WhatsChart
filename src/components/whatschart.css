@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&family=Ubuntu:ital,wght@0,400;0,500;0,700;1,700&display=swap");
 .chartSection {
   width: 100%;
   display: flex;
@@ -9,12 +10,14 @@
 
 .sectionHeading {
   margin-bottom: 2em;
+  font-size: 22px;
 }
 
 .sectionHeadingII {
   /* Use this class when there are multiple headings for a section */
   margin-top: 2em;
   margin-bottom: 1em;
+  font-size: 22px;
 }
 
 .sectionDescription {
@@ -26,8 +29,8 @@
 }
 
 .iconWrapper {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,6 +53,7 @@
 .summaryBox p:is(:first-of-type) {
   margin-top: 1em;
   margin-bottom: 0.2em;
+  font-weight: 500;
 }
 
 .chartsHorizontal {
@@ -58,25 +62,27 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 .chartsHorizontal > div:is(:first-of-type) {
-  margin-right: 3em;
+  margin-right: 2em;
 }
 
 /* Individual sections formatting */
 
 #madeWithTag {
   position: absolute;
-  top: 1em;
-  right: 1em;
+  top: 0.5em;
+  right: 0.5em;
   align-self: flex-end;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: italic;
 }
 
 #chart {
   width: 100%;
-  max-width: 1200px;
+  max-width: 900px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -85,10 +91,27 @@
   padding: 3em;
   background-color: var(--backgroundColor, aqua);
   color: var(--textColor);
+  font-family: "Ubuntu", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
+  font-weight: 400;
+}
+
+#chart h1,
+h2 {
+  font-family: "Raleway", "Ubuntu", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue";
 }
 
 #chart h1 {
-  margin-bottom: 0.3em;
+  margin-bottom: 0.1em;
+  font-size: 42px;
+  font-weight: 700;
+}
+
+#chart h2 {
+  font-size: 28px;
+  font-weight: 400;
 }
 
 #chart header {
@@ -98,7 +121,7 @@
 #summaries {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
 }

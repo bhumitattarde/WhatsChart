@@ -67,6 +67,14 @@ class WhatsChart extends React.Component {
     this.getSectionWordsString = this.getWordsSectionString.bind(this);
     this.addMaps = this.addMaps.bind(this);
     this.getWeekDayName = this.getWeekDayName.bind(this);
+
+    //chartjs global config
+    defaults.animation.duration = 0;
+    defaults.font.family =
+      // eslint-disable-next-line no-multi-str
+      "'Ubuntu', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',\
+    'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue'";
+    defaults.font.weight = "400";
   }
 
   // methods
@@ -186,9 +194,9 @@ class WhatsChart extends React.Component {
     this.busiestHour = [...this.messagesByHour.entries()].reduce((a, e) =>
       e[1] > a[1] ? e : a
     );
-    this.busiestWeekOfDay = [
-      ...this.messagesByDaysOfWeek.entries(),
-    ].reduce((a, e) => (e[1] > a[1] ? e : a));
+    this.busiestWeekOfDay = [...this.messagesByDaysOfWeek.entries()].reduce(
+      (a, e) => (e[1] > a[1] ? e : a)
+    );
     this.busiestDay = [...this.messagesByDate.entries()].reduce((a, e) =>
       e[1] > a[1] ? e : a
     );
@@ -566,7 +574,7 @@ class WhatsChart extends React.Component {
         <header>
           <h1>{this.periodInDays} days of WhatsApp texting</h1>
           <h2>
-            between {author1Name} &amp; {author2Name} in numbers
+            between {author1Name} &amp; {author2Name}
           </h2>
         </header>
 
@@ -694,7 +702,7 @@ class WhatsChart extends React.Component {
           </h4>
           <h3 className="sectionHeadingII">
             {author1Name}'s favourite word was '{author1.mostUsedWord[0]}',
-            while that of {author2Name} was '{author2.mostUsedWord[0]}'
+            while that of {author2Name} was '{author2.mostUsedWord[0]}'.
           </h3>
           <div className="chartsHorizontal">
             <div>
@@ -727,7 +735,7 @@ class WhatsChart extends React.Component {
               {author1Name} &amp; {author2Name} sent a total of{" "}
               {author1.totalEmojis + author2.totalEmojis} emojis with{" "}
               {author1Name} sending {author1.totalEmojis} &amp; {author2Name}{" "}
-              sending {author2.totalEmojis}
+              sending {author2.totalEmojis}.
             </h4>
             <div>
               <Doughnut
@@ -740,7 +748,7 @@ class WhatsChart extends React.Component {
             </div>
             <h4 className="sectionDescription">
               '{this.mostUsedEmoji[0]}' was overall the most used emoji
-              appearing {this.mostUsedEmoji[1]} times
+              appearing {this.mostUsedEmoji[1]} times!
             </h4>
             <h3 className="sectionHeadingII">
               {author1Name}'s favourite emoji was '{author1.mostUsedEmoji[0]}'
@@ -774,7 +782,7 @@ class WhatsChart extends React.Component {
           </h3>
           <h4 className="sectionDescription">
             {this.busiestHour[0]}:00 is the busiest hour with about{" "}
-            {this.busiestHour[1]} messages
+            {this.busiestHour[1]} messages.
           </h4>
           <div>
             <Bar

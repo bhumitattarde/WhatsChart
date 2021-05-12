@@ -2,6 +2,8 @@ import React from "react";
 import "./App.css";
 import statsCalculator from "./core/statscalculator.js";
 import WhatsChart from "./components/whatschart";
+import * as htmlToImage from "html-to-image";
+import { toPng } from "html-to-image";
 
 //FIXME make a progress/error pane that'll display progress/errors that occur
 //FIXME form should be a separate component that accepts a callback as a prop
@@ -31,6 +33,11 @@ class App extends React.Component {
     // member variables
     this.author1 = {};
     this.author2 = {};
+  }
+
+  //FIXME remove later
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   generate(data /*, rmStopwords*/) {
@@ -106,6 +113,9 @@ class App extends React.Component {
           );
         })
         .then(() => {
+          //
+          //
+
           return true;
         })
         .catch((err) => {
