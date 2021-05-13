@@ -7,12 +7,7 @@ const DownloadAndSeeChart = (props) => (
     <p>Maximize browser window</p>
     <p>If using phone, enable landscape mode</p>
 
-    <button
-      type="button"
-      onClick="document.getElementById('chart').scrollIntoView();"
-    >
-      See visualization
-    </button>
+    <a href="#chart">See visualization</a>
     <button type="button" onClick={props.handleDownload}>
       Download visualization
     </button>

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import * as htmlToImage from "html-to-image";
 import { toPng } from "html-to-image";
+import download from "downloadjs";
 
 import statsCalculator from "../core/statscalculator";
 import { supportedLangs } from "../util/util.js";
@@ -199,17 +199,11 @@ class FileForm extends React.Component {
   }
 
   handleDownload() {
-    //TODO handle download
-    htmlToImage
-      .toPng(document.getElementById("chart"), { width: 900 /*height: 3000*/ })
-      .then(function (dataUrl) {
-        var link = document.createElement("a");
-        link.download = "ye.png";
-        link.href = dataUrl;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
+    toPng(document.getElementById("chart"), {
+      width: 900 /*height: 3000*/,
+    }).then(function (dataURL) {
+      download(dataURL, "whatschart.png");
+    });
   }
 
   toggleLangDropdown() {
