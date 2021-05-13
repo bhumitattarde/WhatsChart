@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
 import statsCalculator from "./core/statscalculator.js";
-import WhatsChart from "./components/whatschart";
+import WhatsChart from "./components/whatschart.js";
+import FileForm from "./components/form.js";
 import * as htmlToImage from "html-to-image";
 import { toPng } from "html-to-image";
 
@@ -14,31 +15,21 @@ class App extends React.Component {
     super(props);
     this.state = {
       showChart: false,
-      //FIXME setting for now. Later should be inputted by user. Is part of state so everything doesn't have to
-      //to be calculated again just to change color
-      config: {
-        author1Color: "rgb(234,1,49)",
-        author2Color: "rgb(1,190,149)",
-        backgroundColor: "rgb(42, 43, 70)",
-        textColor: "white",
-        iconColor: "rgb(68, 76, 166)",
-        chartColor: "rgb(242, 17, 112)",
-      },
     };
 
-    // method bindings
+    // `this` bindings
     this.handleFileSelect = this.handleFileSelect.bind(this);
     this.generate = this.generate.bind(this);
+    this.formCallback = this.formCallback.bind(this);
+    this.showChart = this.showChart.bind(this);
 
     // member variables
     this.author1 = {};
     this.author2 = {};
     this.combined = {};
-  }
+    this.config = {};
 
-  //FIXME remove later
-  sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    this.stats = {};
   }
 
   generate(data /*, rmStopwords*/) {
@@ -127,23 +118,32 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {}
+  formCallback(stats, config) {
+    this.stats = stats;
+    this.config = config;
+
+    this.showChart(true);
+  }
+
+  showChart(show) {
+    this.setState((prevState) => ({
+      showChart: show,
+    }));
+  }
 
   render() {
     return (
       <div>
         <h1>WhatsChart!</h1>
-        <form id="form" action="" onSubmit={this.handleFileSelect}>
-          <label htmlFor="fileSelector">Select your WhatsApp chat file</label>
-          <input id="fileSelector" name="file" type="file" accept=".txt" />
-          <input type="submit" value="SELECT" />
-        </form>
+
+        <FileForm callback={this.formCallback} showChart={this.showChart} />
+
         {this.state.showChart && (
           <WhatsChart
-            author1={this.author1}
-            author2={this.author2}
-            combined={this.combined}
-            config={this.state.config}
+            author1={this.stats.author1}
+            author2={this.stats.author2}
+            combined={this.stats.combined}
+            config={this.config}
           />
         )}
       </div>

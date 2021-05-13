@@ -371,7 +371,7 @@ class WhatsChart extends React.Component {
           label: "Messages",
           data: [...combined.messagesByHour.values()],
           borderWidth: 0,
-          backgroundColor: config.chartColor,
+          backgroundColor: config.graphColor,
         },
       ],
     };
@@ -401,7 +401,7 @@ class WhatsChart extends React.Component {
           label: "Messages",
           data: [...combined.messagesByDaysOfWeek.values()],
           borderWidth: 0,
-          backgroundColor: config.chartColor,
+          backgroundColor: config.graphColor,
         },
       ],
     };
@@ -429,7 +429,7 @@ class WhatsChart extends React.Component {
           label: "Messages",
           data: [...combined.messagesByDate.values()],
           borderWidth: 0,
-          backgroundColor: config.chartColor,
+          backgroundColor: config.graphColor,
         },
       ],
     };
@@ -461,7 +461,7 @@ class WhatsChart extends React.Component {
       <div id="chart">
         <p id="madeWithTag">Made using whatschart.bhumit.net</p>
         <header>
-          <h1>{this.periodInDays} days of WhatsApp texting</h1>
+          <h1>{combined.periodInDays} days of WhatsApp texting</h1>
           <h2>
             between {author1Name} &amp; {author2Name}
           </h2>
