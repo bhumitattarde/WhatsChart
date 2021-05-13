@@ -13,7 +13,7 @@
 }
 
 .sectionHeading {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   font-size: 22px;
 }
 
@@ -26,10 +26,6 @@
 
 .sectionDescription {
   margin-top: 1em;
-}
-
-.sectionHeading + .sectionDescription {
-  margin-top: -1em;
 }
 
 .iconWrapper {
@@ -47,11 +43,10 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1em;
 }
 
-.summaryBox:not(:last-child) {
-  margin-right: 3em;
+.summaryBox {
+  margin: 1.5em;
 }
 
 .summaryBox p:is(:first-of-type) {
