@@ -8,6 +8,7 @@ class statsCalculator {
   constructor() {
     // member vars
     this.removeStopwords = false;
+    this.language = {};
     this.authors = {
       author1: new author(),
       author2: new author(),
@@ -237,8 +238,8 @@ class statsCalculator {
             // extract words
             let words = message.match(this.regexWords);
             if (words) {
-              if (this.removeStopwords === true) {
-                words = sw.removeStopwords(words, sw.en);
+              if (this.removeStopwords) {
+                words = sw.removeStopwords(words, this.language);
               }
 
               for (let word of words) {
@@ -307,8 +308,9 @@ class statsCalculator {
     });
   }
 
-  run(data, rmStopwords = false) {
+  run(data, rmStopwords, lang) {
     this.removeStopwords = rmStopwords;
+    this.language = lang;
     return this.parseChats(data);
   }
 }

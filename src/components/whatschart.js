@@ -462,9 +462,9 @@ class WhatsChart extends React.Component {
         <p id="madeWithTag">Made using whatschart.bhumit.net</p>
         <header>
           <h1>{combined.periodInDays} days of WhatsApp texting</h1>
-          <h2>
+          {/* <h2>
             between {author1Name} &amp; {author2Name}
-          </h2>
+          </h2> */}
         </header>
 
         {/* summary section */}

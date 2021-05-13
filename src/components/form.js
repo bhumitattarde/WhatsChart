@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import statsCalculator from "../core/statscalculator";
+import { supportedLangs } from "../util/util.js";
 
 import "./form.css";
 
 class FileForm extends React.Component {
-  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
     // this.state = {};
@@ -22,6 +22,63 @@ class FileForm extends React.Component {
         graphColor: "#f21170",
       },
     };
+    this.langExtensions = new Map([
+      ["af", "Afrikaans"],
+      ["ar", "Arabic, Modern Standard"],
+      ["hy", "Armenian"],
+      ["eu", "Basque"],
+      ["bn", "Bengali"],
+      ["br", "Breton"],
+      ["bg", "Bulgarian"],
+      ["ca", "Catalan"],
+      ["zh", "Chinese Simplified"],
+      ["hr", "Croatian"],
+      ["cs", "Czech"],
+      ["da", "Danish"],
+      ["nl", "Dutch"],
+      ["en", "English"],
+      ["eo", "Esperanto"],
+      ["et", "Estonian"],
+      ["fa", "Farsi"],
+      ["fi", "Finnish"],
+      ["fr", "French"],
+      ["gl", "Galician"],
+      ["de", "German"],
+      ["el", "Greek"],
+      ["ha", "Hausa"],
+      ["he", "Hebrew"],
+      ["hi", "Hindi"],
+      ["hu", "Hungarian"],
+      ["id", "Indonesian"],
+      ["ga", "Irish"],
+      ["it", "Italian"],
+      ["ja", "Japanese"],
+      ["ko", "Korean"],
+      ["la", "Latin"],
+      ["lv", "Latvian"],
+      ["lgg", "Lugbara (without diacrit]ics)"],
+      ["lggo", "Lugbara official (with d]iacritics)"],
+      ["mr", "Marathi"],
+      ["no", "Norwegian"],
+      ["pl", "Polish"],
+      ["pt", "Portuguese"],
+      ["ptbr", "Portuguese (Brazilian)"],
+      ["pa", "Punjabi Gurmukhi"],
+      ["ro", "Romanian"],
+      ["ru", "Russian"],
+      ["sk", "Slovak"],
+      ["sl", "Slovenian"],
+      ["so", "Somali"],
+      ["st", "Sotho"],
+      ["es", "Spanish"],
+      ["sw", "Swahili"],
+      ["sv", "Swedish"],
+      ["th", "Thai"],
+      ["tr", "Turkish"],
+      ["vi", "Vietnamese"],
+      ["yo", "Yoruba"],
+      ["zu", "Zulu"],
+    ]);
 
     // `this` bindings
     this.generate = this.generate.bind(this);
@@ -31,20 +88,19 @@ class FileForm extends React.Component {
     this.convertToRGB = this.convertToRGB.bind(this);
   }
 
-  generate(data /*, rmStopwords*/, config) {
+  generate(data, rmStopwords, lang, config) {
     return new Promise((resolve, reject) => {
       const sc = new statsCalculator();
 
-      sc.run(data, true)
+      sc.run(data, rmStopwords, lang)
         .then((stats) => {
           if (stats === undefined) {
             reject(new Error("Received empty data from generator"));
           }
 
-          console.log(stats);
+          // console.log(stats);
 
-          this.props.callback(stats, config);
-
+          this.props.submitCallback(stats, config);
           resolve();
         })
         .catch((err) => {
@@ -54,19 +110,6 @@ class FileForm extends React.Component {
     });
   }
 
-  convertToRGB(hex) {
-    return (
-      "rgb(" +
-      hex
-        .match(/[A-Za-z0-9]{2}/g)
-        .map(function (v) {
-          return parseInt(v, 16);
-        })
-        .join(",") +
-      ")"
-    );
-  }
-
   readFile(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -74,7 +117,6 @@ class FileForm extends React.Component {
       reader.onload = (event) => {
         const data = event.target.result;
         if (data && data !== "") {
-          // this.generate(data);
           resolve(data);
         }
       };
@@ -119,8 +161,6 @@ class FileForm extends React.Component {
       ),
     };
 
-    console.log(config.author1Color);
-
     if (file === undefined || !file.name.endsWith(".txt")) {
       //!update status
       console.error("Failed to access the selected file");
@@ -129,7 +169,9 @@ class FileForm extends React.Component {
       this.readFile(file)
         .then((data) => {
           return this.generate(
-            data /*, document.getElementById("rmStopwords")*/,
+            data,
+            document.getElementById("rmStopwords").checked,
+            supportedLangs.get(document.getElementById("langDropdown").value),
             config
           );
         })
@@ -151,6 +193,19 @@ class FileForm extends React.Component {
     }
   }
 
+  convertToRGB(hex) {
+    return (
+      "rgb(" +
+      hex
+        .match(/[A-Za-z0-9]{2}/g)
+        .map(function (v) {
+          return parseInt(v, 16);
+        })
+        .join(",") +
+      ")"
+    );
+  }
+
   render() {
     return (
       <form id="form" action="" onSubmit={this.handleFormSubmission}>
@@ -167,55 +222,63 @@ class FileForm extends React.Component {
           name="rmStopwords"
           value="rmStopwords"
           onChange={this.toggleLangDropdown}
-          checked
+          defaultChecked
         ></input>
 
         <label htmlFor="langDropdown">
           Select the language of conversation
         </label>
         <select id="langDropdown" name="lang">
-          {/* <option value="" selected disabled hidden></option> */}
-          <option value="en" selected>
-            English
-          </option>
+          {[...supportedLangs.keys()].map((key, idx) =>
+            // set English as selected option
+            key === "en" ? (
+              <option value={key} key={idx} selected>
+                {this.langExtensions.get(key)}
+              </option>
+            ) : (
+              <option value={key} key={idx}>
+                {this.langExtensions.get(key)}
+              </option>
+            )
+          )}
         </select>
 
-        <label for="author1ColorPicker">First author color</label>
+        <label htmlFor="author1ColorPicker">First author color</label>
         <input
           id="author1ColorPicker"
           type="color"
           value={this.defaultForm.colors.author1Color}
         ></input>
 
-        <label for="author2ColorPicker">Second author color</label>
+        <label htmlFor="author2ColorPicker">Second author color</label>
         <input
           id="author2ColorPicker"
           type="color"
           value={this.defaultForm.colors.author2Color}
         ></input>
 
-        <label for="bgColorPicker">Background color</label>
+        <label htmlFor="bgColorPicker">Background color</label>
         <input
           id="bgColorPicker"
           type="color"
           value={this.defaultForm.colors.backgroundColor}
         ></input>
 
-        <label for="textColorPicker">Text color</label>
+        <label htmlFor="textColorPicker">Text color</label>
         <input
           id="textColorPicker"
           type="color"
           value={this.defaultForm.colors.textColor}
         ></input>
 
-        <label for="iconColorPicker">Icons color</label>
+        <label htmlFor="iconColorPicker">Icons color</label>
         <input
           id="iconColorPicker"
           type="color"
           value={this.defaultForm.colors.iconColor}
         ></input>
 
-        <label for="graphColorPicker">Graphs color</label>
+        <label htmlFor="graphColorPicker">Graphs color</label>
         <input
           id="graphColorPicker"
           type="color"
@@ -229,12 +292,12 @@ class FileForm extends React.Component {
 }
 
 FileForm.propTypes = {
-  callback: PropTypes.func.isRequired,
+  submitCallback: PropTypes.func.isRequired,
   showChart: PropTypes.func.isRequired,
 };
 
 FileForm.defaultProps = {
-  callback: () => {},
+  submitCallback: () => {},
   showChart: () => {},
 };
 

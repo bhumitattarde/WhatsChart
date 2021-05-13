@@ -136,7 +136,10 @@ class App extends React.Component {
       <div>
         <h1>WhatsChart!</h1>
 
-        <FileForm callback={this.formCallback} showChart={this.showChart} />
+        <FileForm
+          submitCallback={this.formCallback}
+          showChart={this.showChart}
+        />
 
         {this.state.showChart && (
           <WhatsChart
