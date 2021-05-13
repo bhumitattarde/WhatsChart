@@ -1,4 +1,4 @@
-module.exports = class author {
+export class author {
   constructor() {
     this.name = "";
     this.totalMessages = 0;
@@ -22,4 +22,4 @@ module.exports = class author {
     this.mostUsedWord = "";
     this.mostUsedEmoji = "";
   }
-};
+}

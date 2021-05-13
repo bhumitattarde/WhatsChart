@@ -566,8 +566,8 @@ class WhatsChart extends React.Component {
                 height={300}
                 width={300}
                 options={this.defaultVerticalBarChartOpts([
-                  "Distribution of media (Pictures -",
-                  "Videos - Audios - Links)",
+                  "Distribution of media",
+                  "(Pictures - Videos - Audios - Links)",
                 ])}
               />
             </div>

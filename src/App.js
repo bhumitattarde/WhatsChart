@@ -6,8 +6,6 @@ import FileForm from "./components/form.js";
 import * as htmlToImage from "html-to-image";
 import { toPng } from "html-to-image";
 
-//FIXME use either require or import
-
 class App extends React.Component {
   constructor(props) {
     super(props);

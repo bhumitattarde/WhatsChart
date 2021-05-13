@@ -1,8 +1,7 @@
-const wsp = require("whatsapp-chat-parser");
-const sw = require("stopword");
-
-const util = require("../util/util.js");
-const author = require("./author.js");
+import * as whatsapp from "whatsapp-chat-parser";
+import sw from "stopword";
+import { sortMap } from "../util/util.js";
+import { author } from "./author.js";
 
 class statsCalculator {
   constructor() {
@@ -174,8 +173,8 @@ class statsCalculator {
 
   generateFinalStats(auth) {
     // sort maps
-    auth.words = util.sortMap(auth.words);
-    auth.emojis = util.sortMap(auth.emojis);
+    auth.words = sortMap(auth.words);
+    auth.emojis = sortMap(auth.emojis);
 
     auth.wordsPerMessage = auth.totalWords / auth.textMessages;
     auth.mostUsedWord = [...auth.words][0];
@@ -269,7 +268,7 @@ class statsCalculator {
 
   parseChats(data) {
     return new Promise((resolve, reject) => {
-      wsp.parseString(data).then(
+      whatsapp.parseString(data).then(
         (messages) => {
           this.generateStats(messages).then(
             (authors) => {
