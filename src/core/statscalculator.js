@@ -184,83 +184,79 @@ class statsCalculator {
 
   generateStats(messages) {
     return new Promise((resolve, reject) => {
-      try {
-        this.setAuthorNames(messages);
+      this.setAuthorNames(messages);
 
-        for (let msg of messages) {
-          // get author of the message
-          var auth = {};
-          if (msg.author === this.authors.author1.name) {
-            auth = this.authors.author1;
-          } else if (msg.author === this.authors.author2.name) {
-            auth = this.authors.author2;
+      for (let msg of messages) {
+        // get author of the message
+        var auth = {};
+        if (msg.author === this.authors.author1.name) {
+          auth = this.authors.author1;
+        } else if (msg.author === this.authors.author2.name) {
+          auth = this.authors.author2;
+        }
+
+        // Sort message by time and increment counters
+        this.incrementCounter(auth.messagesByHour, msg.date.getHours());
+        this.incrementCounter(auth.messagesByDaysOfWeek, msg.date.getDay());
+        this.incrementCounter(
+          auth.messagesByDate,
+          msg.date.toLocaleDateString()
+        );
+
+        // Convert message to lower-case. We're making a decision that case doesn't matter for analysis.
+        const message = msg.message.toLowerCase();
+
+        // determine the type of message and increment counters
+        // This can obviously fail if one includes these file extensions manually, but thanks to WhatsApp's
+        // big brain decision to use differring formats for media messages, this seems to be the only way.
+        auth.totalMessages++;
+
+        if (message.includes(".jpg") || message.includes(".webp")) {
+          // is an image
+          auth.totalMedia++;
+          auth.pictures++;
+        } else if (message.includes(".opus")) {
+          // is an audio
+          auth.totalMedia++;
+          auth.audios++;
+        } else if (message.includes(".mp4")) {
+          // is a video
+          auth.totalMedia++;
+          auth.videos++;
+        } else if (
+          message.includes("https://") ||
+          message.includes("http://")
+        ) {
+          // is a link
+          auth.totalMedia++;
+          auth.links++;
+        } else {
+          // text message
+          auth.textMessages++;
+
+          // extract words
+          let words = message.match(this.regexWords);
+          if (words) {
+            if (this.removeStopwords) {
+              words = sw.removeStopwords(words, this.language);
+            }
+
+            for (let word of words) {
+              this.incrementCounter(auth.words, word);
+            }
+
+            auth.totalWords += words.length;
           }
 
-          // Sort message by time and increment counters
-          this.incrementCounter(auth.messagesByHour, msg.date.getHours());
-          this.incrementCounter(auth.messagesByDaysOfWeek, msg.date.getDay());
-          this.incrementCounter(
-            auth.messagesByDate,
-            msg.date.toLocaleDateString()
-          );
-
-          // Convert message to lower-case. We're making a decision that case doesn't matter for analysis.
-          const message = msg.message.toLowerCase();
-
-          // determine the type of message and increment counters
-          // This can obviously fail if one includes these file extensions manually, but thanks to WhatsApp's
-          // big brain decision to use differring formats for media messages, this seems to be the only way.
-          auth.totalMessages++;
-
-          if (message.includes(".jpg") || message.includes(".webp")) {
-            // is an image
-            auth.totalMedia++;
-            auth.pictures++;
-          } else if (message.includes(".opus")) {
-            // is an audio
-            auth.totalMedia++;
-            auth.audios++;
-          } else if (message.includes(".mp4")) {
-            // is a video
-            auth.totalMedia++;
-            auth.videos++;
-          } else if (
-            message.includes("https://") ||
-            message.includes("http://")
-          ) {
-            // is a link
-            auth.totalMedia++;
-            auth.links++;
-          } else {
-            // text message
-            auth.textMessages++;
-
-            // extract words
-            let words = message.match(this.regexWords);
-            if (words) {
-              if (this.removeStopwords) {
-                words = sw.removeStopwords(words, this.language);
-              }
-
-              for (let word of words) {
-                this.incrementCounter(auth.words, word);
-              }
-
-              auth.totalWords += words.length;
+          // detect & process emojis
+          let emojis = message.match(this.regexEmojis);
+          if (emojis) {
+            for (let emoji of emojis) {
+              this.incrementCounter(auth.emojis, emoji);
             }
-
-            // detect & process emojis
-            let emojis = message.match(this.regexEmojis);
-            if (emojis) {
-              for (let emoji of emojis) {
-                this.incrementCounter(auth.emojis, emoji);
-              }
-              auth.totalEmojis += emojis.length;
-            }
+            auth.totalEmojis += emojis.length;
           }
         }
-      } catch (err) {
-        reject(err);
       }
 
       this.generateFinalStats(this.authors.author1);
@@ -273,38 +269,37 @@ class statsCalculator {
 
   parseChats(data) {
     return new Promise((resolve, reject) => {
-      wsp
-        .parseString(data)
-        .then(
-          (messages) => {
-            return this.generateStats(messages);
-          },
-          (err) => {
-            console.error(
-              `Error while parsing chats: (${err.name}: ${err.message})`
-            );
-            reject(
-              new Error(
-                `Error while parsing chats: (${err.name}: ${err.message})`
-              )
-            );
-          }
-        )
-        .then(
-          (authors) => {
-            resolve(authors);
-          },
-          (err) => {
-            console.error(
-              `Error while generating stats: (${err.name}: ${err.message})`
-            );
-            reject(
-              new Error(
+      wsp.parseString(data).then(
+        (messages) => {
+          this.generateStats(messages).then(
+            (authors) => {
+              resolve(authors);
+            },
+            (err) => {
+              console.error(
                 `Error while generating stats: (${err.name}: ${err.message})`
-              )
-            );
-          }
-        );
+              );
+              reject(
+                new Error(
+                  "An error occured while generating statistics. Please make sure that the file you have uploaded is correct."
+                )
+              );
+            }
+          );
+        },
+        (err) => {
+          console.error(
+            `Error while parsing chats: (${err.name}: ${err.message})`
+          );
+          reject(
+            new Error(
+              // eslint-disable-next-line no-multi-str
+              "Coulnd't parse the file. Please make sure that you have selected correct file. If you're positive that the file is correct, chances\
+              are the format of your file isn't supported yet."
+            )
+          );
+        }
+      );
     });
   }
 

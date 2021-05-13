@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import ProgressIndicator from "./progressindicator.js";
 import statsCalculator from "../core/statscalculator";
 import { supportedLangs } from "../util/util.js";
 
@@ -9,7 +10,9 @@ import "./form.css";
 class FileForm extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {};
+    this.state = {
+      progress: "",
+    };
 
     // member vars
     this.defaultForm = {
@@ -86,6 +89,7 @@ class FileForm extends React.Component {
     this.handleFormSubmission = this.handleFormSubmission.bind(this);
     this.toggleLangDropdown = this.toggleLangDropdown.bind(this);
     this.convertToRGB = this.convertToRGB.bind(this);
+    this.updateProgress = this.updateProgress.bind(this);
   }
 
   generate(data, rmStopwords, lang, config) {
@@ -98,14 +102,11 @@ class FileForm extends React.Component {
             reject(new Error("Received empty data from generator"));
           }
 
-          // console.log(stats);
-
           this.props.submitCallback(stats, config);
           resolve();
         })
         .catch((err) => {
-          console.error(err);
-          reject();
+          reject(err);
         });
     });
   }
@@ -124,7 +125,8 @@ class FileForm extends React.Component {
       reader.onerror = (event) => {
         reject(
           new Error(
-            `An error (${reader.error}) occurred while while trying to read the selected file`
+            `An error (${reader.error}) occurred while while trying to read the selected file. Make sure you have\
+            selected the correct file.`
           )
         );
       };
@@ -135,6 +137,8 @@ class FileForm extends React.Component {
 
   handleFormSubmission(event) {
     this.props.showChart(false);
+
+    this.updateProgress("Trying to access the file..");
 
     // don't referesh page when form is submitted
     event.preventDefault();
@@ -162,12 +166,15 @@ class FileForm extends React.Component {
     };
 
     if (file === undefined || !file.name.endsWith(".txt")) {
-      //!update status
-      console.error("Failed to access the selected file");
+      this.updateProgress("Please select a valid file!");
       return false;
     } else {
+      this.updateProgress("Trying to read the file..");
+
       this.readFile(file)
         .then((data) => {
+          this.updateProgress("Generating the visualization..");
+
           return this.generate(
             data,
             document.getElementById("rmStopwords").checked,
@@ -176,10 +183,11 @@ class FileForm extends React.Component {
           );
         })
         .then(() => {
+          this.updateProgress("Your visualization is ready!");
           return true;
         })
         .catch((err) => {
-          //!update progress bar
+          this.updateProgress(err.message);
           return false;
         });
     }
@@ -204,6 +212,12 @@ class FileForm extends React.Component {
         .join(",") +
       ")"
     );
+  }
+
+  updateProgress(progress) {
+    this.setState((prevState) => {
+      return { progress: progress };
+    });
   }
 
   render() {
@@ -284,6 +298,8 @@ class FileForm extends React.Component {
           type="color"
           value={this.defaultForm.colors.graphColor}
         ></input>
+
+        <ProgressIndicator progress={this.state.progress} />
 
         <input type="submit" value="GO" />
       </form>
