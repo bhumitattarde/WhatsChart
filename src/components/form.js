@@ -1,9 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import ProgressIndicator from "./progressindicator.js";
+import * as htmlToImage from "html-to-image";
+import { toPng } from "html-to-image";
+
 import statsCalculator from "../core/statscalculator";
 import { supportedLangs } from "../util/util.js";
+import ProgressIndicator from "./progressindicator.js";
+import DownloadAndSeeChart from "./downloadandseechart.js";
 
 import "./form.css";
 
@@ -90,6 +94,7 @@ class FileForm extends React.Component {
     this.toggleLangDropdown = this.toggleLangDropdown.bind(this);
     this.convertToRGB = this.convertToRGB.bind(this);
     this.updateProgress = this.updateProgress.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
   }
 
   generate(data, rmStopwords, lang, config) {
@@ -191,6 +196,20 @@ class FileForm extends React.Component {
           return false;
         });
     }
+  }
+
+  handleDownload() {
+    //TODO handle download
+    htmlToImage
+      .toPng(document.getElementById("chart"), { width: 900 /*height: 3000*/ })
+      .then(function (dataUrl) {
+        var link = document.createElement("a");
+        link.download = "ye.png";
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
   }
 
   toggleLangDropdown() {
@@ -301,7 +320,11 @@ class FileForm extends React.Component {
 
         <ProgressIndicator progress={this.state.progress} />
 
-        <input type="submit" value="GO" />
+        {this.props.chartVisible && (
+          <DownloadAndSeeChart handleDownload={this.handleDownload} />
+        )}
+
+        <input type="submit" value="Generate" />
       </form>
     );
   }
@@ -310,11 +333,13 @@ class FileForm extends React.Component {
 FileForm.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   showChart: PropTypes.func.isRequired,
+  chartVisible: PropTypes.bool.isRequired,
 };
 
 FileForm.defaultProps = {
   submitCallback: () => {},
   showChart: () => {},
+  chartVisible: false,
 };
 
 export default FileForm;

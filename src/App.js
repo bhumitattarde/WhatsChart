@@ -1,10 +1,8 @@
 import React from "react";
-import "./App.css";
-import statsCalculator from "./core/statscalculator.js";
+
 import WhatsChart from "./components/whatschart.js";
 import FileForm from "./components/form.js";
-import * as htmlToImage from "html-to-image";
-import { toPng } from "html-to-image";
+import "./App.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -43,6 +41,7 @@ class App extends React.Component {
         <FileForm
           submitCallback={this.formCallback}
           showChart={this.showChart}
+          chartVisible={this.state.showChart}
         />
 
         {this.state.showChart && (
