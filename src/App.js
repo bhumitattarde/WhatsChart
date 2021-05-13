@@ -12,7 +12,7 @@ class App extends React.Component {
     };
 
     // `this` bindings
-    this.formCallback = this.formCallback.bind(this);
+    this.formSubmitCallback = this.formSubmitCallback.bind(this);
     this.showChart = this.showChart.bind(this);
 
     // member variables
@@ -20,7 +20,7 @@ class App extends React.Component {
     this.stats = {};
   }
 
-  formCallback(stats, config) {
+  formSubmitCallback(stats, config) {
     this.stats = stats;
     this.config = config;
 
@@ -39,7 +39,7 @@ class App extends React.Component {
         <h1>WhatsChart!</h1>
 
         <FileForm
-          submitCallback={this.formCallback}
+          submitCallback={this.formSubmitCallback}
           showChart={this.showChart}
           chartVisible={this.state.showChart}
         />

@@ -255,61 +255,54 @@ class FileForm extends React.Component {
         <label htmlFor="langDropdown">
           Select the language of conversation
         </label>
-        <select id="langDropdown" name="lang">
-          {[...supportedLangs.keys()].map((key, idx) =>
-            // set English as selected option
-            key === "en" ? (
-              <option value={key} key={idx} selected>
-                {this.langExtensions.get(key)}
-              </option>
-            ) : (
-              <option value={key} key={idx}>
-                {this.langExtensions.get(key)}
-              </option>
-            )
-          )}
+        <select id="langDropdown" name="lang" defaultValue="en">
+          {[...supportedLangs.keys()].map((key, idx) => (
+            <option value={key} key={idx}>
+              {this.langExtensions.get(key)}
+            </option>
+          ))}
         </select>
 
         <label htmlFor="author1ColorPicker">First author color</label>
         <input
           id="author1ColorPicker"
           type="color"
-          value={this.defaultForm.colors.author1Color}
+          defaultValue={this.defaultForm.colors.author1Color}
         ></input>
 
         <label htmlFor="author2ColorPicker">Second author color</label>
         <input
           id="author2ColorPicker"
           type="color"
-          value={this.defaultForm.colors.author2Color}
+          defaultValue={this.defaultForm.colors.author2Color}
         ></input>
 
         <label htmlFor="bgColorPicker">Background color</label>
         <input
           id="bgColorPicker"
           type="color"
-          value={this.defaultForm.colors.backgroundColor}
+          defaultValue={this.defaultForm.colors.backgroundColor}
         ></input>
 
         <label htmlFor="textColorPicker">Text color</label>
         <input
           id="textColorPicker"
           type="color"
-          value={this.defaultForm.colors.textColor}
+          defaultValue={this.defaultForm.colors.textColor}
         ></input>
 
         <label htmlFor="iconColorPicker">Icons color</label>
         <input
           id="iconColorPicker"
           type="color"
-          value={this.defaultForm.colors.iconColor}
+          defaultValue={this.defaultForm.colors.iconColor}
         ></input>
 
         <label htmlFor="graphColorPicker">Graphs color</label>
         <input
           id="graphColorPicker"
           type="color"
-          value={this.defaultForm.colors.graphColor}
+          defaultValue={this.defaultForm.colors.graphColor}
         ></input>
 
         <ProgressIndicator progress={this.state.progress} />
