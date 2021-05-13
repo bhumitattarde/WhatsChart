@@ -199,9 +199,11 @@ class FileForm extends React.Component {
   }
 
   handleDownload() {
-    toPng(document.getElementById("chart"), {
-      width: 900 /*height: 3000*/,
-    }).then(function (dataURL) {
+    toPng(
+      document.getElementById("chart") /*, {
+      width: 900 
+    }*/
+    ).then(function (dataURL) {
       download(dataURL, "whatschart.png");
     });
   }
