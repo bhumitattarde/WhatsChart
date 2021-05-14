@@ -16,6 +16,7 @@ class FileForm extends React.Component {
     super(props);
     this.state = {
       progress: "",
+      err: false,
     };
 
     // member vars
@@ -171,7 +172,7 @@ class FileForm extends React.Component {
     };
 
     if (file === undefined || !file.name.endsWith(".txt")) {
-      this.updateProgress("Please select a valid file!");
+      this.updateProgress("Please select a valid file!", true);
       return false;
     } else {
       this.updateProgress("Trying to read the file..");
@@ -192,7 +193,7 @@ class FileForm extends React.Component {
           return true;
         })
         .catch((err) => {
-          this.updateProgress(err.message);
+          this.updateProgress(err.message, true);
           return false;
         });
     }
@@ -229,9 +230,9 @@ class FileForm extends React.Component {
     );
   }
 
-  updateProgress(progress) {
+  updateProgress(progress, err = false) {
     this.setState((prevState) => {
-      return { progress: progress };
+      return { progress: progress, err: err };
     });
   }
 
@@ -338,13 +339,13 @@ class FileForm extends React.Component {
           </div>
         </section>
 
+        <input className="button" type="submit" value="Generate" />
+
         <ProgressIndicator progress={this.state.progress} />
 
         {this.props.chartVisible && (
           <DownloadAndSeeChart handleDownload={this.handleDownload} />
         )}
-
-        <input className="button" type="submit" value="Generate" />
       </form>
     );
   }
