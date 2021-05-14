@@ -1,0 +1,78 @@
+#fileForm input[type="checkbox"] {
+  transform: scale(1.3);
+}
+
+#fileForm input[type="color"] {
+  width: 6em;
+  height: 3em;
+}
+
+#fileForm > div,
+#fileForm > section {
+  margin-bottom: 1em;
+}
+
+.fileSelectorWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fileSelectorWrapper > label {
+  font-size: 2em;
+}
+
+.fileSelectorWrapper > input {
+  margin-top: 2em;
+}
+
+.fileFormOptions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rmStopwordsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.rmStopwordsWrapper > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.rmStopwordsWrapper > div > label {
+  margin-bottom: 0.5em;
+}
+
+.colorOptionsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.colorOptionsWrapper > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.colorOptionsWrapper > div > label {
+  width: 150px;
+  display: inline-block;
+  margin-left: 1em;
+  text-align: left;
+}

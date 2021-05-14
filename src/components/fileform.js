@@ -9,7 +9,7 @@ import { supportedLangs } from "../util/util.js";
 import ProgressIndicator from "./progressindicator.js";
 import DownloadAndSeeChart from "./downloadandseechart.js";
 
-import "./form.css";
+import "./fileform.css";
 
 class FileForm extends React.Component {
   constructor(props) {
@@ -237,75 +237,106 @@ class FileForm extends React.Component {
 
   render() {
     return (
-      <form id="form" action="" onSubmit={this.handleFormSubmission}>
-        <label htmlFor="fileSelector">Select your WhatsApp chat file</label>
-        <input id="fileSelector" name="file" type="file" accept=".txt" />
+      <form
+        id="fileForm"
+        className="page"
+        action=""
+        onSubmit={this.handleFormSubmission}
+      >
+        <div className="fileSelectorWrapper">
+          <label htmlFor="fileSelector">
+            Select your WhatsApp chat file and configuration
+          </label>
+          <input id="fileSelector" name="file" type="file" accept=".txt" />
+        </div>
 
-        <label htmlFor="rmStopwords">
-          Remove <a href="https://en.wikipedia.org/wiki/Stop_word">stopwords</a>
-          ?
-        </label>
-        <input
-          id="rmStopwords"
-          type="checkbox"
-          name="rmStopwords"
-          value="rmStopwords"
-          onChange={this.toggleLangDropdown}
-          defaultChecked
-        ></input>
+        <section className="fileFormOptions">
+          <div className="rmStopwordsWrapper">
+            <div>
+              <label htmlFor="rmStopwords">
+                Remove{" "}
+                <a href="https://en.wikipedia.org/wiki/Stop_word">stopwords</a>?
+              </label>
+              <input
+                id="rmStopwords"
+                type="checkbox"
+                name="rmStopwords"
+                value="rmStopwords"
+                onChange={this.toggleLangDropdown}
+                defaultChecked
+              ></input>
+            </div>
 
-        <label htmlFor="langDropdown">
-          Select the language of conversation
-        </label>
-        <select id="langDropdown" name="lang" defaultValue="en">
-          {[...supportedLangs.keys()].map((key, idx) => (
-            <option value={key} key={idx}>
-              {this.langExtensions.get(key)}
-            </option>
-          ))}
-        </select>
+            <div>
+              <label htmlFor="langDropdown">
+                Select the language of conversation
+              </label>
+              <select id="langDropdown" name="lang" defaultValue="en">
+                {[...supportedLangs.keys()].map((key, idx) => (
+                  <option value={key} key={idx}>
+                    {this.langExtensions.get(key)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-        <label htmlFor="author1ColorPicker">First author color</label>
-        <input
-          id="author1ColorPicker"
-          type="color"
-          defaultValue={this.defaultForm.colors.author1Color}
-        ></input>
+          <div className="colorOptionsWrapper">
+            <div>
+              <input
+                id="author1ColorPicker"
+                type="color"
+                defaultValue={this.defaultForm.colors.author1Color}
+              ></input>
+              <label htmlFor="author1ColorPicker">First author color</label>
+            </div>
 
-        <label htmlFor="author2ColorPicker">Second author color</label>
-        <input
-          id="author2ColorPicker"
-          type="color"
-          defaultValue={this.defaultForm.colors.author2Color}
-        ></input>
+            <div>
+              <input
+                id="author2ColorPicker"
+                type="color"
+                defaultValue={this.defaultForm.colors.author2Color}
+              ></input>
+              <label htmlFor="author2ColorPicker">Second author color</label>
+            </div>
 
-        <label htmlFor="bgColorPicker">Background color</label>
-        <input
-          id="bgColorPicker"
-          type="color"
-          defaultValue={this.defaultForm.colors.backgroundColor}
-        ></input>
+            <div>
+              <input
+                id="bgColorPicker"
+                type="color"
+                defaultValue={this.defaultForm.colors.backgroundColor}
+              ></input>
+              <label htmlFor="bgColorPicker">Background color</label>
+            </div>
 
-        <label htmlFor="textColorPicker">Text color</label>
-        <input
-          id="textColorPicker"
-          type="color"
-          defaultValue={this.defaultForm.colors.textColor}
-        ></input>
+            <div>
+              <input
+                id="textColorPicker"
+                type="color"
+                defaultValue={this.defaultForm.colors.textColor}
+              ></input>
+              <label htmlFor="textColorPicker">Text color</label>
+            </div>
 
-        <label htmlFor="iconColorPicker">Icons color</label>
-        <input
-          id="iconColorPicker"
-          type="color"
-          defaultValue={this.defaultForm.colors.iconColor}
-        ></input>
+            <div>
+              <input
+                id="iconColorPicker"
+                type="color"
+                defaultValue={this.defaultForm.colors.iconColor}
+              ></input>
+              <label htmlFor="iconColorPicker">Icons color</label>
+            </div>
 
-        <label htmlFor="graphColorPicker">Graphs color</label>
-        <input
-          id="graphColorPicker"
-          type="color"
-          defaultValue={this.defaultForm.colors.graphColor}
-        ></input>
+            <div>
+              <input
+                id="graphColorPicker"
+                type="color"
+                defaultValue={this.defaultForm.colors.graphColor}
+              ></input>
+              <label htmlFor="graphColorPicker">Graphs color</label>
+            </div>
+          </div>
+        </section>
 
         <ProgressIndicator progress={this.state.progress} />
 
@@ -313,7 +344,7 @@ class FileForm extends React.Component {
           <DownloadAndSeeChart handleDownload={this.handleDownload} />
         )}
 
-        <input type="submit" value="Generate" />
+        <input className="button" type="submit" value="Generate" />
       </form>
     );
   }

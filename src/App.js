@@ -4,7 +4,7 @@ import WhatsChart from "./components/whatschart.js";
 import WhyWhatschart from "./components/whyWhatschart.js";
 import MainPage from "./components/mainpage.js";
 import NavBar from "./components/navbar.js";
-import FileForm from "./components/form.js";
+import FileForm from "./components/fileform.js";
 
 import "./App.css";
 
@@ -50,14 +50,14 @@ class App extends React.Component {
           chartVisible={this.state.showChart}
         />
 
-        {/* {this.state.showChart && (
+        {this.state.showChart && (
           <WhatsChart
             author1={this.stats.author1}
             author2={this.stats.author2}
             combined={this.stats.combined}
             config={this.config}
           />
-        )} */}
+        )}
       </div>
     );
   }
