@@ -1,0 +1,27 @@
+.navBar {
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  /* padding: 1em; */
+}
+
+.navBar > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* flex-wrap: wrap; */
+}
+
+.navBar > ul > li {
+  margin: 0.5em;
+}
+
+.navBar > h1 {
+  margin: 0.5em;
+}

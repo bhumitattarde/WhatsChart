@@ -1,18 +1,54 @@
-*{
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body{
+body {
   background-color: lightgray;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-h1{
-  text-align: center;
+ul > li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1em;
+}
+
+.linksList {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1em;
+}
+
+.linksList > li {
+  margin: 0.3em;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  background-color: aqua;
+  color: brown;
 }

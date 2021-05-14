@@ -1,0 +1,30 @@
+.whyWhatschartBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+.whyWhatschartBox > div {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+}
+
+.whyWhatschartBox > section {
+  width: 100%;
+  max-width: 500px;
+  height: 80px;
+}
+
+#whyWhatschartList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
+}
