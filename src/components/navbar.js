@@ -10,6 +10,9 @@ const NavBar = (props) => (
         <a href="">Generate</a>
       </li>
       <li>
+        <a href="">How to?</a>
+      </li>
+      <li>
         <a href="">Why WhatsChart?</a>
       </li>
       <li>

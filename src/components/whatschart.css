@@ -87,6 +87,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  /* left: 50%; */
+  align-self: center;
   padding: 3em;
   overflow-x: scroll;
   background-color: var(--backgroundColor, aqua);

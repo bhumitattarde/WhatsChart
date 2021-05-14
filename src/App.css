@@ -6,19 +6,14 @@
 
 body {
   background-color: lightgray;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   text-align: center;
 }
 
-ul > li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
+.appWrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
 }
 
 .page {
@@ -51,4 +46,14 @@ a {
   padding: 1em;
   background-color: aqua;
   color: brown;
+}
+
+/*  */
+
+ul > li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
 }

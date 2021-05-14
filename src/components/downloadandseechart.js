@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import "./downloadandseechart.css";
 
 const DownloadAndSeeChart = (props) => (
-  <div class="downloadAndSeeChart">
+  <div className="downloadAndSeeChart">
     {/* <h4>To ensure correct download:</h4>
     <ul>
       <li>Maximize browser window</li>
