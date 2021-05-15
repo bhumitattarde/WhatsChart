@@ -466,7 +466,7 @@ class WhatsChart extends React.Component {
     const author2Name = this.props.author2.name;
 
     return (
-      <div id="chart">
+      <div id="chart" className="page">
         <p id="madeWithTag">Made using whatschart.bhumit.net</p>
         <header>
           <h1>{combined.periodInDays} days of WhatsApp texting</h1>

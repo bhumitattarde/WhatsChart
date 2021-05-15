@@ -108,7 +108,7 @@
   align-items: center;
   align-self: center;
   padding: 3em;
-  overflow-x: scroll;
+  overflow: auto;
   background-color: var(--backgroundColor);
   color: var(--textColor);
   font-family: "Ubuntu", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
