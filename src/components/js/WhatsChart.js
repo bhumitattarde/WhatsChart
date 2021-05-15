@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 
-import "./whatschart.css";
+import "../css/WhatsChart.css";
 
 class WhatsChart extends React.Component {
   constructor(props) {

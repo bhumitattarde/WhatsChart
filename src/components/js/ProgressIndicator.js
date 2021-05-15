@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./progressindicator.css";
+import "../css/ProgressIndicator.css";
 
 const ProgressIndicator = (props) => (
   <div

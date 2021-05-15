@@ -102,6 +102,7 @@
 #chart {
   width: 100%;
   max-width: 900px;
+  height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -109,7 +110,6 @@
   align-items: center;
   align-self: center;
   padding: 3em;
-  overflow: auto;
   background-color: var(--backgroundColor);
   color: var(--textColor);
   font-family: "Ubuntu", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./mainpage.css";
+import "../css/MainPage.css";
 
 const MainPage = (props) => (
   <header id="mainPage" className="page">

@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import { toPng } from "html-to-image";
 import download from "downloadjs";
 
-import statsCalculator from "../core/statscalculator";
-import { supportedLangs } from "../util/util.js";
-import ProgressIndicator from "./progressindicator.js";
-import DownloadAndSeeChart from "./downloadandseechart.js";
+import statsCalculator from "../../core/statscalculator";
+import { supportedLangs } from "../../util/util.js";
+import ProgressIndicator from "./ProgressIndicator.js";
+import DownloadAndSeeChart from "./DownloadAndSeeChart.js";
 
-import "./fileform.css";
+import "../css/FileForm.css";
 
 class FileForm extends React.Component {
   constructor(props) {

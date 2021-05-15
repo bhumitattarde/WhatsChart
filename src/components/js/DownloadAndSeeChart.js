@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./downloadandseechart.css";
+import "../css/DownloadAndSeeChart.css";
 
 const DownloadAndSeeChart = (props) => (
   <div className="downloadAndSeeChart">

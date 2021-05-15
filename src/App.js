@@ -1,13 +1,13 @@
 import React from "react";
 
-import NavBar from "./components/navbar.js";
-import MainPage from "./components/mainpage.js";
-import WhyWhatschart from "./components/whyWhatschart.js";
-import HowtoPage from "./components/howtopage.js";
-import WhatsChart from "./components/whatschart.js";
-import FileForm from "./components/fileform.js";
-import FeedbackPage from "./components/feedbackpage.js";
-import Footer from "./components/Footer.js";
+import NavBar from "./components/js/NavBar.js";
+import MainPage from "./components/js/MainPage.js";
+import WhyWhatschart from "./components/js/WhyWhatschart.js";
+import HowtoPage from "./components/js/HowtoPage.js";
+import WhatsChart from "./components/js/WhatsChart.js";
+import FileForm from "./components/js/FileForm.js";
+import FeedbackPage from "./components/js/FeedbackPage.js";
+import Footer from "./components/js/Footer.js";
 
 import "./App.css";
 

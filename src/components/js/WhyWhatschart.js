@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserSecret, faFastForward } from "@fortawesome/free-solid-svg-icons";
 import { faOsi } from "@fortawesome/free-brands-svg-icons";
 
-import "./whyWhatschart.css";
+import "../css/WhyWhatschart.css";
 
 const WhyWhatschart = (props) => (
   <div id="whyWhatschart" className="page">

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./feedbackpage.css";
+import "../css/FeedbackPage.css";
 
 const FeedbackPage = (props) => (
   <div className="page">

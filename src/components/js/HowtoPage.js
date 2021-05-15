@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./howtopage.css";
+import "../css/HowtoPage.css";
 
 const HowtoPage = (props) => (
   <div className="page howtoPage">
