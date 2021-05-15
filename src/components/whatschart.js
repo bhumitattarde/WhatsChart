@@ -92,12 +92,18 @@ class WhatsChart extends React.Component {
     const config = this.props.config;
 
     defaults.color = config.textColor;
+    if (document.body.clientWidth < 480) {
+      defaults.font.size = 10;
+    } else {
+      defaults.font.size = 12;
+    }
 
     // Graph configs
     // graph options. If some graph needs customized options, set them separately
 
     this.defaultVerticalBarChartOpts = (title = "") => {
       return {
+        maintainAspectRatio: false,
         scales: {
           x: {
             grid: {
@@ -131,6 +137,7 @@ class WhatsChart extends React.Component {
 
     this.defaultHorizontalBarChartOpts = (title = "") => {
       return {
+        maintainAspectRatio: false,
         indexAxis: "y",
         scales: {
           x: {
@@ -328,6 +335,7 @@ class WhatsChart extends React.Component {
     };
 
     this.optsMostUsedEmojis = {
+      maintainAspectRatio: false,
       indexAxis: "y",
       scales: {
         x: {
@@ -546,7 +554,7 @@ class WhatsChart extends React.Component {
             ).toPrecision(4)}
             % by {author2Name}.
           </h3>
-          <div className="chartsHorizontal">
+          <div id="chartInDepthSummary" className="chartsHorizontal">
             <div>
               <Pie
                 id="chartInDepthSummaryAll"
@@ -594,19 +602,17 @@ class WhatsChart extends React.Component {
             while that of {author2Name} was '{author2.mostUsedWord[0]}'.
           </h3>
           <div className="chartsHorizontal">
-            <div>
+            <div className="dividedHorizontalBarWrapper">
               <Bar
                 id="chartMostUsedWordsAuthor1"
                 data={this.dataMostUsedWords(1)}
-                height={300}
                 options={this.defaultHorizontalBarChartOpts()}
               />
             </div>
-            <div>
+            <div className="dividedHorizontalBarWrapper">
               <Bar
                 id="chartMostUsedWordsAuthor2"
                 data={this.dataMostUsedWords(2)}
-                height={300}
                 options={this.defaultHorizontalBarChartOpts()}
               />
             </div>
@@ -644,19 +650,21 @@ class WhatsChart extends React.Component {
               while that of {author2Name} was '{author2.mostUsedEmoji[0]}'
             </h3>
             <div className="chartsHorizontal">
-              <div>
+              <div className="dividedHorizontalBarWrapper">
                 <Bar
                   id="chartMostUsedEmojisAuthor1"
                   data={this.dataMostUsedEmojis(1)}
-                  height={300}
+                  // height={300}
+                  // width={300}
                   options={this.optsMostUsedEmojis}
                 />
               </div>
-              <div>
+              <div className="dividedHorizontalBarWrapper">
                 <Bar
                   id="chartMostUsedEmojisAuthor2"
                   data={this.dataMostUsedEmojis(2)}
-                  height={300}
+                  // height={300}
+                  // width={300}
                   options={this.optsMostUsedEmojis}
                 />
               </div>
@@ -673,12 +681,10 @@ class WhatsChart extends React.Component {
             {combined.busiestHour[0]}:00 is the busiest hour with about{" "}
             {combined.busiestHour[1]} messages.
           </h4>
-          <div>
+          <div className="verticalBarWrapper">
             <Bar
               id="chartMessagesByHour"
               data={this.dataMessagesByHour}
-              height={300}
-              width={600}
               options={this.defaultVerticalBarChartOpts(
                 "Messages by hour of the day"
               )}
@@ -695,12 +701,10 @@ class WhatsChart extends React.Component {
             {this.getWeekDayName(combined.busiestWeekOfDay[0])}s are the
             busiest!
           </h4>
-          <div>
+          <div className="verticalBarWrapper">
             <Bar
               id="chartMessagesByDayOfWeek"
               data={this.dataMessagesByDayOfWeek}
-              height={300}
-              width={600}
               options={this.defaultVerticalBarChartOpts(
                 "Messages by day of the week"
               )}
@@ -713,12 +717,10 @@ class WhatsChart extends React.Component {
             {combined.busiestDay[1]} messages! That's about{" "}
             {(combined.busiestDay[1] / 24).toPrecision(4)} messages every hour.
           </h4>
-          <div>
+          <div className="verticalBarWrapper">
             <Bar
               id="chartMessagesByDate"
               data={this.dataMessagesByDate}
-              height={300}
-              width={600}
               options={this.defaultVerticalBarChartOpts("Messages by date")}
             />
           </div>

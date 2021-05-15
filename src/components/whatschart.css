@@ -14,18 +14,19 @@
 
 .sectionHeading {
   margin-bottom: 1em;
-  font-size: 22px;
+  font-size: clamp(14px, 4vw, 24px);
 }
 
 .sectionHeadingII {
   /* Use this class when there are multiple headings for a section */
   margin-top: 2em;
   margin-bottom: 1em;
-  font-size: 22px;
+  font-size: clamp(14px, 4vw, 24px);
 }
 
 .sectionDescription {
   margin-top: 1em;
+  font-size: clamp(12px, 3vw, 18px);
 }
 
 .iconWrapper {
@@ -55,6 +56,24 @@
   font-weight: 500;
 }
 
+/* wrappers to make chartjs charts responsive */
+
+.dividedHorizontalBarWrapper {
+  position: relative;
+  width: 40vw;
+  max-width: 300px;
+  height: 40vh;
+  max-height: 300px;
+}
+
+.verticalBarWrapper {
+  position: relative;
+  width: 80vw;
+  max-width: 600px;
+  height: 40vh;
+  max-height: 300px;
+}
+
 .chartsHorizontal {
   width: 100%;
   display: flex;
@@ -74,8 +93,8 @@
   top: 0.5em;
   right: 0.5em;
   align-self: flex-end;
-  font-size: 14px;
   font-weight: 700;
+  font-size: clamp(7px, 1vw, 14px);
   font-style: italic;
 }
 
@@ -87,11 +106,10 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  /* left: 50%; */
   align-self: center;
   padding: 3em;
   overflow-x: scroll;
-  background-color: var(--backgroundColor, aqua);
+  background-color: var(--backgroundColor);
   color: var(--textColor);
   font-family: "Ubuntu", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
@@ -107,13 +125,8 @@ h2 {
 
 #chart h1 {
   margin-bottom: 0.1em;
-  font-size: 42px;
   font-weight: 700;
-}
-
-#chart h2 {
-  font-size: 28px;
-  font-weight: 400;
+  font-size: clamp(21px, 6vw, 56px);
 }
 
 #chart header {
@@ -131,4 +144,65 @@ h2 {
 #sectionEmojis > .sectionDescription,
 #sectionTiming > .sectionDescription {
   margin-bottom: 1em;
+}
+
+/* Media queries */
+
+@media (max-width: 650px) {
+  #chart {
+    padding: 2em;
+  }
+
+  #chartInDepthSummary {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0;
+  }
+
+  .chartsHorizontal > div:is(:first-of-type) {
+    margin-right: 0em;
+  }
+}
+
+@media (max-width: 480px) {
+  #madeWithTag {
+    top: 0.2em;
+    right: 0.2em;
+  }
+  #chart {
+    padding: 1.5em;
+  }
+
+  .chartSection {
+    margin-top: 1em;
+  }
+
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+    font-size: 60px;
+  }
+
+  .summaryBox {
+    margin: 0.7em;
+  }
+
+  .summaryBox p:is(:first-of-type) {
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+  }
+
+  .summaryBox p {
+    font-size: 12px;
+  }
+
+  .sectionHeadingII {
+    /* Use this class when there are multiple headings for a section */
+    margin-bottom: 0.5em;
+  }
+
+  .sectionDescription {
+    margin-top: 0.5em;
+  }
 }
