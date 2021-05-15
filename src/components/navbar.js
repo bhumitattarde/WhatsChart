@@ -24,9 +24,6 @@ const NavBar = (props) => (
       <li>
         <a href="">GitHub</a>
       </li>
-      <li>
-        <a href="">Donate</a>
-      </li>
     </ul>
   </nav>
 );

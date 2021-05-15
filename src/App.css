@@ -12,8 +12,8 @@ body {
 .appWrapper {
   display: flex;
   flex-direction: column;
-  align-content: center;
   justify-content: center;
+  align-items: center;
 }
 
 .page {
@@ -23,8 +23,8 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 0 1em;
 }
 

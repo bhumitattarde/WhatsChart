@@ -1,10 +1,13 @@
 import React from "react";
 
-import WhatsChart from "./components/whatschart.js";
-import WhyWhatschart from "./components/whyWhatschart.js";
-import MainPage from "./components/mainpage.js";
 import NavBar from "./components/navbar.js";
+import MainPage from "./components/mainpage.js";
+import WhyWhatschart from "./components/whyWhatschart.js";
+import HowtoPage from "./components/howtopage.js";
+import WhatsChart from "./components/whatschart.js";
 import FileForm from "./components/fileform.js";
+import FeedbackPage from "./components/feedbackpage.js";
+import Footer from "./components/Footer.js";
 
 import "./App.css";
 
@@ -43,6 +46,7 @@ class App extends React.Component {
         <NavBar />
         <MainPage />
         <WhyWhatschart />
+        <HowtoPage />
 
         <FileForm
           submitCallback={this.formSubmitCallback}
@@ -58,6 +62,9 @@ class App extends React.Component {
             config={this.config}
           />
         )}
+
+        <FeedbackPage />
+        <Footer />
       </div>
     );
   }
