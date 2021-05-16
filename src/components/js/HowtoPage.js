@@ -3,12 +3,12 @@ import React from "react";
 import "../css/HowtoPage.css";
 
 const HowtoPage = (props) => (
-  <div className="page howtoPage">
-    <h3>How to use WhatsChart?</h3>
-    <ol>
+  <div id="howtoPage" className="page">
+    <h2>How to use WhatsChart?</h2>
+    <ol className="paraWrapper">
       <li>
         <div>
-          <h4>Export your WhatsApp chats</h4>
+          <h3>Export your WhatsApp chats</h3>
           <ol className="howtoSubListWrapper">
             <li>Open the chat.</li>
             <li>Tap More options &gt; More &gt; Export chat. </li>
@@ -44,10 +44,10 @@ const HowtoPage = (props) => (
       </li>
       <li>
         <div>
-          <h4>
+          <h3>
             Go to <a href="">generate page</a>, select the exported chat file,
             configuration and click on Generate.
-          </h4>
+          </h3>
           <p className="howtoSubListWrapper">
             You can then see/download the generated visualization. It is HIGHLY
             recommended that you use desktop or a device with wide screen to

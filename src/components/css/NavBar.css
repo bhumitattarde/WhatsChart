@@ -13,15 +13,28 @@
 .navBar > ul {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
 }
 
 .navBar > ul > li {
   margin: 0.5em;
+  font-size: clamp(16px, 1vw, 20px);
 }
 
-.navBar > h1 {
+#navHeading {
   margin: 0.5em;
+  font-size: clamp(32px, 2vw, 40px);
+}
+
+@media (max-width: 650px) {
+  .navBar {
+    position: unset;
+    justify-content: center;
+  }
+
+  .navBar > ul {
+    width: 100%;
+  }
 }

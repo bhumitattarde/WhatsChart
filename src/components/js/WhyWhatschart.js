@@ -8,17 +8,19 @@ import "../css/WhyWhatschart.css";
 
 const WhyWhatschart = (props) => (
   <div id="whyWhatschart" className="page">
+    <h2>Why WhatsChart?</h2>
+
     <ul id="whyWhatschartList">
       <li className="whyWhatschartBox">
         <div>
           <FontAwesomeIcon icon={faUserSecret} fixedWidth />
         </div>
         <section>
-          <h2>Maximum privacy</h2>
+          <h3>Maximum privacy</h3>
           <p>
             WhatsChart works locally, which means NO data, including the chat
-            you select, is ever sent to ANY server! Additionally, WhatsChart
-            does NOT collect any analytics or other data.
+            you select, is ever sent to ANY server! WhatsChart does NOT collect
+            any analytics or other data either.
           </p>
         </section>
       </li>
@@ -27,7 +29,7 @@ const WhyWhatschart = (props) => (
           <FontAwesomeIcon icon={faOsi} fixedWidth />
         </div>
         <section>
-          <h2>Completely open-source and free</h2>
+          <h3>Completely open-source and free</h3>
           <p>
             WhatsChart does not charge you anything! Also, anyone, including
             you, can read the source code anytime!
@@ -39,10 +41,11 @@ const WhyWhatschart = (props) => (
           <FontAwesomeIcon icon={faFastForward} fixedWidth />
         </div>
         <section>
-          <h2>Instant and customizable</h2>
+          <h3>Instant and customizable</h3>
           <p>
-            WhatsChart is customizable and works instantly! One click and off
-            you go!
+            WhatsChart works instantly! One click and off you go! Additionally,
+            WhatsChart is highly customizable and new customization options are
+            still being added.
           </p>
         </section>
       </li>

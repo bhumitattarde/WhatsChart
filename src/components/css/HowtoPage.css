@@ -1,31 +1,21 @@
-.howtoPage {
-  width: 100%;
-  max-width: 1000px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+#howtoPage {
   text-align: left;
-  line-height: 1.5em;
 }
 
-.howtoPage h3 {
-  margin-bottom: 1em;
-  font-size: clamp(20px, 6vw, 60px);
+#howtoPage h2 {
+  margin-bottom: 2em;
 }
 
-.howtoPage h4 {
+#howtoPage h3 {
   margin: 0.5em 0;
-  line-height: 1.5em;
 }
 
-.howtoPage > ol > li,
-.howtoPage h4 {
-  font-size: clamp(10px, 3vw, 30px);
+#howtoPage > ol > li {
+  font-size: clamp(18.72px, 1.2vw, 22.72px);
 }
 
-.howtoPage div {
-  font-size: 16px;
+#howtoPage div {
+  font-size: clamp(16px, 1vw, 20px);
 }
 
 .howtoSubListWrapper {
@@ -34,4 +24,10 @@
 
 .howtoSubListWrapper > li {
   margin: 0.5em 0;
+}
+
+.paraWrapper {
+  width: 100%;
+  max-width: 1000px;
+  padding: 0 1em;
 }

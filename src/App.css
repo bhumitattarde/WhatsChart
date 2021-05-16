@@ -7,6 +7,30 @@
 body {
   background-color: lightgray;
   text-align: center;
+  scroll-behavior: smooth;
+  line-height: 1.4;
+}
+
+h1:not(#chart, #navHeading) {
+  font-size: clamp(32px, 2vw, 40px);
+  /* margin-bottom: 2em; */
+}
+
+h2:not(#chart) {
+  font-size: clamp(24px, 1.5vw, 28px);
+  /* margin-bottom: 1.5em; */
+}
+
+h3:not(#chart) {
+  font-size: clamp(18.72px, 1.2vw, 22.72px);
+}
+
+h4:not(#chart) {
+  font-size: clamp(16px, 1vw, 20px);
+}
+
+p:not(#chart) {
+  font-size: clamp(16px, 1vw, 20px);
 }
 
 .appWrapper {

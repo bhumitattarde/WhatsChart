@@ -4,7 +4,7 @@ import "../css/NavBar.css";
 
 const NavBar = (props) => (
   <nav className="navBar">
-    <h1>WhatsChart</h1>
+    <h1 id="navHeading">WhatsChart</h1>
     <ul>
       <li>
         <a href="">Generate</a>

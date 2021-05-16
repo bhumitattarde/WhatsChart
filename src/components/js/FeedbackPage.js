@@ -5,18 +5,21 @@ import "../css/FeedbackPage.css";
 const FeedbackPage = (props) => (
   <div className="page">
     <h3>Feedback</h3>
-    <p>
-      <a href="	https://github.com/bhumitattarde/WhatsChart/issues/new?labels=bug&title=BUG: ">
-        Click here
-      </a>{" "}
-      to report bugs
-    </p>
-    <p>
-      <a href="	https://github.com/bhumitattarde/WhatsChart/issues/new?labels=improvement&title=SUGGESTION: ">
-        Click here
-      </a>{" "}
-      to suggest improvements
-    </p>
+    <a
+      className="button"
+      href="https://github.com/bhumitattarde/WhatsChart/issues/new?labels=bug&title=BUG: "
+    >
+      Report bugs
+    </a>
+    <a
+      className="button"
+      href="https://github.com/bhumitattarde/WhatsChart/issues/new?labels=improvement&title=SUGGESTION: "
+    >
+      Suggest improvements
+    </a>
+    <a className="GitHub" href="https://github.com/bhumitattarde/WhatsChart">
+      Report bugs
+    </a>
   </div>
 );
 

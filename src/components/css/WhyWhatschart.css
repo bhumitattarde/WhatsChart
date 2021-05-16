@@ -7,18 +7,22 @@
 }
 
 .whyWhatschartBox > div {
-  width: 120px;
-  height: 120px;
+  width: clamp(80px, 7vw, 100px);
+  height: clamp(80px, 7vw, 100px);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 80px;
+  margin-right: 0.3em;
+  font-size: clamp(80px, 7vw, 100px);
 }
 
 .whyWhatschartBox > section {
   width: 100%;
-  max-width: 500px;
-  height: 80px;
+  max-width: 700px;
+  height: clamp(80px, 6vw, 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 #whyWhatschartList {
@@ -26,5 +30,32 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1em;
+  margin: 0 1em;
+}
+
+#whyWhatschart > h2 {
+  margin-bottom: 3em;
+}
+
+#whyWhatschartList > li {
+  margin-bottom: 4em;
+}
+
+@media (max-width: 650px) {
+  .whyWhatschartBox {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #whyWhatschart > h2 {
+    margin-bottom: 2em;
+  }
+
+  #whyWhatschartList > li {
+    margin-bottom: 2em;
+  }
+
+  .whyWhatschartBox > div {
+    margin-bottom: 0.3em;
+  }
 }
