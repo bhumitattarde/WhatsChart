@@ -7,22 +7,22 @@ const NavBar = (props) => (
     <h1 id="navHeading">WhatsChart</h1>
     <ul>
       <li>
-        <a href="">Generate</a>
+        <a href="#fileForm">Generate</a>
       </li>
       <li>
-        <a href="">How to?</a>
+        <a href="#howtoPage">How to?</a>
       </li>
       <li>
-        <a href="">Why WhatsChart?</a>
+        <a href="#whyWhatschart">Why WhatsChart?</a>
       </li>
       <li>
         <a href="">Demo</a>
       </li>
       <li>
-        <a href="">Feedback</a>
+        <a href="#feedbackPage">Feedback</a>
       </li>
       <li>
-        <a href="">GitHub</a>
+        <a href="https://github.com/bhumitattarde/WhatsChart">GitHub</a>
       </li>
     </ul>
   </nav>

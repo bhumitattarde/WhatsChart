@@ -53,7 +53,7 @@ const WhyWhatschart = (props) => (
 
     <ul className="linksList">
       <li className="button altColorButton">
-        <a href="">Try it out!</a>
+        <a href="#fileForm">Try it out!</a>
       </li>
       <li className="button altColorButton">
         <a href="">Demo</a>

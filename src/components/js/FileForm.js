@@ -234,7 +234,6 @@ class FileForm extends React.Component {
     this.setState((prevState) => {
       return { progress: progress, err: err };
     });
-    console.log(this.state);
   }
 
   render() {

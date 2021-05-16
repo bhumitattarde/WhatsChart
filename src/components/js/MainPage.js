@@ -8,13 +8,13 @@ const MainPage = (props) => (
 
     <ul className="linksList">
       <li className="button">
-        <a href="">Why WhatsChart?</a>
+        <a href="#whyWhatschart">Why WhatsChart?</a>
       </li>
       <li className="button">
         <a href="">See a sample visualization</a>
       </li>
       <li className="button">
-        <a href="">Generate a visualization!</a>
+        <a href="#fileForm">Generate a visualization!</a>
       </li>
     </ul>
   </header>
