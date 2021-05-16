@@ -79,3 +79,9 @@
 #fileForm > section {
   margin-bottom: 1em;
 }
+
+@media (max-width: 650px) {
+  .fileSelectorWrapper > label {
+    margin-top: 3em;
+  }
+}

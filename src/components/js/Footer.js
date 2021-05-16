@@ -9,14 +9,11 @@ const Footer = (props) => (
         <a href="">Buy me a coffee!</a>
       </li>
       <li>
-        Made with &heart; by <a href="">Bhumit Attarde</a>
+        Made with &hearts; by <a href="">Bhumit Attarde</a>
       </li>
       <li>
-        WhatsApp is registered trademark and not affiliated to this site in any
-        way
-      </li>
-      <li>
-        <a href="">Privacy policy</a>
+        WhatsApp is a registered trademark of WhatsApp Inc. This site and
+        service are not related in any way to WhatsApp Inc.
       </li>
     </ul>
   </div>

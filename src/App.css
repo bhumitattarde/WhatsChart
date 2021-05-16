@@ -11,25 +11,25 @@ body {
   line-height: 1.4;
 }
 
-h1:not(#chart, #navHeading) {
+h1:not(#chart h1, #navHeading) {
   font-size: clamp(32px, 2vw, 40px);
   /* margin-bottom: 2em; */
 }
 
-h2:not(#chart) {
+h2:not(#chart h2) {
   font-size: clamp(24px, 1.5vw, 28px);
   /* margin-bottom: 1.5em; */
 }
 
-h3:not(#chart) {
+h3:not(#chart h3) {
   font-size: clamp(18.72px, 1.2vw, 22.72px);
 }
 
-h4:not(#chart) {
+h4:not(#chart h4) {
   font-size: clamp(16px, 1vw, 20px);
 }
 
-p:not(#chart) {
+p:not(#chart p) {
   font-size: clamp(16px, 1vw, 20px);
 }
 
