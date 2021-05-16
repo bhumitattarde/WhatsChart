@@ -1,0 +1,26 @@
+#footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-items: center; */
+  padding: 0 0.5em;
+}
+
+#footer li {
+  margin: 0.5em;
+}
+
+#footer hr {
+  margin: 0 -0.5em;
+  height: clamp(14px, 1vw, 18px);
+  background-color: var(--color4);
+  border: none;
+}
+
+#donate {
+  padding: 1em;
+  font-size: clamp(24px, 1.5vw, 28px);
+  font-weight: 700;
+  font-family: "Raleway", sans-serif;
+}
