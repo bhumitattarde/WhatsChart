@@ -339,7 +339,11 @@ class FileForm extends React.Component {
           </div>
         </section>
 
-        <input className="button" type="submit" value="Generate" />
+        <input
+          className="button altColorButton"
+          type="submit"
+          value="Generate"
+        />
 
         <ProgressIndicator
           progress={this.state.progress}

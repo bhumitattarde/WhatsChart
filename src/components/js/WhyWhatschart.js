@@ -52,10 +52,10 @@ const WhyWhatschart = (props) => (
     </ul>
 
     <ul className="linksList">
-      <li className="button">
+      <li className="button altColorButton">
         <a href="">Try it out!</a>
       </li>
-      <li className="button">
+      <li className="button altColorButton">
         <a href="">Demo</a>
       </li>
     </ul>

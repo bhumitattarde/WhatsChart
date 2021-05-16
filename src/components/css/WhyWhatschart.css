@@ -25,16 +25,22 @@
   justify-content: space-evenly;
 }
 
+/*  */
+
+#whyWhatschart > h2 {
+  margin-bottom: 3em;
+}
+
+#whyWhatschart {
+  background-color: var(--color3);
+}
+
 #whyWhatschartList {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0 1em;
-}
-
-#whyWhatschart > h2 {
-  margin-bottom: 3em;
 }
 
 #whyWhatschartList > li {

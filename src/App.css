@@ -5,10 +5,27 @@
 }
 
 body {
-  background-color: lightgray;
+  color: var(--color4);
+  background-color: var(--color1);
   text-align: center;
   scroll-behavior: smooth;
   line-height: 1.4;
+
+  /* color vars */
+  /*! Bright Cyan text */
+  /* --color4: #14ffec; */
+
+  /*!  Blue alternate */
+  /* --color1: #004a7c;
+  --color2: #005691; */
+
+  /*!  Alternative blue */
+  /* --color3: #00818a; */
+
+  --color1: #14274e;
+  --color2: #394867;
+  --color3: #004a7c;
+  --color4: #f1f6f9;
 }
 
 h1:not(#chart h1, #navHeading) {
@@ -39,8 +56,13 @@ li:not(#chart li) {
   /* font-family: "Poppins", sans-serif; */
 }
 
+a {
+  color: var(--color4);
+}
+
 button,
 input[type="submit"] {
+  font-family: "Poppins", sans-serif;
   border: none;
   cursor: pointer;
 }
@@ -81,10 +103,18 @@ input[type="submit"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.2em;
+  margin: 0.3em;
   padding: 1em;
-  background-color: aqua;
-  color: brown;
+  background-color: var(--color2);
+  color: var(--color4);
+}
+
+.button:hover {
+  background-color: var(--color3);
+}
+
+.altColorButton:hover {
+  background-color: var(--color1);
 }
 
 /*  */

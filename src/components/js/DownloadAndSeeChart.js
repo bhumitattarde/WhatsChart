@@ -7,12 +7,16 @@ const DownloadAndSeeChart = (props) => (
   <div className="downloadAndSeeChart">
     <ul>
       <li>
-        <a className="button" href="#chart">
-          See
+        <a className="button altColorButton" href="#chart">
+          See it
         </a>
       </li>
       <li>
-        <button className="button" type="button" onClick={props.handleDownload}>
+        <button
+          className="button altColorButton"
+          type="button"
+          onClick={props.handleDownload}
+        >
           Download
         </button>
       </li>
