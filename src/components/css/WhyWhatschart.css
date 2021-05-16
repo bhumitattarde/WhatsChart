@@ -49,15 +49,12 @@
     text-align: center;
   }
 
-  #whyWhatschart > h2 {
-    margin-bottom: 2em;
-  }
-
-  #whyWhatschartList > li {
-    margin-bottom: 2em;
-  }
-
   .whyWhatschartBox > div {
-    margin-bottom: 0.3em;
+    margin-right: 0;
+    margin-bottom: 0.5em;
+  }
+
+  #whyWhatschartList {
+    margin: 0 0.5em;
   }
 }

@@ -34,7 +34,7 @@
 
 @media (max-width: 650px) {
   .navBar {
-    position: unset;
+    position: relative;
     justify-content: center;
   }
 
