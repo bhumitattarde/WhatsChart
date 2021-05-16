@@ -4,9 +4,10 @@
   height: 1em;
   margin: 1em 0.5em;
   font-style: italic;
+  color: var(--linkHoverColor);
 }
 
 .progressIndicatorBad {
-  color: red;
+  color: var(--progressIndicatorBadColor);
   font-weight: 500;
 }

@@ -5,7 +5,7 @@ import "../css/DownloadAndSeeChart.css";
 
 const DownloadAndSeeChart = (props) => (
   <div className="downloadAndSeeChart">
-    <ul>
+    <ul className="linksList">
       <li>
         <a className="button altColorButton" href="#chart">
           See it

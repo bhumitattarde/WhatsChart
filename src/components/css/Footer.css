@@ -13,7 +13,7 @@
 
 #footer hr {
   margin: 0 -0.5em;
-  height: clamp(14px, 1vw, 18px);
+  height: clamp(10px, 0.7vw, 14px);
   background-color: var(--color4);
   border: none;
 }

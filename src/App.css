@@ -12,30 +12,36 @@ body {
   line-height: 1.4;
 
   /* color vars */
-  /*! Bright Cyan text */
+  /*? Bright Cyan text */
   /* --color4: #14ffec; */
 
-  /*!  Blue alternate */
+  /*?  Blue alternate */
   /* --color1: #004a7c;
   --color2: #005691; */
 
-  /*!  Alternative blue */
+  /*?  Blue alternate */
   /* --color3: #00818a; */
 
   --color1: #14274e;
   --color2: #394867;
   --color3: #004a7c;
   --color4: #f1f6f9;
+  --linkHoverColor: #14ffec;
+
+  --progressIndicatorBadColor: #fcbf1e;
 }
 
 h1:not(#chart h1, #navHeading) {
   font-size: clamp(32px, 2vw, 40px);
   font-family: "Raleway", sans-serif;
+  margin: 0 1.5em;
+  margin-bottom: 2.5em;
 }
 
 h2:not(#chart h2) {
   font-size: clamp(24px, 1.5vw, 28px);
   font-family: "Raleway", sans-serif;
+  margin-bottom: 2em;
 }
 
 h3:not(#chart h3) {
@@ -52,12 +58,20 @@ p:not(#chart p) {
   font-size: clamp(16px, 1vw, 20px);
 }
 
-li:not(#chart li) {
-  /* font-family: "Poppins", sans-serif; */
+a {
+  color: var(--color4);
+}
+
+a:hover {
+  color: var(--linkHoverColor);
+}
+
+ul > li {
+  list-style: none;
 }
 
 a {
-  color: var(--color4);
+  text-decoration: none;
 }
 
 button,
@@ -115,14 +129,4 @@ input[type="submit"] {
 
 .altColorButton:hover {
   background-color: var(--color1);
-}
-
-/*  */
-
-ul > li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
 }

@@ -2,16 +2,13 @@
   text-align: left;
 }
 
-#howtoPage h2 {
-  margin-bottom: 2em;
-}
-
 #howtoPage h3 {
   margin: 0.5em 0;
 }
 
 #howtoPage > ol > li {
   font-size: clamp(18.72px, 1.2vw, 22.72px);
+  margin-bottom: 1.5em;
 }
 
 #howtoPage div {
@@ -30,11 +27,4 @@
   width: 100%;
   max-width: 1000px;
   padding: 0 1em;
-}
-
-@media (max-width: 650px) {
-  #howtoPage h2 {
-    margin-top: 3em;
-    margin-bottom: 1em;
-  }
 }

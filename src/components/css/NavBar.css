@@ -19,10 +19,12 @@
   flex-wrap: wrap;
 }
 
-.navBar > ul > li {
+.navBar li {
   margin: 0.5em;
   font-size: clamp(16px, 1vw, 20px);
 }
+
+/*  */
 
 #navHeading {
   margin: 0.5em;

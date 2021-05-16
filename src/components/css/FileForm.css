@@ -57,10 +57,6 @@
   background-color: var(--color3);
 }
 
-#fileForm > h2 {
-  margin-bottom: 2em;
-}
-
 #fileForm label {
   font-weight: 500;
 }
@@ -81,4 +77,10 @@
 #fileForm > div,
 #fileForm > section {
   margin-bottom: 1em;
+}
+
+#buttonGenerate {
+  width: 200px;
+  margin-top: 2em;
+  border: solid 1px var(--color4);
 }

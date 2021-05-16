@@ -340,6 +340,7 @@ class FileForm extends React.Component {
         </section>
 
         <input
+          id="buttonGenerate"
           className="button altColorButton"
           type="submit"
           value="Generate"

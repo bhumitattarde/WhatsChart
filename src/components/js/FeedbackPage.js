@@ -5,7 +5,7 @@ import "../css/FeedbackPage.css";
 const FeedbackPage = (props) => (
   <div id="feedbackPage" className="page">
     <h2>Feedback</h2>
-    <ul>
+    <ul className="linksList">
       <li>
         <a
           className="button"

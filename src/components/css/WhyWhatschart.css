@@ -27,10 +27,6 @@
 
 /*  */
 
-#whyWhatschart > h2 {
-  margin-bottom: 3em;
-}
-
 #whyWhatschart {
   background-color: var(--color3);
 }

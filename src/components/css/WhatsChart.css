@@ -91,7 +91,7 @@
   right: 0.5em;
   align-self: flex-end;
   font-weight: 700;
-  font-size: clamp(7px, 1vw, 12px);
+  font-size: clamp(12px, 0.7vw, 16px);
   font-style: italic;
 }
 
