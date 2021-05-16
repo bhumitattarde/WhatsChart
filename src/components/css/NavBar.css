@@ -26,6 +26,7 @@
 #navHeading {
   margin: 0.5em;
   font-size: clamp(32px, 2vw, 40px);
+  font-family: "Raleway", sans-serif;
 }
 
 @media (max-width: 650px) {

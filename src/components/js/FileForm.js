@@ -245,10 +245,9 @@ class FileForm extends React.Component {
         action=""
         onSubmit={this.handleFormSubmission}
       >
+        <h2>Select your file &amp; configuration</h2>
         <div className="fileSelectorWrapper">
-          <label htmlFor="fileSelector">
-            Select your WhatsApp chat file and configuration
-          </label>
+          <label htmlFor="fileSelector">Select the chat file</label>
           <input id="fileSelector" name="file" type="file" accept=".txt" />
         </div>
 
