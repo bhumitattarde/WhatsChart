@@ -7,7 +7,7 @@ const ProgressIndicator = (props) => (
   <div
     className={
       props.isError
-        ? "progressIndicator, progressIndicatorBad"
+        ? "progressIndicator progressIndicatorBad"
         : "progressIndicator"
     }
   >

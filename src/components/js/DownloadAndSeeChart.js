@@ -5,21 +5,15 @@ import "../css/DownloadAndSeeChart.css";
 
 const DownloadAndSeeChart = (props) => (
   <div className="downloadAndSeeChart">
-    {/* <h4>To ensure correct download:</h4>
-    <ul>
-      <li>Maximize browser window</li>
-      <li>If using phone, enable landscape mode</li>
-    </ul> */}
-
     <ul>
       <li>
         <a className="button" href="#chart">
-          See visualization
+          See
         </a>
       </li>
       <li>
         <button className="button" type="button" onClick={props.handleDownload}>
-          Download visualization
+          Download
         </button>
       </li>
     </ul>

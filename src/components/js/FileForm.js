@@ -234,6 +234,7 @@ class FileForm extends React.Component {
     this.setState((prevState) => {
       return { progress: progress, err: err };
     });
+    console.log(this.state);
   }
 
   render() {
@@ -341,7 +342,10 @@ class FileForm extends React.Component {
 
         <input className="button" type="submit" value="Generate" />
 
-        <ProgressIndicator progress={this.state.progress} />
+        <ProgressIndicator
+          progress={this.state.progress}
+          isError={this.state.err}
+        />
 
         {this.props.chartVisible && (
           <DownloadAndSeeChart handleDownload={this.handleDownload} />

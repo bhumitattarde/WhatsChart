@@ -7,7 +7,8 @@
 }
 
 .fileSelectorWrapper > label {
-  font-size: 2em;
+  font-size: clamp(24px, 1.5vw, 28px);
+  font-weight: 500;
 }
 
 .fileSelectorWrapper > input {

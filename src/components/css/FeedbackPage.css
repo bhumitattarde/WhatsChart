@@ -1,0 +1,17 @@
+#feedbackPage > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#feedbackPage h2 {
+  margin-bottom: 3em;
+}
+
+@media (max-width: 650px) {
+  #feedbackPage > ul {
+    flex-direction: column;
+  }
+}

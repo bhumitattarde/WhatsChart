@@ -51,7 +51,9 @@ const HowtoPage = (props) => (
           <p className="howtoSubListWrapper">
             You can then see/download the generated visualization. It is HIGHLY
             recommended that you use desktop or a device with wide screen to
-            download the visualization.
+            download the visualization. Please note that downloading is
+            currently not supprted on Safari browser, please use Firefox or
+            Chrome.
           </p>
         </div>
       </li>
