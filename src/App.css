@@ -89,8 +89,6 @@ input[type="submit"] {
 }
 
 .page {
-  /* width: 100vw; 
-  max-width: 100%; */
   width: 100%;
   height: max(100vh, 100%);
   min-height: 100vh;
