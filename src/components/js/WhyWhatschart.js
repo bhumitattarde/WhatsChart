@@ -56,7 +56,7 @@ const WhyWhatschart = (props) => (
         <a href="#fileForm">Try it out!</a>
       </li>
       <li className="button altColorButton">
-        <a href="">Demo</a>
+        <a href="/demo.png">Demo</a>
       </li>
     </ul>
   </div>

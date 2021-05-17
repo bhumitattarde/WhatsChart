@@ -11,7 +11,7 @@ const MainPage = (props) => (
         <a href="#whyWhatschart">Why WhatsChart?</a>
       </li>
       <li className="button">
-        <a href="">See a sample visualization</a>
+        <a href="/demo.png">See a sample visualization</a>
       </li>
       <li className="button">
         <a href="#fileForm">Generate a visualization!</a>

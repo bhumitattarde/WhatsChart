@@ -16,7 +16,7 @@ const NavBar = (props) => (
         <a href="#whyWhatschart">Why WhatsChart?</a>
       </li>
       <li>
-        <a href="">Demo</a>
+        <a href="/demo.png">Demo</a>
       </li>
       <li>
         <a href="#feedbackPage">Feedback</a>

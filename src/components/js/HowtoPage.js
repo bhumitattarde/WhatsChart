@@ -49,8 +49,8 @@ const HowtoPage = (props) => (
       <li>
         <div>
           <h3>
-            Go to <a href="">generate page</a>, select the exported chat file,
-            configuration and click on Generate.
+            Go to <a href="#fileForm">generate page</a>, select the exported
+            chat file, configuration and click on Generate.
           </h3>
           <p className="howtoSubListWrapper">
             You can then see/download the generated visualization. It is HIGHLY
