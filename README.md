@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-- [Why use WhatsChart?](https://github.com/bhumitattarde/WhatsChart#Why--use--WhatsChart?)
-- [How to use?](https://github.com/bhumitattarde/WhatsChart#How--to--use?)
-- [How to report bugs or offer suggestions?](https://github.com/bhumitattarde/WhatsChart#How--to--report--bugs--or--offer--suggestions?)
+- [Why use WhatsChart?](https://github.com/bhumitattarde/WhatsChart#why-use-whatschart)
+- [How to use?](https://github.com/bhumitattarde/WhatsChart#how--to--use)
+- [How to report bugs or offer suggestions?](https://github.com/bhumitattarde/WhatsChart#how--to--report--bugs--or--offer--suggestions)
 - [Testing](https://github.com/bhumitattarde/WhatsChart#Testing)
-- [Documentation for developers](https://github.com/bhumitattarde/WhatsChart#Documentation--for--developers)
+- [Documentation for developers](https://github.com/bhumitattarde/WhatsChart#documentation--for--developers)
 - [License](https://github.com/bhumitattarde/WhatsChart#License)
 
 ## Why use WhatsChart?
