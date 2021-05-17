@@ -109,20 +109,16 @@
   background-color: var(--backgroundColor);
   color: var(--textColor);
   line-height: 1.3;
-  font-family: "Ubuntu", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue";
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
 }
 
 #chart h1,
 h2 {
-  font-family: "Raleway", "Ubuntu", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Roboto", "Oxygen", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue";
+  font-family: "Raleway", sans-serif;
 }
 
 #chart h1 {
-  margin-bottom: 0.1em;
   font-weight: 700;
   font-size: clamp(21px, 6vw, 56px);
 }

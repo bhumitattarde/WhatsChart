@@ -18,7 +18,7 @@ const Footer = (props) => (
       </li>
       <li>
         WhatsApp is a registered trademark of WhatsApp Inc. This site and
-        service are not related in any way to WhatsApp Inc.
+        service are not related to WhatsApp Inc. in any way.
       </li>
     </ul>
   </div>

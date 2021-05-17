@@ -22,12 +22,12 @@ class FileForm extends React.Component {
     // member vars
     this.defaultForm = {
       colors: {
-        author1Color: "#ea0131",
-        author2Color: "#01be95",
-        backgroundColor: "#2a2b46",
+        author1Color: "#00C9B1",
+        author2Color: "#005D6C",
+        backgroundColor: "#000839",
         textColor: "#FFFFFF",
-        iconColor: "#444ca6",
-        graphColor: "#f21170",
+        iconColor: "#FFA41B",
+        graphColor: "#FFA41B",
       },
     };
     this.langExtensions = new Map([

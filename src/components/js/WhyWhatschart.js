@@ -31,8 +31,8 @@ const WhyWhatschart = (props) => (
         <section>
           <h3>Completely open-source and free</h3>
           <p>
-            WhatsChart does not charge you anything! Also, anyone, including
-            you, can read the source code anytime!
+            WhatsChart does not charge you anything! Anyone, including you, can
+            read the source code anytime!
           </p>
         </section>
       </li>

@@ -52,10 +52,8 @@ class WhatsChart extends React.Component {
 
     //chartjs global config
     defaults.animation.duration = 0;
-    defaults.font.family =
-      // eslint-disable-next-line no-multi-str
-      "'Ubuntu', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',\
-    'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue'";
+    defaults.font.family = "'Poppins', 'sans-serif'";
+
     defaults.font.weight = "400";
   }
 
