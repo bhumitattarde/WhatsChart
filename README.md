@@ -47,7 +47,7 @@
 - #### Hosted version:
 
   Prefer this way since you don't have to download/install anything.
-  Head over to [whatschart.bhumit.net](whatschart.bhumit.net)
+  Head over to [whatschart.bhumit.net](https://whatschart.bhumit.net)
 
 - #### Offline version:
 
