@@ -111,13 +111,13 @@ class statsCalculator {
 
   setAuthorNames(messages) {
     for (let msg of messages) {
-      if (msg.author != "" && msg.author != "System") {
+      if (msg.author !== "" && msg.author !== "System") {
         if (!this.authors.author1.name) {
           this.authors.author1.name = msg.author;
           continue;
         }
 
-        if (msg.author != this.authors.author1.name) {
+        if (msg.author !== this.authors.author1.name) {
           this.authors.author2.name = msg.author;
           break;
         }
