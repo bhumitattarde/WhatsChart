@@ -2,6 +2,10 @@
 
 ###### WhatsChart is a free and open-source chat analyzer + visualizer for WhatsApp that lets you create customizable visualizations instantly.
 
+## Demo visualization
+
+![Demo visualization](public/demo.png?raw=true)
+
 ## Table of contents
 
 - [Why use WhatsChart?](https://github.com/bhumitattarde/WhatsChart#why-use-whatschart)
