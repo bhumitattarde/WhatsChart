@@ -9,29 +9,17 @@ html {
 }
 
 body {
-  color: var(--color4);
-  background-color: var(--color1);
-  text-align: center;
-  line-height: 1.4;
-
-  /* color vars */
-  /*? Bright Cyan text */
-  /* --color4: #14ffec; */
-
-  /*?  Blue alternate */
-  /* --color1: #004a7c;
-  --color2: #005691; */
-
-  /*?  Blue alternate */
-  /* --color3: #00818a; */
-
   --color1: #14274e;
   --color2: #394867;
   --color3: #004a7c;
   --color4: #f1f6f9;
   --linkHoverColor: #14ffec;
-
   --progressIndicatorBadColor: #fcbf1e;
+
+  text-align: center;
+  line-height: 1.4;
+  color: var(--color4);
+  background-color: var(--color1);
 }
 
 h1:not(#chart h1, #navHeading) {
