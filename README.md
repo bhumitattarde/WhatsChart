@@ -35,7 +35,7 @@
 ### 1. Export your WhatsApp chats
 
 1. Open the chat.
-2. Tap `More options > More > Export chat` for Android. For iPhone Tap the `contact's name or group subject > Export Chat`.
+2. Tap `More options > More > Export chat` for Android. For iPhone Tap the `contact's name > Export Chat`.
 3. Choose to export with media. If you decide to leave media out, you won't get statistics about media like pictures, videos etc.
 4. File with name like `chat.txt` or `WhatsApp chat with John.txt` is the file you'll need. WhatsApp unfortunately doesn't follow a consistent pattern while naming the chat file. If a `zip` file was exported, unzip it to find the `.txt` chat file. Feel free to discard the exported media.
 5. If you're still having trouble exporting your chats, refer to the following links from WhatsApp FAQ:
