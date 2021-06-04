@@ -13,7 +13,7 @@ const HowtoPage = (props) => (
             <li>Open the chat.</li>
             <li>
               Tap More options &gt; More &gt; Export chat for Android. For
-              iPhone Tap the contact's name or group subject &gt; Export Chat.{" "}
+              iPhone Tap the contact's name &gt; Export Chat.{" "}
             </li>
             <li>
               Choose to export with media. If you decide to leave media out, you
