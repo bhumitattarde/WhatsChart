@@ -1,13 +1,13 @@
 /*TODO add background (see firefox robots url bar)  */
 .progressIndicator {
-  width: 100%;
-  height: 1em;
-  margin: 1em 0.5em;
-  font-style: italic;
-  color: var(--linkHoverColor);
+	width: 100%;
+	height: 1em;
+	margin: 1em 0.5em;
+	font-style: italic;
+	color: var(--linkHoverColor);
 }
 
 .progressIndicatorBad {
-  color: var(--progressIndicatorBadColor);
-  font-weight: 500;
+	color: var(--progressIndicatorBadColor);
+	font-weight: 500;
 }

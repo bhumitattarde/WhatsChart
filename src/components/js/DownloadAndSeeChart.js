@@ -3,33 +3,33 @@ import PropTypes from "prop-types";
 
 import "../css/DownloadAndSeeChart.css";
 
-const DownloadAndSeeChart = (props) => (
-  <div className="downloadAndSeeChart">
-    <ul className="linksList">
-      <li>
-        <a className="button altColorButton" href="#chart">
-          See it
-        </a>
-      </li>
-      <li>
-        <button
-          className="button altColorButton"
-          type="button"
-          onClick={props.handleDownload}
-        >
-          Download
-        </button>
-      </li>
-    </ul>
-  </div>
+const DownloadAndSeeChart = props => (
+	<div className="downloadAndSeeChart">
+		<ul className="linksList">
+			<li>
+				<a className="button altColorButton" href="#chart">
+					See it
+				</a>
+			</li>
+			<li>
+				<button
+					className="button altColorButton"
+					type="button"
+					onClick={props.handleDownload}
+				>
+					Download
+				</button>
+			</li>
+		</ul>
+	</div>
 );
 
 DownloadAndSeeChart.propTypes = {
-  handleDownload: PropTypes.func.isRequired,
+	handleDownload: PropTypes.func.isRequired
 };
 
 DownloadAndSeeChart.defaultProps = {
-  handleDownload: () => {},
+	handleDownload: () => {}
 };
 
 export default DownloadAndSeeChart;

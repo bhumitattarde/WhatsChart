@@ -1,5 +1,5 @@
 @media (max-width: 650px) {
-  #feedbackPage > ul {
-    flex-direction: column;
-  }
+	#feedbackPage > ul {
+		flex-direction: column;
+	}
 }

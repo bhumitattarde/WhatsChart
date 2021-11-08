@@ -1,131 +1,131 @@
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-  --color1: #14274e;
-  --color2: #394867;
-  --color3: #004a7c;
-  --color4: #f1f6f9;
-  --linkHoverColor: #14ffec;
-  --progressIndicatorBadColor: #fcbf1e;
+	--color1: #14274e;
+	--color2: #394867;
+	--color3: #004a7c;
+	--color4: #f1f6f9;
+	--linkHoverColor: #14ffec;
+	--progressIndicatorBadColor: #fcbf1e;
 
-  text-align: center;
-  line-height: 1.4;
-  color: var(--color4);
-  background-color: var(--color1);
+	text-align: center;
+	line-height: 1.4;
+	color: var(--color4);
+	background-color: var(--color1);
 }
 
 h1:not(#chart h1, #navHeading) {
-  font-size: clamp(32px, 2vw, 40px);
-  font-family: "Raleway", sans-serif;
-  margin: 2.5em 1.5em;
-  margin-bottom: 2.5em;
+	font-size: clamp(32px, 2vw, 40px);
+	font-family: "Raleway", sans-serif;
+	margin: 2.5em 1.5em;
+	margin-bottom: 2.5em;
 }
 
 h2:not(#chart h2) {
-  font-size: clamp(24px, 1.5vw, 28px);
-  font-family: "Raleway", sans-serif;
-  margin: 2em 0;
+	font-size: clamp(24px, 1.5vw, 28px);
+	font-family: "Raleway", sans-serif;
+	margin: 2em 0;
 }
 
 h3:not(#chart h3) {
-  font-size: clamp(18.72px, 1.2vw, 22.72px);
-  font-family: "Raleway", sans-serif;
+	font-size: clamp(18.72px, 1.2vw, 22.72px);
+	font-family: "Raleway", sans-serif;
 }
 
 h4:not(#chart h4) {
-  font-size: clamp(16px, 1vw, 20px);
-  font-family: "Raleway", sans-serif;
+	font-size: clamp(16px, 1vw, 20px);
+	font-family: "Raleway", sans-serif;
 }
 
 p:not(#chart p) {
-  font-size: clamp(16px, 1vw, 20px);
+	font-size: clamp(16px, 1vw, 20px);
 }
 
 a {
-  color: var(--color4);
+	color: var(--color4);
 }
 
 a:hover {
-  color: var(--linkHoverColor);
+	color: var(--linkHoverColor);
 }
 
 ul > li {
-  list-style: none;
+	list-style: none;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 button,
 input[type="submit"] {
-  font-family: "Poppins", sans-serif;
-  border: none;
-  cursor: pointer;
+	font-family: "Poppins", sans-serif;
+	border: none;
+	cursor: pointer;
 }
 
 .appWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .page {
-  width: 100%;
-  height: max(100vh, 100%);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1em 1em;
+	width: 100%;
+	height: max(100vh, 100%);
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1em 1em;
 }
 
 .linksList {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: 1em;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-top: 1em;
 }
 
 .linksList > li {
-  margin: 0.3em;
+	margin: 0.3em;
 }
 
 .button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0.3em;
-  padding: 1em;
-  background-color: var(--color2);
-  color: var(--color4);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0.3em;
+	padding: 1em;
+	background-color: var(--color2);
+	color: var(--color4);
 }
 
 .button:hover {
-  background-color: var(--color3);
+	background-color: var(--color3);
 }
 
 .altColorButton:hover {
-  background-color: var(--color1);
+	background-color: var(--color1);
 }
 
 /*  */
 
 @media (max-width: 480px) {
-  h1:not(#chart h1, #navHeading) {
-    margin: 2.5em 0.5em;
-    margin-bottom: 1.5em;
-  }
+	h1:not(#chart h1, #navHeading) {
+		margin: 2.5em 0.5em;
+		margin-bottom: 1.5em;
+	}
 }
