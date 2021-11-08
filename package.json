@@ -1,62 +1,56 @@
 {
-	"name": "whatschart",
-	"version": "0.1.0",
-	"private": true,
-	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^1.2.35",
-		"@fortawesome/free-brands-svg-icons": "^5.15.3",
-		"@fortawesome/free-regular-svg-icons": "^5.15.3",
-		"@fortawesome/free-solid-svg-icons": "^5.15.3",
-		"@fortawesome/react-fontawesome": "^0.1.14",
-		"@testing-library/jest-dom": "^5.12.0",
-		"@testing-library/react": "^11.2.6",
-		"@testing-library/user-event": "^12.8.3",
-		"chart.js": "^3.2.1",
-		"downloadjs": "^1.4.7",
-		"html-to-image": "^1.6.1",
-		"prop-types": "^15.7.2",
-		"react": "^17.0.2",
-		"react-chartjs-2": "^3.0.3",
-		"react-dom": "^17.0.2",
-		"react-scripts": "4.0.3",
-		"stopword": "^1.0.7",
-		"web-vitals": "^1.1.1",
-		"whatsapp-chat-parser": "^3.1.1"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	},
-	"devDependencies": {
-		"eslint": "^7.32.0",
-		"eslint-config-airbnb-base": "^14.2.1",
-		"eslint-config-prettier": "^8.3.0",
-		"eslint-plugin-import": "^2.25.2",
-		"eslint-plugin-prettier": "^4.0.0",
-		"gh-pages": "^3.1.0",
-		"prettier": "^2.4.1"
-	},
-	"homepage": "https://whatschart.bhumit.net"
+  "name": "whatschart",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "chart.js": "^3.2.1",
+    "downloadjs": "^1.4.7",
+    "html-to-image": "^1.6.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-chartjs-2": "^3.0.3",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "stopword": "^1.0.7",
+    "web-vitals": "^1.1.1",
+    "whatsapp-chat-parser": "^3.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "gh-pages": "^3.1.0",
+    "prettier": "^2.4.1"
+  },
+  "homepage": "https://whatschart.bhumit.net"
 }
