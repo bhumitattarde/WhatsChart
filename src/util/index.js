@@ -1,8 +1,13 @@
 import sw from "stopword";
 
-// sorts the map in descending order of values
+/**
+ * sorts the map in descending order of values
+ * @param {Map} map map to sort
+ * @returns {Map} sorted map
+ */
 const sortMap = map => new Map([...map.entries()].sort((a, b) => b[1] - a[1]));
 
+// languages supported by stopword package (to remove stopwords from chats)
 const supportedLangs = new Map([
 	["af", sw.af],
 	["ar", sw.ar],
