@@ -1,6 +1,6 @@
 import * as whatsapp from "whatsapp-chat-parser";
 import sw from "stopword";
-import { sortMap } from "../util/util.js";
+import { sortMap } from "../util";
 import { author } from "./author.js";
 
 class statsCalculator {

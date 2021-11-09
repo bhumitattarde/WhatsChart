@@ -5,7 +5,7 @@ import { toPng } from "html-to-image";
 import download from "downloadjs";
 
 import statsCalculator from "../../core/statscalculator";
-import { supportedLangs } from "../../util/util.js";
+import { supportedLangs } from "../../util";
 import ProgressIndicator from "./ProgressIndicator.js";
 import DownloadAndSeeChart from "./DownloadAndSeeChart.js";
 
@@ -242,8 +242,7 @@ class FileForm extends React.Component {
 				id="fileForm"
 				className="page"
 				action=""
-				onSubmit={this.handleFormSubmission}
-			>
+				onSubmit={this.handleFormSubmission}>
 				<h2>Select your file &amp; configuration</h2>
 				<div className="fileSelectorWrapper">
 					<label htmlFor="fileSelector">Select the chat file</label>
@@ -263,8 +262,7 @@ class FileForm extends React.Component {
 								name="rmStopwords"
 								value="rmStopwords"
 								onChange={this.toggleLangDropdown}
-								defaultChecked
-							></input>
+								defaultChecked></input>
 						</div>
 
 						<div>
@@ -286,8 +284,7 @@ class FileForm extends React.Component {
 							<input
 								id="author1ColorPicker"
 								type="color"
-								defaultValue={this.defaultForm.colors.author1Color}
-							></input>
+								defaultValue={this.defaultForm.colors.author1Color}></input>
 							<label htmlFor="author1ColorPicker">First author color</label>
 						</div>
 
@@ -295,8 +292,7 @@ class FileForm extends React.Component {
 							<input
 								id="author2ColorPicker"
 								type="color"
-								defaultValue={this.defaultForm.colors.author2Color}
-							></input>
+								defaultValue={this.defaultForm.colors.author2Color}></input>
 							<label htmlFor="author2ColorPicker">Second author color</label>
 						</div>
 
@@ -304,8 +300,7 @@ class FileForm extends React.Component {
 							<input
 								id="bgColorPicker"
 								type="color"
-								defaultValue={this.defaultForm.colors.backgroundColor}
-							></input>
+								defaultValue={this.defaultForm.colors.backgroundColor}></input>
 							<label htmlFor="bgColorPicker">Background color</label>
 						</div>
 
@@ -313,8 +308,7 @@ class FileForm extends React.Component {
 							<input
 								id="textColorPicker"
 								type="color"
-								defaultValue={this.defaultForm.colors.textColor}
-							></input>
+								defaultValue={this.defaultForm.colors.textColor}></input>
 							<label htmlFor="textColorPicker">Text color</label>
 						</div>
 
@@ -322,8 +316,7 @@ class FileForm extends React.Component {
 							<input
 								id="iconColorPicker"
 								type="color"
-								defaultValue={this.defaultForm.colors.iconColor}
-							></input>
+								defaultValue={this.defaultForm.colors.iconColor}></input>
 							<label htmlFor="iconColorPicker">Icons color</label>
 						</div>
 
@@ -331,8 +324,7 @@ class FileForm extends React.Component {
 							<input
 								id="graphColorPicker"
 								type="color"
-								defaultValue={this.defaultForm.colors.graphColor}
-							></input>
+								defaultValue={this.defaultForm.colors.graphColor}></input>
 							<label htmlFor="graphColorPicker">Graphs color</label>
 						</div>
 					</div>
