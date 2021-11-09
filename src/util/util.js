@@ -1,13 +1,9 @@
 import sw from "stopword";
 
-// Util functions that are required in more than one class/file go here
+// sorts the map in descending order of values
+const sortMap = map => new Map([...map.entries()].sort((a, b) => b[1] - a[1]));
 
-export function sortMap(map) {
-	// sorts the map in descending order of values
-	return new Map([...map.entries()].sort((a, b) => b[1] - a[1]));
-}
-
-export const supportedLangs = new Map([
+const supportedLangs = new Map([
 	["af", sw.af],
 	["ar", sw.ar],
 	["bg", sw.bg],
@@ -65,3 +61,5 @@ export const supportedLangs = new Map([
 	["zh", sw.zh],
 	["zu", sw.zu]
 ]);
+
+export { sortMap, supportedLangs };
