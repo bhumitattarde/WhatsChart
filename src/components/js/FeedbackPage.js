@@ -2,23 +2,21 @@ import React from "react";
 
 import "../css/FeedbackPage.css";
 
-const FeedbackPage = props => (
+const FeedbackPage = () => (
 	<div id="feedbackPage" className="page">
 		<h2>Feedback</h2>
 		<ul className="linksList">
 			<li>
 				<a
 					className="button"
-					href="https://github.com/bhumitattarde/WhatsChart/issues/new?labels=bug&title=BUG: "
-				>
+					href="https://github.com/bhumitattarde/WhatsChart/issues/new?labels=bug&title=BUG: ">
 					Report bugs
 				</a>
 			</li>
 			<li>
 				<a
 					className="button"
-					href="https://github.com/bhumitattarde/WhatsChart/issues/new?labels=enhancement&title=SUGGESTION: "
-				>
+					href="https://github.com/bhumitattarde/WhatsChart/issues/new?labels=enhancement&title=SUGGESTION: ">
 					Suggest improvements
 				</a>
 			</li>
@@ -27,8 +25,7 @@ const FeedbackPage = props => (
 					className="button"
 					href="https://github.com/bhumitattarde/WhatsChart"
 					target="_blank"
-					rel="noopener noreferrer"
-				>
+					rel="noopener noreferrer">
 					GitHub
 				</a>
 			</li>
