@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Bar, Pie, Doughnut } from "react-chartjs-2";
-import { defaults } from "react-chartjs-2";
+import { Bar, Pie, Doughnut, defaults } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faIcons,
@@ -50,23 +49,23 @@ class WhatsChart extends React.Component {
 		// `this` bindings
 		this.getWeekDayName = this.getWeekDayName.bind(this);
 
-		//chartjs global config
+		// chartjs global config
 		defaults.animation.duration = 0;
 		defaults.font.family = "'Poppins', 'sans-serif'";
-
 		defaults.font.weight = "400";
 	}
 
 	// methods
-	shadeColor(percentage, color) {
+	static shadeColor(percentage, Color) {
 		// `percentage` range is -1 to 1 & color is in rgb format eg., ("0.1", "rgb(0,0,255)")
-		var i = parseInt,
-			r = Math.round,
-			[a, b, color, d] = color.split(","),
-			P = percentage < 0,
-			t = P ? 0 : 255 * percentage,
-			P = P ? 1 + percentage : 1 - percentage;
+		const i = parseInt;
+		const r = Math.round;
+		const [a, b, color, d] = Color.split(",");
+		let P = percentage < 0;
+		const t = P ? 0 : 255 * percentage;
+		P = P ? 1 + percentage : 1 - percentage;
 		return (
+			// eslint-disable-next-line prefer-template
 			"rgb" +
 			(d ? "a(" : "(") +
 			r(i(a[3] === "a" ? a.slice(5) : a.slice(4)) * P + t) +
@@ -74,6 +73,7 @@ class WhatsChart extends React.Component {
 			r(i(b) * P + t) +
 			"," +
 			r(i(color) * P + t) +
+			// eslint-disable-next-line prefer-template
 			(d ? "," + d : ")")
 		);
 	}
@@ -84,10 +84,7 @@ class WhatsChart extends React.Component {
 
 	// hooks
 	componentWillMount() {
-		const author1 = this.props.author1;
-		const author2 = this.props.author2;
-		const combined = this.props.combined;
-		const config = this.props.config;
+		const { author1, author2, combined, config } = this.props;
 
 		defaults.color = config.textColor;
 		if (document.body.clientWidth < 480) {
@@ -98,95 +95,88 @@ class WhatsChart extends React.Component {
 
 		// Graph configs
 		// graph options. If some graph needs customized options, set them separately
-
-		this.defaultVerticalBarChartOpts = (title = "") => {
-			return {
-				maintainAspectRatio: false,
-				scales: {
-					x: {
-						grid: {
-							display: false,
-							drawOnChartArea: false,
-							drawTicks: false,
-							drawBorder: false
-						}
-					},
-					y: {
-						grid: {
-							display: false,
-							drawOnChartArea: false,
-							drawTicks: false,
-							drawBorder: false
-						}
+		this.defaultVerticalBarChartOpts = (title = "") => ({
+			maintainAspectRatio: false,
+			scales: {
+				x: {
+					grid: {
+						display: false,
+						drawOnChartArea: false,
+						drawTicks: false,
+						drawBorder: false
 					}
 				},
-				plugins: {
-					legend: {
-						display: false
-					},
-					title: {
-						display: true,
-						position: "bottom",
-						text: title
+				y: {
+					grid: {
+						display: false,
+						drawOnChartArea: false,
+						drawTicks: false,
+						drawBorder: false
 					}
 				}
-			};
-		};
+			},
+			plugins: {
+				legend: {
+					display: false
+				},
+				title: {
+					display: true,
+					position: "bottom",
+					text: title
+				}
+			}
+		});
 
-		this.defaultHorizontalBarChartOpts = (title = "") => {
-			return {
-				maintainAspectRatio: false,
-				indexAxis: "y",
-				scales: {
-					x: {
-						grid: {
-							display: false,
-							drawOnChartArea: false,
-							drawTicks: false,
-							drawBorder: false
-						}
-					},
-					y: {
-						grid: {
-							display: false,
-							drawOnChartArea: false,
-							drawTicks: false,
-							drawBorder: false
-						}
+		this.defaultHorizontalBarChartOpts = (title = "") => ({
+			maintainAspectRatio: false,
+			indexAxis: "y",
+			scales: {
+				x: {
+					grid: {
+						display: false,
+						drawOnChartArea: false,
+						drawTicks: false,
+						drawBorder: false
 					}
 				},
-				plugins: {
-					legend: {
-						display: false
-					},
-					title: {
-						display: true,
-						position: "bottom",
-						text: title
+				y: {
+					grid: {
+						display: false,
+						drawOnChartArea: false,
+						drawTicks: false,
+						drawBorder: false
 					}
 				}
-			};
-		};
-
-		this.defaultPieChartOpts = (title = "") => {
-			return {
-				scales: {
-					x: {
-						display: false
-					},
-					y: {
-						display: false
-					}
+			},
+			plugins: {
+				legend: {
+					display: false
 				},
-				plugins: {
-					title: {
-						display: true,
-						position: "bottom",
-						text: title
-					}
+				title: {
+					display: true,
+					position: "bottom",
+					text: title
 				}
-			};
-		};
+			}
+		});
+
+		this.defaultPieChartOpts = (title = "") => ({
+			scales: {
+				x: {
+					display: false
+				},
+				y: {
+					display: false
+				}
+			},
+			plugins: {
+				title: {
+					display: true,
+					position: "bottom",
+					text: title
+				}
+			}
+		});
 
 		// data and individual options
 		this.dataInDepthSummaryAll = {
@@ -197,10 +187,9 @@ class WhatsChart extends React.Component {
 					labels: [author1.name, author2.name],
 					data: [author1.totalMessages, author2.totalMessages],
 					backgroundColor: [
-						this.shadeColor("0", config.author1Color),
-						this.shadeColor("0", config.author2Color)
+						WhatsChart.shadeColor("0", config.author1Color),
+						WhatsChart.shadeColor("0", config.author2Color)
 					],
-					// "borderWidth": 2,
 					borderColor: config.backgroundColor
 				},
 				{
@@ -208,10 +197,9 @@ class WhatsChart extends React.Component {
 					labels: [author1.name, author2.name],
 					data: [author1.textMessages, author2.textMessages],
 					backgroundColor: [
-						this.shadeColor("0.3", config.author1Color),
-						this.shadeColor("0.3", config.author2Color)
+						WhatsChart.shadeColor("0.3", config.author1Color),
+						WhatsChart.shadeColor("0.3", config.author2Color)
 					],
-					// "borderWidth": 2,
 					borderColor: config.backgroundColor
 				},
 				{
@@ -219,11 +207,10 @@ class WhatsChart extends React.Component {
 					labels: [author1.name, author2.name],
 					data: [author1.totalMedia, author2.totalMedia],
 					backgroundColor: [
-						this.shadeColor("0.6", config.author1Color),
-						this.shadeColor("0.6", config.author2Color)
+						WhatsChart.shadeColor("0.6", config.author1Color),
+						WhatsChart.shadeColor("0.6", config.author2Color)
 					],
 					borderColor: config.backgroundColor
-					// "borderWidth": 2,
 				}
 			]
 		};
@@ -235,40 +222,36 @@ class WhatsChart extends React.Component {
 					label: "Pictures",
 					data: [author1.pictures, author2.pictures],
 					backgroundColor: [
-						this.shadeColor("0", config.author1Color),
-						this.shadeColor("0", config.author2Color)
+						WhatsChart.shadeColor("0", config.author1Color),
+						WhatsChart.shadeColor("0", config.author2Color)
 					],
-					// borderWidth: 0,
 					borderColor: config.backgroundColor
 				},
 				{
 					label: "Videos",
 					data: [author1.videos, author2.videos],
 					backgroundColor: [
-						this.shadeColor("0.2", config.author1Color),
-						this.shadeColor("0.2", config.author2Color)
+						WhatsChart.shadeColor("0.2", config.author1Color),
+						WhatsChart.shadeColor("0.2", config.author2Color)
 					],
-					// borderWidth: 0,
 					borderColor: config.backgroundColor
 				},
 				{
 					label: "Audios",
 					data: [author1.audios, author2.audios],
 					backgroundColor: [
-						this.shadeColor("0.4", config.author1Color),
-						this.shadeColor("0.4", config.author2Color)
+						WhatsChart.shadeColor("0.4", config.author1Color),
+						WhatsChart.shadeColor("0.4", config.author2Color)
 					],
-					// borderWidth: 0,
 					borderColor: config.backgroundColor
 				},
 				{
 					label: "Links",
 					data: [author1.links, author2.links],
 					backgroundColor: [
-						this.shadeColor("0.6", config.author1Color),
-						this.shadeColor("0.6", config.author2Color)
+						WhatsChart.shadeColor("0.6", config.author1Color),
+						WhatsChart.shadeColor("0.6", config.author2Color)
 					],
-					// borderWidth: 0,
 					borderColor: config.backgroundColor
 				}
 			]
@@ -286,7 +269,7 @@ class WhatsChart extends React.Component {
 		};
 
 		this.dataMostUsedWords = authorNum => {
-			//authorNum is number (either 1 or 2)
+			// authorNum is number (either 1 or 2)
 			const author = authorNum === 1 ? author1 : author2;
 
 			return {
@@ -315,7 +298,7 @@ class WhatsChart extends React.Component {
 		};
 
 		this.dataMostUsedEmojis = authorNum => {
-			//authorNum is number (either 1 or 2)
+			// authorNum is number (either 1 or 2)
 			const author = authorNum === 1 ? author1 : author2;
 
 			return {
@@ -387,22 +370,6 @@ class WhatsChart extends React.Component {
 				this.getWeekDayName(val)
 			),
 			datasets: [
-				// {
-				//   type: "line",
-				//   label: author1.name,
-				//   data: [...author1.messagesByDaysOfWeek.values()],
-				//   borderWidth: 1.5,
-				//   pointRadius: 0,
-				//   borderColor: config.author1Color,
-				// },
-				// {
-				//   type: "line",
-				//   label: author2.name,
-				//   data: [...author2.messagesByDaysOfWeek.values()],
-				//   borderWidth: 1.5,
-				//   pointRadius: 0,
-				//   borderColor: config.author2Color,
-				// },
 				{
 					label: "Messages",
 					data: [...combined.messagesByDaysOfWeek.values()],
@@ -415,22 +382,6 @@ class WhatsChart extends React.Component {
 		this.dataMessagesByDate = {
 			labels: [...combined.messagesByDate.keys()],
 			datasets: [
-				// {
-				//   type: "line",
-				//   label: author1.name,
-				//   data: [...author1.messagesByDate.values()],
-				//   borderWidth: 1,
-				//   pointRadius: 0,
-				//   borderColor: config.author1Color,
-				// },
-				// {
-				//   type: "line",
-				//   label: author2.name,
-				//   data: [...author2.messagesByDate.values()],
-				//   borderWidth: 1,
-				//   pointRadius: 0,
-				//   borderColor: config.author2Color,
-				// },
 				{
 					label: "Messages",
 					data: [...combined.messagesByDate.values()],
@@ -442,8 +393,7 @@ class WhatsChart extends React.Component {
 	}
 
 	componentDidMount() {
-		const config = this.props.config;
-
+		const { config } = this.props;
 		document
 			.getElementById("chart")
 			.style.setProperty("--backgroundColor", config.backgroundColor);
@@ -456,10 +406,7 @@ class WhatsChart extends React.Component {
 	}
 
 	render() {
-		// frequently used vars
-		const author1 = this.props.author1;
-		const author2 = this.props.author2;
-		const combined = this.props.combined;
+		const { author1, author2, combined } = this.props;
 		const author1Name = this.props.author1.name;
 		const author2Name = this.props.author2.name;
 
@@ -468,9 +415,6 @@ class WhatsChart extends React.Component {
 				<p id="madeWithTag">Made using whatschart.bhumit.net</p>
 				<header>
 					<h1>{combined.periodInDays} days of WhatsApp texting</h1>
-					{/* <h2>
-            between {author1Name} &amp; {author2Name}
-          </h2> */}
 				</header>
 
 				{/* summary section */}
