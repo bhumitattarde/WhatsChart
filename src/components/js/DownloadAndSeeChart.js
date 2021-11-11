@@ -15,8 +15,7 @@ const DownloadAndSeeChart = props => (
 				<button
 					className="button altColorButton"
 					type="button"
-					onClick={props.handleDownload}
-				>
+					onClick={props.handleDownload}>
 					Download
 				</button>
 			</li>
