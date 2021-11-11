@@ -3,12 +3,15 @@ import sw from "stopword";
 import { sortMap } from "../util";
 import Author from "./author";
 
+/**
+ * Class responsible for generating metrics/statistics from the chat file
+ */
 class Statistics {
 	constructor() {
-		// member vars
+		// init member vars
 		this.removeStopwords = false;
 		this.language = {};
-		this.authors = {
+		this.stats = {
 			author1: new Author(),
 			author2: new Author(),
 			combined: {
@@ -36,22 +39,32 @@ class Statistics {
 
 		// Fill messagesByHour and messagesByDaysOfWeek for consistent plotting
 		for (let i = 0; i <= 23; i += 1) {
-			this.authors.author1.messagesByHour.set(i, 0);
-			this.authors.author2.messagesByHour.set(i, 0);
+			this.stats.author1.messagesByHour.set(i, 0);
+			this.stats.author2.messagesByHour.set(i, 0);
 		}
 		for (let i = 0; i < 7; i += 1) {
-			this.authors.author1.messagesByDaysOfWeek.set(i, 0);
-			this.authors.author2.messagesByDaysOfWeek.set(i, 0);
+			this.stats.author1.messagesByDaysOfWeek.set(i, 0);
+			this.stats.author2.messagesByDaysOfWeek.set(i, 0);
 		}
 	}
 
+	/**
+	 * Increments count of a key in a map with key:count structure
+	 * @param {Map} map Map that has the key
+	 * @param {} key key whose count should be incremented
+	 */
 	static incrementKeyCount(map, key) {
 		const freq = map.get(key);
 		map.set(key, freq === undefined ? 1 : freq + 1);
 	}
 
+	/**
+	 * Adds (read: combines) two Maps. If there are duplicate keys, their values are added.
+	 * @param {Map} map1 first map
+	 * @param {Map} map2 second map
+	 * @returns {Map} combined map
+	 */
 	static addMaps(map1, map2) {
-		// Adds two Maps. If there are duplicate keys, their values are added
 		const newMap = new Map();
 		for (const [key, val] of map1) {
 			newMap.set(key, val);
@@ -66,16 +79,33 @@ class Statistics {
 		return newMap;
 	}
 
+	/**
+	 * Get element with highest frequency for a map with key:count structure
+	 * @param {Map} map Map whose mode you need
+	 * @returns {} element with highest frequency
+	 */
 	static getModeOfAMap(map) {
 		return [...map.entries()].reduce((a, e) => (e[1] > a[1] ? e : a));
 	}
 
+	/**
+	 * Get element with highest frequency from maps with key:count structure.
+	 * Note: This function 'combines' the maps using `addMaps` and then
+	 * calculates mode.
+	 * @param {Map} map1 Map 1
+	 * @param {Map} map2 Map 2
+	 * @returns {} mode of the maps provided
+	 */
 	static getModeOfTwoMaps(map1, map2) {
 		return [...Statistics.addMaps(map1, map2).entries()].reduce((a, e) =>
 			e[1] > a[1] ? e : a
 		);
 	}
 
+	/**
+	 * Generates statistics of an author
+	 * @param {Author} author Auhtor whose stats you need to generate
+	 */
 	static generateAuthorStats(author) {
 		author.words = sortMap(author.words);
 		author.emojis = sortMap(author.emojis);
@@ -84,6 +114,12 @@ class Statistics {
 		[author.mostUsedEmoji] = [...author.emojis];
 	}
 
+	/**
+	 * Generates string required for the 'words' section of the chart
+	 * @param {Author} author1 Author 1
+	 * @param {Author} author2 Author 2
+	 * @returns {String} string used in 'words' section
+	 */
 	static generateWordsSection(author1, author2) {
 		let wordsSectionString = "";
 		if (author1.textMessages === author2.textMessages) {
@@ -123,25 +159,32 @@ class Statistics {
 		return wordsSectionString;
 	}
 
+	/**
+	 * Detects and sets names of the authors
+	 * @param {Array} messages messages
+	 */
 	setAuthorNames(messages) {
 		for (const msg of messages) {
 			if (msg.author !== "" && msg.author !== "System") {
-				if (!this.authors.author1.name) {
-					this.authors.author1.name = msg.author;
+				if (!this.stats.author1.name) {
+					this.stats.author1.name = msg.author;
 					continue;
 				}
-				if (msg.author !== this.authors.author1.name) {
-					this.authors.author2.name = msg.author;
+				if (msg.author !== this.stats.author1.name) {
+					this.stats.author2.name = msg.author;
 					break;
 				}
 			}
 		}
 	}
 
+	/**
+	 * Generates combined statistics (combined section of `this.stats`)
+	 */
 	generateCombinedStats() {
-		const { author1 } = this.authors;
-		const { author2 } = this.authors;
-		const { combined } = this.authors;
+		const { author1 } = this.stats;
+		const { author2 } = this.stats;
+		const { combined } = this.stats;
 
 		combined.sectionWordsString = Statistics.generateWordsSection(
 			author1,
@@ -182,6 +225,11 @@ class Statistics {
 		combined.periodInDays = combined.messagesByDate.size;
 	}
 
+	/**
+	 * Genrates both author's as well as combined statistics
+	 * @param {Array} messages messages
+	 * @returns {Promise}
+	 */
 	generateAllStats(messages) {
 		return new Promise(resolve => {
 			this.setAuthorNames(messages);
@@ -189,10 +237,10 @@ class Statistics {
 			for (const message of messages) {
 				// get author of the message
 				let author = {};
-				if (message.author === this.authors.author1.name) {
-					author = this.authors.author1;
-				} else if (message.author === this.authors.author2.name) {
-					author = this.authors.author2;
+				if (message.author === this.stats.author1.name) {
+					author = this.stats.author1;
+				} else if (message.author === this.stats.author2.name) {
+					author = this.stats.author2;
 				}
 
 				// Sort message by time and increment counters
@@ -260,13 +308,21 @@ class Statistics {
 				}
 			}
 
-			Statistics.generateAuthorStats(this.authors.author1);
-			Statistics.generateAuthorStats(this.authors.author2);
+			Statistics.generateAuthorStats(this.stats.author1);
+			Statistics.generateAuthorStats(this.stats.author2);
 			this.generateCombinedStats();
-			resolve(this.authors);
+			resolve(this.stats);
 		});
 	}
 
+	/**
+	 * Generate statiscs/metrics of a chat
+	 * @param {String} data chat file data
+	 * @param {Boolean} rmStopwords `true` if stopwords should be removed from
+	 * the chat messages
+	 * @param {Object} language language of the conversation
+	 * @returns {Promise} generated statistics
+	 */
 	generate(data, rmStopwords, language) {
 		return new Promise((resolve, reject) => {
 			this.removeStopwords = rmStopwords;
@@ -274,7 +330,7 @@ class Statistics {
 			whatsapp
 				.parseString(data)
 				.then(messages => this.generateAllStats(messages))
-				.then(authors => resolve(authors))
+				.then(stats => resolve(stats))
 				.catch(err => reject(err));
 		});
 	}
