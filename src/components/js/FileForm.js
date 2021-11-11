@@ -37,6 +37,9 @@ class FileForm extends React.Component {
 		this.updateProgress = this.updateProgress.bind(this);
 	}
 
+	/**
+	 * Toggles language dropdown menu based on 'remove stopwords?' checkbox
+	 */
 	static toggleLangDropdown() {
 		if (document.getElementById("rmStopwords").checked) {
 			document.getElementById("langDropdown").disabled = false;
@@ -45,6 +48,11 @@ class FileForm extends React.Component {
 		}
 	}
 
+	/**
+	 * Converts hex color code to RGB color code
+	 * @param {String} hex Hex code of the color
+	 * @returns {String} RGB color code of the color
+	 */
 	static convertToRGB(hex) {
 		return `rgb(${hex
 			.match(/[A-Za-z0-9]{2}/g)
@@ -52,6 +60,11 @@ class FileForm extends React.Component {
 			.join(",")})`;
 	}
 
+	/**
+	 * Read a file into a string
+	 * @param {Object} file file
+	 * @returns {Promise} contents of the file into a string
+	 */
 	static readFile(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -75,6 +88,11 @@ class FileForm extends React.Component {
 		});
 	}
 
+	/**
+	 * Gets user input values from the form
+	 * @returns {Object} object with file, config, rmStopwords, language
+	 * properties
+	 */
 	static getInputs() {
 		const file = document.getElementById("fileSelector").files[0];
 		const config = {
@@ -105,12 +123,20 @@ class FileForm extends React.Component {
 		return { file, config, rmStopwords, language };
 	}
 
+	/**
+	 * Downloads the chart to user's local machine
+	 */
 	static handleDownload() {
 		toPng(document.getElementById("chart")).then(dataURL => {
 			download(dataURL, "whatschart.png");
 		});
 	}
 
+	/**
+	 * Updates progress bar
+	 * @param {String} progress progres/update to show
+	 * @param {Boolean} err error status
+	 */
 	updateProgress(progress, err = false) {
 		this.setState(() => ({
 			progress,
@@ -118,6 +144,14 @@ class FileForm extends React.Component {
 		}));
 	}
 
+	/**
+	 * Generate WhatsChart
+	 * @param {String} data chat file data
+	 * @param {Boolean} rmStopwords `true` if stopwords should be removed
+	 * @param {Object} lang stopword language object (if rmStopwords `true`)
+	 * @param {Object} config configuration chosen by the user
+	 * @returns
+	 */
 	generate(data, rmStopwords, lang, config) {
 		return new Promise((resolve, reject) => {
 			new Statistics()
@@ -133,6 +167,12 @@ class FileForm extends React.Component {
 		});
 	}
 
+	/**
+	 * Callback to handle form submission.
+	 * Called when user clicks on the 'generate' button
+	 * @param {Object} event click/other page event
+	 * @returns {Boolean} success status
+	 */
 	async handleFormSubmission(event) {
 		let success = false;
 		this.props.showChart(false);
