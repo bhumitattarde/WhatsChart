@@ -2,7 +2,7 @@ import React from "react";
 
 import "../css/NavBar.css";
 
-const NavBar = props => (
+const NavBar = () => (
 	<nav className="navBar">
 		<h1 id="navHeading">WhatsChart</h1>
 		<ul>
