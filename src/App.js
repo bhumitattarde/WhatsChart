@@ -1,13 +1,13 @@
 import React from "react";
 
-import NavBar from "./components/js/NavBar.js";
-import MainPage from "./components/js/MainPage.js";
-import WhyWhatschart from "./components/js/WhyWhatschart.js";
-import HowtoPage from "./components/js/HowtoPage.js";
-import WhatsChart from "./components/js/WhatsChart.js";
-import FileForm from "./components/js/FileForm.js";
-import FeedbackPage from "./components/js/FeedbackPage.js";
-import Footer from "./components/js/Footer.js";
+import NavBar from "./components/js/NavBar";
+import MainPage from "./components/js/MainPage";
+import WhyWhatschart from "./components/js/WhyWhatschart";
+import HowtoPage from "./components/js/HowtoPage";
+import WhatsChart from "./components/js/WhatsChart";
+import FileForm from "./components/js/FileForm";
+import FeedbackPage from "./components/js/FeedbackPage";
+import Footer from "./components/js/Footer";
 
 import "./App.css";
 
@@ -30,12 +30,11 @@ class App extends React.Component {
 	formSubmitCallback(stats, config) {
 		this.stats = stats;
 		this.config = config;
-
 		this.showChart(true);
 	}
 
 	showChart(show) {
-		this.setState(prevState => ({
+		this.setState(() => ({
 			showChart: show
 		}));
 	}
@@ -47,13 +46,11 @@ class App extends React.Component {
 				<MainPage />
 				<WhyWhatschart />
 				<HowtoPage />
-
 				<FileForm
 					submitCallback={this.formSubmitCallback}
 					showChart={this.showChart}
 					chartVisible={this.state.showChart}
 				/>
-
 				{this.state.showChart && (
 					<WhatsChart
 						author1={this.stats.author1}
@@ -62,7 +59,6 @@ class App extends React.Component {
 						config={this.config}
 					/>
 				)}
-
 				<FeedbackPage />
 				<Footer />
 			</div>
