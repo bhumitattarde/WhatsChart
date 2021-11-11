@@ -1,19 +1,18 @@
 import * as whatsapp from "whatsapp-chat-parser";
 import sw from "stopword";
 import { sortMap } from "../util";
-import { author } from "./author.js";
+import Author from "./author";
 
-class statsCalculator {
+class Statistics {
 	constructor() {
 		// member vars
 		this.removeStopwords = false;
 		this.language = {};
 		this.authors = {
-			author1: new author(),
-			author2: new author(),
+			author1: new Author(),
+			author2: new Author(),
 			combined: {
-				sectionsWordString: "",
-
+				wordsSection: "",
 				messagesByHour: new Map(),
 				messagesByDaysOfWeek: new Map(),
 				messagesByDate: new Map(),
@@ -36,41 +35,56 @@ class statsCalculator {
 		this.regexWords = new RegExp(/[^\W_]+(?:['’_-][^\W_]+)*/g);
 
 		// Fill messagesByHour and messagesByDaysOfWeek for consistent plotting
-		for (let i = 0; i <= 23; i++) {
+		for (let i = 0; i <= 23; i += 1) {
 			this.authors.author1.messagesByHour.set(i, 0);
 			this.authors.author2.messagesByHour.set(i, 0);
 		}
-		for (let i = 0; i < 7; i++) {
+		for (let i = 0; i < 7; i += 1) {
 			this.authors.author1.messagesByDaysOfWeek.set(i, 0);
 			this.authors.author2.messagesByDaysOfWeek.set(i, 0);
 		}
 	}
 
-	incrementCounter(map, key) {
-		let freq = map.get(key);
+	static incrementKeyCount(map, key) {
+		const freq = map.get(key);
 		map.set(key, freq === undefined ? 1 : freq + 1);
 	}
 
-	addMaps(map1, map2) {
+	static addMaps(map1, map2) {
 		// Adds two Maps. If there are duplicate keys, their values are added
 		const newMap = new Map();
-
-		for (let [key, val] of map1) {
+		for (const [key, val] of map1) {
 			newMap.set(key, val);
 		}
-		for (let [key, val] of map2) {
+		for (const [key, val] of map2) {
 			let prevVal = newMap.get(key);
 			if (prevVal === undefined) {
 				prevVal = 0;
 			}
-
 			newMap.set(key, prevVal + val);
 		}
-
 		return newMap;
 	}
 
-	generateWordsSectionString(author1, author2) {
+	static getModeOfAMap(map) {
+		return [...map.entries()].reduce((a, e) => (e[1] > a[1] ? e : a));
+	}
+
+	static getModeOfTwoMaps(map1, map2) {
+		return [...Statistics.addMaps(map1, map2).entries()].reduce((a, e) =>
+			e[1] > a[1] ? e : a
+		);
+	}
+
+	static generateAuthorStats(author) {
+		author.words = sortMap(author.words);
+		author.emojis = sortMap(author.emojis);
+		author.wordsPerMessage = author.totalWords / author.textMessages;
+		[author.mostUsedWord] = [...author.words];
+		[author.mostUsedEmoji] = [...author.emojis];
+	}
+
+	static generateWordsSection(author1, author2) {
 		let wordsSectionString = "";
 		if (author1.textMessages === author2.textMessages) {
 			if (author1.wordsPerMessage === author2.wordsPerMessage) {
@@ -110,13 +124,12 @@ class statsCalculator {
 	}
 
 	setAuthorNames(messages) {
-		for (let msg of messages) {
+		for (const msg of messages) {
 			if (msg.author !== "" && msg.author !== "System") {
 				if (!this.authors.author1.name) {
 					this.authors.author1.name = msg.author;
 					continue;
 				}
-
 				if (msg.author !== this.authors.author1.name) {
 					this.authors.author2.name = msg.author;
 					break;
@@ -126,187 +139,145 @@ class statsCalculator {
 	}
 
 	generateCombinedStats() {
-		const author1 = this.authors.author1;
-		const author2 = this.authors.author2;
-		const combined = this.authors.combined;
+		const { author1 } = this.authors;
+		const { author2 } = this.authors;
+		const { combined } = this.authors;
 
-		combined.sectionWordsString = this.generateWordsSectionString(
+		combined.sectionWordsString = Statistics.generateWordsSection(
 			author1,
 			author2
 		);
 
-		combined.messagesByHour = this.addMaps(
+		combined.messagesByHour = Statistics.addMaps(
 			author1.messagesByHour,
 			author2.messagesByHour
 		);
-		combined.messagesByDaysOfWeek = this.addMaps(
+		combined.messagesByDaysOfWeek = Statistics.addMaps(
 			author1.messagesByDaysOfWeek,
 			author2.messagesByDaysOfWeek
 		);
-		combined.messagesByDate = this.addMaps(
+		combined.messagesByDate = Statistics.addMaps(
 			author1.messagesByDate,
 			author2.messagesByDate
 		);
 
-		combined.mostUsedWord = [
-			...this.addMaps(author1.words, author2.words).entries()
-		].reduce((a, e) => (e[1] > a[1] ? e : a));
-		combined.mostUsedEmoji = [
-			...this.addMaps(author1.emojis, author2.emojis).entries()
-		].reduce((a, e) => (e[1] > a[1] ? e : a));
-		combined.busiestHour = [...combined.messagesByHour.entries()].reduce(
-			(a, e) => (e[1] > a[1] ? e : a)
+		combined.mostUsedWord = Statistics.getModeOfTwoMaps(
+			author1.words,
+			author2.words
 		);
-		combined.busiestWeekOfDay = [
-			...combined.messagesByDaysOfWeek.entries()
-		].reduce((a, e) => (e[1] > a[1] ? e : a));
-		combined.busiestDay = [...combined.messagesByDate.entries()].reduce(
-			(a, e) => (e[1] > a[1] ? e : a)
+		combined.mostUsedEmoji = Statistics.getModeOfTwoMaps(
+			author1.emojis,
+			author2.emojis
 		);
+		combined.busiestHour = Statistics.getModeOfAMap(combined.messagesByHour);
+		combined.busiestWeekOfDay = Statistics.getModeOfAMap(
+			combined.messagesByDaysOfWeek
+		);
+		combined.busiestDay = Statistics.getModeOfAMap(combined.messagesByDate);
 
-		combined.startDate = [...combined.messagesByDate][0][0];
-		combined.endDate = [...combined.messagesByDate][
+		[[combined.startDate]] = [...combined.messagesByDate];
+		[combined.endDate] = [...combined.messagesByDate][
 			combined.messagesByDate.size - 1
-		][0];
+		];
 		combined.periodInDays = combined.messagesByDate.size;
 	}
 
-	generateFinalStats(auth) {
-		// sort maps
-		auth.words = sortMap(auth.words);
-		auth.emojis = sortMap(auth.emojis);
-
-		auth.wordsPerMessage = auth.totalWords / auth.textMessages;
-		auth.mostUsedWord = [...auth.words][0];
-		auth.mostUsedEmoji = [...auth.emojis][0];
-	}
-
-	generateStats(messages) {
-		return new Promise((resolve, reject) => {
+	generateAllStats(messages) {
+		return new Promise(resolve => {
 			this.setAuthorNames(messages);
 
-			for (let msg of messages) {
+			for (const message of messages) {
 				// get author of the message
-				var auth = {};
-				if (msg.author === this.authors.author1.name) {
-					auth = this.authors.author1;
-				} else if (msg.author === this.authors.author2.name) {
-					auth = this.authors.author2;
+				let author = {};
+				if (message.author === this.authors.author1.name) {
+					author = this.authors.author1;
+				} else if (message.author === this.authors.author2.name) {
+					author = this.authors.author2;
 				}
 
 				// Sort message by time and increment counters
-				this.incrementCounter(auth.messagesByHour, msg.date.getHours());
-				this.incrementCounter(auth.messagesByDaysOfWeek, msg.date.getDay());
-				this.incrementCounter(
-					auth.messagesByDate,
-					msg.date.toLocaleDateString()
+				Statistics.incrementKeyCount(
+					author.messagesByHour,
+					message.date.getHours()
+				);
+				Statistics.incrementKeyCount(
+					author.messagesByDaysOfWeek,
+					message.date.getDay()
+				);
+				Statistics.incrementKeyCount(
+					author.messagesByDate,
+					message.date.toLocaleDateString()
 				);
 
 				// Convert message to lower-case. We're making a decision that case doesn't matter for analysis.
-				const message = msg.message.toLowerCase();
+				const msg = message.message.toLowerCase();
 
 				// determine the type of message and increment counters
 				// This can obviously fail if one includes these file extensions manually, but thanks to WhatsApp's
 				// big brain decision to use differring formats for media messages, this seems to be the only way.
-				auth.totalMessages++;
+				author.totalMessages += 1;
 
-				if (message.includes(".jpg") || message.includes(".webp")) {
+				if (msg.includes(".jpg") || msg.includes(".webp")) {
 					// is an image
-					auth.totalMedia++;
-					auth.pictures++;
-				} else if (message.includes(".opus")) {
+					author.totalMedia += 1;
+					author.pictures += 1;
+				} else if (msg.includes(".opus")) {
 					// is an audio
-					auth.totalMedia++;
-					auth.audios++;
-				} else if (message.includes(".mp4")) {
+					author.totalMedia += 1;
+					author.audios += 1;
+				} else if (msg.includes(".mp4")) {
 					// is a video
-					auth.totalMedia++;
-					auth.videos++;
-				} else if (
-					message.includes("https://") ||
-					message.includes("http://")
-				) {
+					author.totalMedia += 1;
+					author.videos += 1;
+				} else if (msg.includes("https://") || msg.includes("http://")) {
 					// is a link
-					auth.totalMedia++;
-					auth.links++;
+					author.totalMedia += 1;
+					author.links += 1;
 				} else {
 					// text message
-					auth.textMessages++;
+					author.textMessages += 1;
 
 					// extract words
-					let words = message.match(this.regexWords);
+					let words = msg.match(this.regexWords);
 					if (words) {
 						if (this.removeStopwords) {
 							words = sw.removeStopwords(words, this.language);
 						}
-
-						for (let word of words) {
-							this.incrementCounter(auth.words, word);
+						for (const word of words) {
+							Statistics.incrementKeyCount(author.words, word);
 						}
-
-						auth.totalWords += words.length;
+						author.totalWords += words.length;
 					}
 
 					// detect & process emojis
-					let emojis = message.match(this.regexEmojis);
+					const emojis = msg.match(this.regexEmojis);
 					if (emojis) {
-						for (let emoji of emojis) {
-							this.incrementCounter(auth.emojis, emoji);
+						for (const emoji of emojis) {
+							Statistics.incrementKeyCount(author.emojis, emoji);
 						}
-						auth.totalEmojis += emojis.length;
+						author.totalEmojis += emojis.length;
 					}
 				}
 			}
 
-			this.generateFinalStats(this.authors.author1);
-			this.generateFinalStats(this.authors.author2);
+			Statistics.generateAuthorStats(this.authors.author1);
+			Statistics.generateAuthorStats(this.authors.author2);
 			this.generateCombinedStats();
-
 			resolve(this.authors);
 		});
 	}
 
-	parseChats(data) {
+	generate(data, rmStopwords, language) {
 		return new Promise((resolve, reject) => {
-			whatsapp.parseString(data).then(
-				messages => {
-					this.generateStats(messages).then(
-						authors => {
-							resolve(authors);
-						},
-						err => {
-							console.error(
-								`Error while generating stats: (${err.name}: ${err.message})`
-							);
-							reject(
-								new Error(
-									"An error occured while generating statistics. Please make sure that the file you have uploaded is correct."
-								)
-							);
-						}
-					);
-				},
-				err => {
-					console.error(
-						`Error while parsing chats: (${err.name}: ${err.message})`
-					);
-					reject(
-						new Error(
-							// eslint-disable-next-line no-multi-str
-							"Coulnd't parse the file. Please make sure that you have selected correct file. If you're positive that the file is correct, chances\
-              are the format of your file isn't supported yet."
-						)
-					);
-				}
-			);
+			this.removeStopwords = rmStopwords;
+			this.language = language;
+			whatsapp
+				.parseString(data)
+				.then(messages => this.generateAllStats(messages))
+				.then(authors => resolve(authors))
+				.catch(err => reject(err));
 		});
-	}
-
-	run(data, rmStopwords, lang) {
-		this.removeStopwords = rmStopwords;
-		this.language = lang;
-		return this.parseChats(data);
 	}
 }
 
-export default statsCalculator;
+export default Statistics;
