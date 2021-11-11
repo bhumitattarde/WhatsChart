@@ -5,7 +5,7 @@ import { toPng } from "html-to-image";
 import download from "downloadjs";
 
 import Statistics from "../../core/statistics";
-import { supportedLangs } from "../../util";
+import { supportedLangs, langExtensions } from "../../util";
 import ProgressIndicator from "./ProgressIndicator";
 import DownloadAndSeeChart from "./DownloadAndSeeChart";
 
@@ -31,65 +31,6 @@ class FileForm extends React.Component {
 				graphColor: "#FFA41B"
 			}
 		};
-		// used by stopwords package
-		this.langExtensions = new Map([
-			["af", "Afrikaans"],
-			["ar", "Arabic, Modern Standard"],
-			["hy", "Armenian"],
-			["eu", "Basque"],
-			["bn", "Bengali"],
-			["br", "Breton"],
-			["bg", "Bulgarian"],
-			["ca", "Catalan"],
-			["zh", "Chinese Simplified"],
-			["hr", "Croatian"],
-			["cs", "Czech"],
-			["da", "Danish"],
-			["nl", "Dutch"],
-			["en", "English"],
-			["eo", "Esperanto"],
-			["et", "Estonian"],
-			["fa", "Farsi"],
-			["fi", "Finnish"],
-			["fr", "French"],
-			["gl", "Galician"],
-			["de", "German"],
-			["el", "Greek"],
-			["ha", "Hausa"],
-			["he", "Hebrew"],
-			["hi", "Hindi"],
-			["hu", "Hungarian"],
-			["id", "Indonesian"],
-			["ga", "Irish"],
-			["it", "Italian"],
-			["ja", "Japanese"],
-			["ko", "Korean"],
-			["la", "Latin"],
-			["lv", "Latvian"],
-			["lgg", "Lugbara (without diacrit]ics)"],
-			["lggo", "Lugbara official (with d]iacritics)"],
-			["mr", "Marathi"],
-			["no", "Norwegian"],
-			["pl", "Polish"],
-			["pt", "Portuguese"],
-			["ptbr", "Portuguese (Brazilian)"],
-			["pa", "Punjabi Gurmukhi"],
-			["ro", "Romanian"],
-			["ru", "Russian"],
-			["sk", "Slovak"],
-			["sl", "Slovenian"],
-			["so", "Somali"],
-			["st", "Sotho"],
-			["es", "Spanish"],
-			["sw", "Swahili"],
-			["sv", "Swedish"],
-			["th", "Thai"],
-			["tr", "Turkish"],
-			["vi", "Vietnamese"],
-			["yo", "Yoruba"],
-			["zu", "Zulu"]
-		]);
-
 		// `this` bindings
 		this.generate = this.generate.bind(this);
 		this.handleFormSubmission = this.handleFormSubmission.bind(this);
@@ -262,7 +203,7 @@ class FileForm extends React.Component {
 							<select id="langDropdown" name="lang" defaultValue="en">
 								{[...supportedLangs.keys()].map((key, idx) => (
 									<option value={key} key={idx}>
-										{this.langExtensions.get(key)}
+										{langExtensions.get(key)}
 									</option>
 								))}
 							</select>
