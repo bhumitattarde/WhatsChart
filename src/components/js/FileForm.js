@@ -6,8 +6,8 @@ import download from "downloadjs";
 
 import Statistics from "../../core/statistics";
 import { supportedLangs } from "../../util";
-import ProgressIndicator from "./ProgressIndicator.js";
-import DownloadAndSeeChart from "./DownloadAndSeeChart.js";
+import ProgressIndicator from "./ProgressIndicator";
+import DownloadAndSeeChart from "./DownloadAndSeeChart";
 
 import "../css/FileForm.css";
 
@@ -15,6 +15,7 @@ class FileForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			// represents progress status shown under generate button
 			progress: "",
 			err: false
 		};
@@ -30,6 +31,7 @@ class FileForm extends React.Component {
 				graphColor: "#FFA41B"
 			}
 		};
+		// used by stopwords package
 		this.langExtensions = new Map([
 			["af", "Afrikaans"],
 			["ar", "Arabic, Modern Standard"],
@@ -90,34 +92,26 @@ class FileForm extends React.Component {
 
 		// `this` bindings
 		this.generate = this.generate.bind(this);
-		this.readFile = this.readFile.bind(this);
 		this.handleFormSubmission = this.handleFormSubmission.bind(this);
-		this.toggleLangDropdown = this.toggleLangDropdown.bind(this);
-		this.convertToRGB = this.convertToRGB.bind(this);
 		this.updateProgress = this.updateProgress.bind(this);
-		this.handleDownload = this.handleDownload.bind(this);
 	}
 
-	generate(data, rmStopwords, lang, config) {
-		return new Promise((resolve, reject) => {
-			const sc = new Statistics();
-
-			sc.generate(data, rmStopwords, lang)
-				.then(stats => {
-					if (stats === undefined) {
-						reject(new Error("Received empty data from generator"));
-					}
-
-					this.props.submitCallback(stats, config);
-					resolve();
-				})
-				.catch(err => {
-					reject(err);
-				});
-		});
+	static toggleLangDropdown() {
+		if (document.getElementById("rmStopwords").checked) {
+			document.getElementById("langDropdown").disabled = false;
+		} else {
+			document.getElementById("langDropdown").disabled = true;
+		}
 	}
 
-	readFile(file) {
+	static convertToRGB(hex) {
+		return `rgb(${hex
+			.match(/[A-Za-z0-9]{2}/g)
+			.map(v => parseInt(v, 16))
+			.join(",")})`;
+	}
+
+	static readFile(file) {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
 
@@ -127,8 +121,7 @@ class FileForm extends React.Component {
 					resolve(data);
 				}
 			};
-
-			reader.onerror = event => {
+			reader.onerror = () => {
 				reject(
 					new Error(
 						`An error (${reader.error}) occurred while while trying to read the selected file. Make sure you have\
@@ -141,99 +134,96 @@ class FileForm extends React.Component {
 		});
 	}
 
-	handleFormSubmission(event) {
-		this.props.showChart(false);
-
-		this.updateProgress("Trying to access the file..");
-
-		// don't referesh page when form is submitted
-		event.preventDefault();
-
+	static getInputs() {
 		const file = document.getElementById("fileSelector").files[0];
 		const config = {
-			author1Color: this.convertToRGB(
+			author1Color: FileForm.convertToRGB(
 				document.getElementById("author1ColorPicker").value
 			),
-			author2Color: this.convertToRGB(
+			author2Color: FileForm.convertToRGB(
 				document.getElementById("author2ColorPicker").value
 			),
-			backgroundColor: this.convertToRGB(
+			backgroundColor: FileForm.convertToRGB(
 				document.getElementById("bgColorPicker").value
 			),
-			textColor: this.convertToRGB(
+			textColor: FileForm.convertToRGB(
 				document.getElementById("textColorPicker").value
 			),
-			iconColor: this.convertToRGB(
+			iconColor: FileForm.convertToRGB(
 				document.getElementById("iconColorPicker").value
 			),
-			graphColor: this.convertToRGB(
+			graphColor: FileForm.convertToRGB(
 				document.getElementById("graphColorPicker").value
 			)
 		};
+		const rmStopwords = document.getElementById("rmStopwords").checked;
+		const language = supportedLangs.get(
+			document.getElementById("langDropdown").value
+		);
 
-		if (file === undefined || !file.name.endsWith(".txt")) {
-			this.updateProgress("Please select a valid file!", true);
-			return false;
-		} else {
-			this.updateProgress("Trying to read the file..");
-
-			this.readFile(file)
-				.then(data => {
-					this.updateProgress("Generating the visualization..");
-
-					return this.generate(
-						data,
-						document.getElementById("rmStopwords").checked,
-						supportedLangs.get(document.getElementById("langDropdown").value),
-						config
-					);
-				})
-				.then(() => {
-					this.updateProgress("Your visualization is ready!");
-					return true;
-				})
-				.catch(err => {
-					this.updateProgress(err.message, true);
-					return false;
-				});
-		}
+		return { file, config, rmStopwords, language };
 	}
 
-	handleDownload() {
-		toPng(
-			document.getElementById("chart") /*, {
-      width: 900 
-    }*/
-		).then(function (dataURL) {
+	static handleDownload() {
+		toPng(document.getElementById("chart")).then(dataURL => {
 			download(dataURL, "whatschart.png");
 		});
 	}
 
-	toggleLangDropdown() {
-		if (document.getElementById("rmStopwords").checked) {
-			document.getElementById("langDropdown").disabled = false;
-		} else {
-			document.getElementById("langDropdown").disabled = true;
-		}
-	}
-
-	convertToRGB(hex) {
-		return (
-			"rgb(" +
-			hex
-				.match(/[A-Za-z0-9]{2}/g)
-				.map(function (v) {
-					return parseInt(v, 16);
-				})
-				.join(",") +
-			")"
-		);
-	}
-
 	updateProgress(progress, err = false) {
-		this.setState(prevState => {
-			return { progress: progress, err: err };
+		this.setState(() => ({
+			progress,
+			err
+		}));
+	}
+
+	generate(data, rmStopwords, lang, config) {
+		return new Promise((resolve, reject) => {
+			new Statistics()
+				.generate(data, rmStopwords, lang)
+				.then(stats => {
+					if (stats === undefined) {
+						reject(new Error("Received empty data from generator"));
+					}
+					this.props.submitCallback(stats, config);
+					resolve();
+				})
+				.catch(err => reject(err));
 		});
+	}
+
+	async handleFormSubmission(event) {
+		let success = false;
+		this.props.showChart(false);
+		this.updateProgress("Trying to access the file..");
+		// don't referesh page when form is submitted
+		event.preventDefault();
+
+		// get inputs
+		const { file, config, rmStopwords, language } = FileForm.getInputs();
+		if (file === undefined || !file.name.endsWith(".txt")) {
+			this.updateProgress("Please select a valid file.", true);
+			success = false;
+		} else {
+			// read and process the file
+			this.updateProgress("Trying to read the file..");
+			try {
+				const data = await FileForm.readFile(file);
+				this.updateProgress("Generating the visualization..");
+				await this.generate(data, rmStopwords, language, config);
+				this.updateProgress("Your visualization is ready!");
+				success = true;
+			} catch (err) {
+				console.error(err.message);
+				this.updateProgress(
+					"An error occured..\nPlease check the console for more details and consider reporting the issue.",
+					true
+				);
+				success = false;
+			}
+		}
+
+		return success;
 	}
 
 	render() {
@@ -261,7 +251,7 @@ class FileForm extends React.Component {
 								type="checkbox"
 								name="rmStopwords"
 								value="rmStopwords"
-								onChange={this.toggleLangDropdown}
+								onChange={FileForm.toggleLangDropdown}
 								defaultChecked></input>
 						</div>
 
@@ -343,7 +333,7 @@ class FileForm extends React.Component {
 				/>
 
 				{this.props.chartVisible && (
-					<DownloadAndSeeChart handleDownload={this.handleDownload} />
+					<DownloadAndSeeChart handleDownload={FileForm.handleDownload} />
 				)}
 			</form>
 		);
