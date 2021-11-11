@@ -231,7 +231,8 @@ class Statistics {
 	 * @returns {Promise}
 	 */
 	generateAllStats(messages) {
-		return new Promise(resolve => {
+		// eslint-disable-next-line no-unused-vars
+		return new Promise((resolve, reject) => {
 			this.setAuthorNames(messages);
 
 			for (const message of messages) {
