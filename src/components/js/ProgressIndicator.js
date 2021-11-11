@@ -9,8 +9,7 @@ const ProgressIndicator = props => (
 			props.isError
 				? "progressIndicator progressIndicatorBad"
 				: "progressIndicator"
-		}
-	>
+		}>
 		<p>{props.progress}</p>
 	</div>
 );
