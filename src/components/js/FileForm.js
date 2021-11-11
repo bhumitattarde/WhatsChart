@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { toPng } from "html-to-image";
 import download from "downloadjs";
 
-import statsCalculator from "../../core/statscalculator";
+import Statistics from "../../core/statscalculator";
 import { supportedLangs } from "../../util";
 import ProgressIndicator from "./ProgressIndicator.js";
 import DownloadAndSeeChart from "./DownloadAndSeeChart.js";
@@ -100,9 +100,9 @@ class FileForm extends React.Component {
 
 	generate(data, rmStopwords, lang, config) {
 		return new Promise((resolve, reject) => {
-			const sc = new statsCalculator();
+			const sc = new Statistics();
 
-			sc.run(data, rmStopwords, lang)
+			sc.generate(data, rmStopwords, lang)
 				.then(stats => {
 					if (stats === undefined) {
 						reject(new Error("Received empty data from generator"));
