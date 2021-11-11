@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { toPng } from "html-to-image";
 import download from "downloadjs";
 
-import Statistics from "../../core/statscalculator";
+import Statistics from "../../core/statistics";
 import { supportedLangs } from "../../util";
 import ProgressIndicator from "./ProgressIndicator.js";
 import DownloadAndSeeChart from "./DownloadAndSeeChart.js";
