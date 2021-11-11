@@ -27,12 +27,22 @@ class App extends React.Component {
 		this.showChart = this.showChart.bind(this);
 	}
 
+	/**
+	 * Callback for when user submits the form.
+	 * Called by `FileForm`.
+	 * @param {Statistics} stats calculated statustics
+	 * @param {Object} config user configuration
+	 */
 	formSubmitCallback(stats, config) {
 		this.stats = stats;
 		this.config = config;
 		this.showChart(true);
 	}
 
+	/**
+	 * Toggle WhatsChart
+	 * @param {Boolean} show shows the chart if `true`
+	 */
 	showChart(show) {
 		this.setState(() => ({
 			showChart: show
