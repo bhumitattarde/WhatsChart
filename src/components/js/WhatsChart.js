@@ -56,8 +56,14 @@ class WhatsChart extends React.Component {
 	}
 
 	// methods
+
+	/**
+	 * 'Shades' a color
+	 * @param {Number} percentage shading intensity. Ranges from -1 to 1
+	 * @param {String} Color RGB color code
+	 * @returns {String} RGB color code of the shaded color
+	 */
 	static shadeColor(percentage, Color) {
-		// `percentage` range is -1 to 1 & color is in rgb format eg., ("0.1", "rgb(0,0,255)")
 		const i = parseInt;
 		const r = Math.round;
 		const [a, b, color, d] = Color.split(",");
@@ -78,6 +84,11 @@ class WhatsChart extends React.Component {
 		);
 	}
 
+	/**
+	 * Get name of the day by it's number in the week
+	 * @param {Number} day day number
+	 * @returns {String} name of the day
+	 */
 	getWeekDayName(day) {
 		return this.days[day];
 	}
