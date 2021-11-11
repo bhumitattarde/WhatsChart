@@ -1,8 +1,6 @@
 # WhatsChart
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
-###### WhatsChart is a free and open-source chat analyzer + visualizer for WhatsApp that lets you create customizable visualizations instantly.
+Create customizable data visualizations of WhatsApp chats with a single click
 
 ## Demo visualization
 
