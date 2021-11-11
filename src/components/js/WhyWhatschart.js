@@ -6,7 +6,7 @@ import { faOsi } from "@fortawesome/free-brands-svg-icons";
 
 import "../css/WhyWhatschart.css";
 
-const WhyWhatschart = props => (
+const WhyWhatschart = () => (
 	<div id="whyWhatschart" className="page">
 		<h2>Why WhatsChart?</h2>
 
