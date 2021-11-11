@@ -1,4 +1,4 @@
-export class author {
+export default class Author {
 	constructor() {
 		this.name = "";
 		this.totalMessages = 0;
