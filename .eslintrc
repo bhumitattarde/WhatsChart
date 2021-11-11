@@ -2,7 +2,11 @@
     "extends": ["react-app", "airbnb-base", "react-app/jest", "prettier"],
     "plugins": ["prettier"],
     "rules": {
-      "prettier/prettier": ["error"]
+      "prettier/prettier": ["error"],
       // * All JS rules
+      "no-restricted-syntax": "off",
+      "no-continue": "off",
+      "no-param-reassign": "off"
+
     }
   }
