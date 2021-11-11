@@ -2,13 +2,10 @@ import React from "react";
 
 import "../css/Footer.css";
 
-const Footer = props => (
+const Footer = () => (
 	<div id="footer">
 		<hr />
 		<ul>
-			<li id="donate">
-				<a href="">Buy me a coffee!</a>
-			</li>
 			<li>
 				Made with &hearts; by{" "}
 				<a href="https://www.bhumit.net">Bhumit Attarde</a>
