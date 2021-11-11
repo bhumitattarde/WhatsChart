@@ -2,7 +2,7 @@ import React from "react";
 
 import "../css/HowtoPage.css";
 
-const HowtoPage = props => (
+const HowtoPage = () => (
 	<div id="howtoPage" className="page">
 		<h2>How to use WhatsChart?</h2>
 		<ol className="paraWrapper">
