@@ -1,3 +1,6 @@
+/**
+ * Represents statistics for one of the authors of the chat
+ */
 export default class Author {
 	constructor() {
 		this.name = "";
@@ -11,6 +14,7 @@ export default class Author {
 		this.audios = 0;
 		this.links = 0;
 
+		// words/content mapped to thier frequency
 		this.words = new Map();
 		this.emojis = new Map();
 
